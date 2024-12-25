@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 685d6cfb51c6ad24bb113d986919a759, type: 3}
+  m_Name: DoubleChance
+  m_EditorClassIdentifier: 
+  id: 0
+  relicName: Double Chance
+  description: You can throw your dices twice every turn.
+  icon: {fileID: 21300000, guid: a2a6b7f95f54526439a37940861beba7, type: 3}

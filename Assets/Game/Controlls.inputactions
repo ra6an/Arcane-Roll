@@ -1,0 +1,54 @@
+{
+    "name": "Controlls",
+    "maps": [
+        {
+            "name": "Inputs",
+            "id": "acadd78d-4959-4d81-aad7-151d8b84a205",
+            "actions": [
+                {
+                    "name": "Choose",
+                    "type": "Button",
+                    "id": "0b51e6e1-bb7d-434e-acd1-72f8f4e2f9cc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Roll",
+                    "type": "Button",
+                    "id": "1a003014-7f29-48b6-a57b-0ba0f082d6a7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "42ad67f3-a664-4d25-91f3-51e6985c868f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Choose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b79087d-e6c4-4ade-86fa-1ed081ea871d",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

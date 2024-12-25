@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4960afe9aca6384f8666d8091421504, type: 3}
+  m_Name: FireStarter
+  m_EditorClassIdentifier: 
+  id: 0
+  starterSetName: Fire Starter 1
+  deck: {fileID: 11400000, guid: 862b4e25c24760c43bcb4347fe0efd88, type: 2}
+  relic: {fileID: 11400000, guid: dc751a366db081944b91fb52360cbe14, type: 2}
