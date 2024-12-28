@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [Foldout("DataBase")]
     [SerializeField] private SetsDB starterSetsDB;
     [SerializeField] private EnemyTeamsDB enemyTeamsDB;
+    [SerializeField] private BattleRoomsDB battleRoomsDB;
 
     private GameObject canvas;
 
@@ -21,9 +22,10 @@ public class GameManager : MonoBehaviour
 
     public GameObject Canvas => canvas;
     public List<List<Node>> Map => _map;
+    public MapSettings MapSettings => mapSettings;
     public SetsDB StarterSetsDB => starterSetsDB;
     public EnemyTeamsDB EnemyTeamsDB => enemyTeamsDB;
-    public MapSettings MapSettings => mapSettings;
+    public BattleRoomsDB BattleRoomsDB => battleRoomsDB;
 
     private void Awake()
     {
@@ -53,5 +55,17 @@ public class GameManager : MonoBehaviour
     public void SetMap(List<List<Node>> _m)
     {
         _map = _m;
+    }
+
+    public BattleRoomSO GetBattleRoom()
+    {
+        int rndInt = 0;
+
+        if(battleRoomsDB.BattleRooms.Count > 1)
+        {
+            rndInt = Random.Range(0, battleRoomsDB.BattleRooms.Count);
+        }
+
+        return battleRoomsDB.BattleRooms[rndInt];
     }
 }

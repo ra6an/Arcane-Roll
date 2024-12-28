@@ -64,7 +64,8 @@ public class MapState : IGameState
         if (pickedRoom.Type == RoomType.BATTLE || pickedRoom.Type == RoomType.BOSS)
         {
             BattleState bs = _stateMachine.GetState<BattleState>();
-            bs.SetEnemyTeam(pickedRoom.EnemyTeam);
+            BattleRoomSO br = GameManager.Instance.GetBattleRoom();
+            bs.SetEnemyTeam(pickedRoom.EnemyTeam, br);
         }
     }
 

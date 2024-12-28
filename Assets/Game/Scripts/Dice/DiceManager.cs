@@ -9,7 +9,6 @@ public class DiceManager : MonoBehaviour
     private int rolledNumber = 0;
 
     public List<Transform> dicePositions = new List<Transform>();
-    //public IEnumerable<Transform> diceTransforms => dicePositions;
 
     private void Awake()
     {

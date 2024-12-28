@@ -20,4 +20,13 @@ public class EnemyTeamController : MonoBehaviour
             go.GetComponent<EnemyDetails>().SetEnemyDetails(enemy);
         }
     }
+
+    public GameObject SetEnemyDetails(EnemySO e)
+    {
+        if(e == null || e.enemyName == null) return null;
+
+        GameObject go = Instantiate(enemyDetailsPrefab, enemyTeamContainer.transform);
+        go.GetComponent<EnemyDetails>().SetEnemyDetails(e);
+        return go;
+    }
 }

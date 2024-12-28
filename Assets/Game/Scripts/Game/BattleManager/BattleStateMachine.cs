@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BattleStateMachine
+public class BattleStateMachine 
 {
     public IBattleState CurrentBattleState { get; private set; }
 
@@ -20,9 +20,11 @@ public class BattleStateMachine
             { typeof(EnemyBattlePhase), new EnemyBattlePhase(this) },
             { typeof(EndTurnPhase), new EndTurnPhase(this) },
         };
+
+        ChangeState<EnemyPlanningPhase>();
     }
 
-public void SetState(IBattleState newState)
+    public void SetState(IBattleState newState)
     {
         CurrentBattleState?.ExitState();
         CurrentBattleState = newState;
@@ -34,16 +36,30 @@ public void SetState(IBattleState newState)
         CurrentBattleState?.UpdateState();
     }
 
-    public void ChangeState<T>() where T : IGameState
+    public void ChangeState<T>() where T : IBattleState
     {
         if (CurrentBattleState != null)
         {
             CurrentBattleState.ExitState();
         }
-        Debug.Log($"Changing state from: {CurrentBattleState} to: {typeof(T).Name}");
+        //Debug.Log($"Changing state from: {CurrentBattleState} to: {typeof(T).Name}");
 
         CurrentBattleState = _battleStates[typeof(T)];
         CurrentBattleState.EnterState();
-        Debug.Log($"State changed to: {CurrentBattleState}");
+        //Debug.Log($"State changed to: {CurrentBattleState}");
+    }
+
+    public void StartState()
+    {
+        _battleStates = new Dictionary<Type, IBattleState>
+        {
+            { typeof(EnemyPlanningPhase), new EnemyPlanningPhase(this) },
+            { typeof(PlayerPreparationPhase), new PlayerPreparationPhase(this) },
+            { typeof(PlayerBattlePhase), new PlayerBattlePhase(this) },
+            { typeof(EnemyBattlePhase), new EnemyBattlePhase(this) },
+            { typeof(EndTurnPhase), new EndTurnPhase(this) },
+        };
+
+        ChangeState<EnemyPlanningPhase>();
     }
 }

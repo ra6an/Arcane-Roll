@@ -1,5 +1,8 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameState
@@ -23,6 +26,12 @@ public class PlayerController : MonoBehaviour
 
     public GameState CurrentGameState => currentGameState;
 
+    [SerializeField] private float transformDuration = 1f;
+    [SerializeField] private float rotationDuration = 0.8f;
+
+    [SerializeField] private GameObject crystalsContainer;
+    [SerializeField] private float crystalsContainerDistance = 2f;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -40,6 +49,11 @@ public class PlayerController : MonoBehaviour
             _canvas = _canvasGO.GetComponent<CanvasController>();
             ResetStateMachine();
         }
+    }
+
+    private void Update()
+    {
+        MoveCrystalsContainer();
     }
 
     private void AddNewRelic(RelicSO r)
@@ -91,6 +105,46 @@ public class PlayerController : MonoBehaviour
     {
         AddNewRelic(_starterSet.relic);
         currentGameState.deck = _starterSet.deck;
-        _canvas.playerMonstersPanel.GetComponent<PlayerMonstersController>().SetupPlayersMonstersUI(_starterSet.deck);
+        SetupAllyMonsters();
+        //_canvas.playerMonstersPanel.GetComponent<PlayerMonstersController>().SetupPlayersMonstersUI(_starterSet.deck);
+    }
+
+    public void SetupAllyMonsters()
+    {
+        GameManager.Instance.GetComponent<PlayerTeamController>().SetAllyTeam();
+    }
+
+    internal void SetPlayerPosition(BattleRoomSO battleRoom)
+    {
+        Vector3 newPosition = battleRoom.PlayerPositionTo;
+        transform.localPosition = newPosition;
+    }
+
+    public void MovePlayerOnBattleStart(BattleRoomSO battleRoom, Action onComplete = null)
+    {
+        transform.SetLocalPositionAndRotation(battleRoom.PlayerPositionFrom, battleRoom.PlayerRotationFrom);
+
+        transform.DOLocalMove(battleRoom.PlayerPositionTo, transformDuration)
+           .SetEase(Ease.InOutQuad)
+           .OnComplete(() =>
+           {
+               // Izvrši dodatni kod nakon završetka animacije
+               onComplete?.Invoke();
+           });
+
+        // Rotiraj kameru prema ciljnoj rotaciji
+        transform.DOLocalRotate(battleRoom.PlayerRotationTo.eulerAngles, rotationDuration)
+            .SetEase(Ease.InOutQuad);
+    }
+
+    private void MoveCrystalsContainer()
+    {
+        if (crystalsContainer == null) return;
+
+        Vector3 playerPosition = transform.position;
+        Vector3 forwardDirection = transform.forward;
+
+        crystalsContainer.transform.position = playerPosition + forwardDirection * crystalsContainerDistance;
+        crystalsContainer.transform.rotation = transform.rotation;
     }
 }

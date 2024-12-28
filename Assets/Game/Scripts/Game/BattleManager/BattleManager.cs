@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,5 +32,36 @@ public class BattleManager : MonoBehaviour
     private void Update()
     {
         _battleStateMachine.Update();
+    }
+
+    public void SetEnemyTeam(EnemyTeamSO et)
+    {
+        if(et != null)
+        {
+            enemyTeam = et;
+        }
+    }
+
+    private void ResetBattleState()
+    {
+        currentTurn = 0;
+        battleIsOver = false;
+    }
+
+    internal void SetupBattleState(EnemyTeamSO et)
+    {
+        ResetBattleState();
+        enemyTeam = et;
+        _battleStateMachine = new BattleStateMachine();
+        _battleStateMachine.StartState();
+    }
+
+    public IBattleState GetState()
+    {
+        IBattleState currState = _battleStateMachine.CurrentBattleState;
+
+        if (currState == null) return null;
+
+        return currState;
     }
 }

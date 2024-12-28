@@ -10,11 +10,13 @@ public class SkillController : MonoBehaviour
     [SerializeField] private GameObject skillNoneGO;
     [SerializeField] private GameObject activeShaderGO;
 
+    public AbilitySO Skill => skill;
+
     public void SetSkill(AbilitySO skill)
     {
         if (skill == null) return;
 
-        if (skill.abilityName == "")
+        if (string.IsNullOrEmpty(skill.abilityName))
         {
             skillNoneGO.SetActive(true);
             skillSpriteGO.SetActive(false);

@@ -17,7 +17,7 @@ MonoBehaviour:
   description: Hit one enemy with 5 DMG.
   type: 1
   attack: 5
-  attackEnemies: 1
+  numOfTargetsToAttack: 1
   numOfAttacks: 1
   lifesteal: 0
   execute: 0

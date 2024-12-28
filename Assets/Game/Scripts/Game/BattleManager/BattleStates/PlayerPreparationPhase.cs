@@ -5,24 +5,37 @@ using UnityEngine;
 public class PlayerPreparationPhase : IBattleState
 {
     private BattleStateMachine _battleStateMachine;
+    private EnemiesController _enemiesController;
     
     public PlayerPreparationPhase(BattleStateMachine _bsm)
     {
         _battleStateMachine = _bsm;
+        _enemiesController = GameManager.Instance.GetComponent<EnemiesController>();
     }
 
     public void EnterState()
     {
-        throw new System.NotImplementedException();
-    }
+        Debug.Log("Entering player prep phase!");
 
-    public void ExitState()
-    {
-        throw new System.NotImplementedException();
+        if(_enemiesController != null )
+        {
+            GameManager.Instance.GetComponent<BattleManager>().StartCoroutine(HideAbilities());
+        }
     }
 
     public void UpdateState()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
+    }
+
+    public void ExitState()
+    {
+        Debug.Log("Exiting player prep phase!");
+    }
+
+    private IEnumerator HideAbilities()
+    {
+        yield return new WaitForSeconds(1f);
+        _enemiesController.HideEnemiesAbilitieDetails();
     }
 }

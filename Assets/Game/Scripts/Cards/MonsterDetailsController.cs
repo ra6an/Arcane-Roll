@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Kamgam.UGUIWorldImage;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,7 +22,10 @@ public class MonsterDetailsController : MonoBehaviour
     [SerializeField] private GameObject skillPrefab;
 
     [Header("Dice WorldView")]
+    [SerializeField] private GameObject worldImageContainer;
     [SerializeField] private GameObject diceWorldView;
+    [SerializeField] private GameObject rolledDiceGO;
+    [SerializeField] private List<Sprite> diceFaces = new List<Sprite>(6);
 
     public void SetMonsterDetails (CardSO cd, int num)
     {
@@ -50,5 +54,29 @@ public class MonsterDetailsController : MonoBehaviour
         currentHealthSliderGO.GetComponent<Image>().fillAmount = (float)newHealth / cardDetails.health;
         healthText.text = $"{newHealth} / {cardDetails.health}";
         currentHealth = newHealth;
+    }
+
+    public void SetRolledDice(int _rolledNumber)
+    {
+        rolledDiceGO.GetComponent<Image>().sprite = diceFaces[_rolledNumber - 1];
+
+        SkillController sk = skillsContainerGO.transform.GetChild(_rolledNumber - 1).GetComponent<SkillController>();
+
+        if(sk.Skill != null && !string.IsNullOrEmpty(sk.Skill.abilityName))
+        {
+            sk.SetSkillActive();
+        }
+    }
+
+    public void ShowDiceWorldImage()
+    {
+        float wiHeight = worldImageContainer.GetComponent<RectTransform>().rect.height;
+        worldImageContainer.transform.DOMoveY(wiHeight / 2 - 5f, 0.6f);
+    }
+
+    public void HideDiceWorldImage()
+    {
+        float wiHeight = worldImageContainer.GetComponent<RectTransform>().rect.height;
+        worldImageContainer.transform.DOMoveY(-(wiHeight / 2 - 5f), 0.6f);
     }
 }

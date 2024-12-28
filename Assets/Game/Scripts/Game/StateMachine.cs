@@ -79,28 +79,16 @@ public class StateMachine : MonoBehaviour
         {
             CurrentState.ExitState();
         }
-        Debug.Log($"Changing state from: {CurrentState} to: {typeof(T).Name}");
+        //Debug.Log($"Changing state from: {CurrentState} to: {typeof(T).Name}");
 
         CurrentState = _states[typeof(T)];
         CurrentState.EnterState();
-        Debug.Log($"State changed to: {CurrentState}");
+        //Debug.Log($"State changed to: {CurrentState}");
     }
 
     private void Update()
     {
-        //Debug.Log($"Trenutni state: {CurrentState.StateName}");
         CurrentState?.UpdateState();
-
-        //if(Input.GetKeyDown(KeyCode.A))
-        //{
-        //    CanvasController cnv = GameManager.Instance.Canvas.GetComponent<CanvasController>();
-        //    cnv.ShowBattleUI();
-        //}
-        //if (Input.GetKeyDown(KeyCode.S))
-        //{
-        //    CanvasController cnv = GameManager.Instance.Canvas.GetComponent<CanvasController>();
-        //    cnv.HideBattleUI();
-        //}
     }
 
     public T GetState<T>() where T : class, IGameState

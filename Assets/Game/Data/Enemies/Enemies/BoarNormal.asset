@@ -15,12 +15,10 @@ MonoBehaviour:
   id: 0
   sprite: {fileID: 21300000, guid: ec7d24ded02994d82b732b274c9ba6cc, type: 3}
   enemyName: Boar
+  enemyPrefab: {fileID: 6544756308272640223, guid: 9d9e2b9222e59b749a06501503f31be0,
+    type: 3}
   health: 15
   attack: 0
   abilities:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: fefb10130a5c2914dac54605c37ecd5b, type: 2}
+  - {fileID: 11400000, guid: b52825dc743b1cc4194569f044af0caa, type: 2}

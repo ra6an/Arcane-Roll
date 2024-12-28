@@ -6,14 +6,34 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    private PlayerController playerController;
+
     [Header("Animation Parameters Setup")]
     [SerializeField] private Vector3 targetPosition;
     [SerializeField] private float transformDuration = 1f;
     [SerializeField] private Quaternion targetRotation;
     [SerializeField] private float rotationDuration = 1.5f;
+
+    private void Awake()
+    {
+        playerController = PlayerController.Instance;
+    }
+
+    private void Update()
+    {
+        FollowPlayer();
+    }
+
+    private void FollowPlayer()
+    {
+        if(playerController == null) return;
+
+        transform.SetLocalPositionAndRotation(playerController.transform.localPosition, playerController.transform.localRotation);
+    }
+
     public void MoveCameraToTarget(System.Action onComplete = null)
     {
-        this.transform.DOMove(targetPosition, transformDuration)
+        this.transform.DOLocalMove(targetPosition, transformDuration)
            .SetEase(Ease.InOutQuad)
            .OnComplete(() =>
            {
@@ -22,7 +42,7 @@ public class CameraController : MonoBehaviour
            });
 
         // Rotiraj kameru prema ciljnoj rotaciji
-        this.transform.DORotate(targetRotation.eulerAngles, rotationDuration)
+        this.transform.DOLocalRotate(targetRotation.eulerAngles, rotationDuration)
             .SetEase(Ease.InOutQuad);
     }
 }

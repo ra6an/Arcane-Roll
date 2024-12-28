@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Flarea
   m_EditorClassIdentifier: 
   id: 1
-  title: Flarea
+  cardName: Flarea
   art: {fileID: 21300000, guid: 2f5036d8fdd5b4a329643f8b92568e68, type: 3}
   rarity: 0
   health: 14

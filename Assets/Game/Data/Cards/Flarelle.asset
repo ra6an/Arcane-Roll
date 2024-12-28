@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Flarelle
   m_EditorClassIdentifier: 
   id: 3
-  title: Flarelle
+  cardName: Flarelle
   art: {fileID: 21300000, guid: 07076ae3be5f74abab9bbb9d3eb19e26, type: 3}
   rarity: 2
   health: 18

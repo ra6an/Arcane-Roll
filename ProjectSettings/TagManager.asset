@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Animal
   - Table
+  - EnemySpawnPoints
+  - CrystalsSpawnPoints
   layers:
   - Default
   - TransparentFX

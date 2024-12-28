@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMonstersController : MonoBehaviour
 {
     [SerializeField] private GameObject monstersContainerGO;
+    
     [SerializeField] private GameObject monsterDetailsPrefab;
 
     public void SetupPlayersMonstersUI(DeckSO _deck)
@@ -16,5 +17,11 @@ public class PlayerMonstersController : MonoBehaviour
             go.GetComponent<MonsterDetailsController>().SetMonsterDetails(_card, num);
             num++;
         }
+    }
+
+    public void AddPlayerMonster(CardSO _card, int position)
+    {
+        GameObject go = Instantiate(monsterDetailsPrefab, monstersContainerGO.transform);
+        go.GetComponent<MonsterDetailsController>().SetMonsterDetails(_card, position);
     }
 }
