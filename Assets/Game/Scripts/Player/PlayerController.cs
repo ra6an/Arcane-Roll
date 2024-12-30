@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
     {
         AddNewRelic(_starterSet.relic);
         currentGameState.deck = _starterSet.deck;
-        SetupAllyMonsters();
+        //SetupAllyMonsters();
         //_canvas.playerMonstersPanel.GetComponent<PlayerMonstersController>().SetupPlayersMonstersUI(_starterSet.deck);
     }
 
@@ -146,5 +146,14 @@ public class PlayerController : MonoBehaviour
 
         crystalsContainer.transform.position = playerPosition + forwardDirection * crystalsContainerDistance;
         crystalsContainer.transform.rotation = transform.rotation;
+    }
+
+    internal void GetAvailableRolls()
+    {
+        int _availableRolls = 1;
+
+        List<RelicSO> _relics = currentGameState.relics;
+
+        
     }
 }

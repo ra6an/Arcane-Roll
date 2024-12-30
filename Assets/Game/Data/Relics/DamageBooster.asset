@@ -16,3 +16,15 @@ MonoBehaviour:
   relicName: Damage Booster
   description: Get 2 strength on start of each battle.
   icon: {fileID: 21300000, guid: 6c36dd3b5832d644fbd05df45f8d8f2e, type: 3}
+  type: 512
+  numOfExtraRolls: 0
+  lifestealPercentage: 0
+  invincibleFirstDamageTaken: 0
+  thornsTurns: 0
+  burnPercentage: 0
+  poisonPercentage: 0
+  debuffType: 0
+  debuffDuration: 0
+  extraCoinsRewardPercentage: 0
+  shieldBoostTurns: 0
+  strengthTurns: 3

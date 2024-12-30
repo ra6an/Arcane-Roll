@@ -31,7 +31,7 @@ public class Dice : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space) && !isRolling)
         {
-            RollDice();
+            //RollDice();
         }
 
         if(isRolling && !isDiceStopped)
@@ -51,7 +51,7 @@ public class Dice : MonoBehaviour
         }
     }
 
-    private void RollDice()
+    public void RollDice()
     {
         isRolling = true;
         isDiceStopped = false;

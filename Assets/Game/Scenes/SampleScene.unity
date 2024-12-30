@@ -601,11 +601,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c37e2ed61f1a3064ca302a17088e28df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceMachines:
+  - {fileID: 1502250213}
+  - {fileID: 547501317}
+  - {fileID: 1721876423}
+  - {fileID: 1905299324}
   dicePositions:
-  - {fileID: 1784071571}
-  - {fileID: 1721876422}
-  - {fileID: 248325915}
   - {fileID: 1378760505}
+  - {fileID: 248325915}
+  - {fileID: 1721876422}
+  - {fileID: 1784071571}
 --- !u!114 &164138739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2531,6 +2536,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 546585730}
   m_CullTransparentMesh: 1
+--- !u!114 &547501317 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6724375916941374279, guid: 498ddc5b68f3fdd429e7a68136709f23,
+    type: 3}
+  m_PrefabInstance: {fileID: 248325914}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a924af1df6974104bb01e3153ae5090f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &561035085 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4263491874698800, guid: 4ca3359aecc21c6408dd95416ae42c9c,
@@ -5055,6 +5072,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487726514}
   m_CullTransparentMesh: 1
+--- !u!114 &1502250213 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6724375916941374279, guid: 498ddc5b68f3fdd429e7a68136709f23,
+    type: 3}
+  m_PrefabInstance: {fileID: 1378760504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a924af1df6974104bb01e3153ae5090f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1507831067
 GameObject:
   m_ObjectHideFlags: 0
@@ -6606,6 +6635,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1721876421}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1721876423 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6724375916941374279, guid: 498ddc5b68f3fdd429e7a68136709f23,
+    type: 3}
+  m_PrefabInstance: {fileID: 1721876421}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a924af1df6974104bb01e3153ae5090f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1751514594
 GameObject:
   m_ObjectHideFlags: 0
@@ -6951,6 +6992,18 @@ Transform:
   - {fileID: 1767007512}
   m_Father: {fileID: 1553998607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1905299324 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6724375916941374279, guid: 498ddc5b68f3fdd429e7a68136709f23,
+    type: 3}
+  m_PrefabInstance: {fileID: 36902182}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a924af1df6974104bb01e3153ae5090f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1910758700 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4226729148616072, guid: 03d68db6e89d8a748aadc735ebd56146,

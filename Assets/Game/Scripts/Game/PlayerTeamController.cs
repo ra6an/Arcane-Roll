@@ -24,7 +24,9 @@ public class PlayerTeamController : MonoBehaviour
 
             // INSTANTIATE 3D CRYSTAL AND SETUP SCRIPT FOR MONSTER
             GameObject go = Instantiate(teamMonsterPrefab, teamContainer.transform);
-            go.GetComponent<AllyCrystalController>().SetMonster(currentCard, i);
+            AllyCrystalController acc = go.GetComponent<AllyCrystalController>();
+            acc.SetMonster(currentCard, i);
+            
             CrystalsContainer cc = _crystalsContainerGO.GetComponent<CrystalsContainer>();
             Vector3 availablePos = cc.crystalsPositions[i];
             Vector3 ccPos = cc.transform.position;
@@ -32,9 +34,13 @@ public class PlayerTeamController : MonoBehaviour
             go.transform.position = position;
             go.SetActive(false);
 
+            // COMBINE CRYSTAL AND DICE ROLL MACHINE
+            DiceManager.Instance.SetCrystalInStates(acc);
+
             // INSTANTIATE AND SETUP UI FOR MONSTER
             CanvasController _canvas = GameManager.Instance.Canvas.GetComponent<CanvasController>();
             _canvas.playerMonstersPanel.GetComponent<PlayerMonstersController>().AddPlayerMonster(currentCard, i);
+
         }
     }
 
@@ -55,15 +61,11 @@ public class PlayerTeamController : MonoBehaviour
 
         foreach (Transform ally in teamContainer.transform)
         {
-            //Debug.Log(ally.name);
             Damageable da = ally.GetComponent<Damageable>();
-            //Debug.Log($"PRIJE IFA!!! {da != null} {da.IsAlive()}");
             if(da != null && da.IsAlive())
             {
-                Debug.Log("U IFU!!!");
                 listToReturn.Add(da);
             }
-            //Debug.Log("POSLIJE IFA!!!");
         }
 
         return listToReturn;

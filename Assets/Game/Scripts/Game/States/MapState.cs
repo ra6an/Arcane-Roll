@@ -66,6 +66,7 @@ public class MapState : IGameState
             BattleState bs = _stateMachine.GetState<BattleState>();
             BattleRoomSO br = GameManager.Instance.GetBattleRoom();
             bs.SetEnemyTeam(pickedRoom.EnemyTeam, br);
+            PlayerController.Instance.SetupAllyMonsters();
         }
     }
 

@@ -46,7 +46,13 @@ public class MonsterDetailsController : MonoBehaviour
             go.GetComponent<SkillController>().SetSkill(skill);
         }
 
-        diceWorldView.GetComponent<WorldImage>().AddWorldObject(DiceManager.Instance.dicePositions[num]);
+        // NACI WORLD IMAGE POSITION I DODATI GA NA UI SKRIPTU
+        DiceRollState _drs = DiceManager.Instance.GetPositionForCard(cd);
+        //diceWorldView.GetComponent<WorldImage>().AddWorldObject(DiceManager.Instance.dicePositions[num]);
+        if(_drs != null )
+        {
+            diceWorldView.GetComponent<WorldImage>().AddWorldObject(_drs.Dice.transform);
+        }
     }
 
     public void SetHealth(int newHealth)

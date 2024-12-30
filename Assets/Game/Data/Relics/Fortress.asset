@@ -16,3 +16,15 @@ MonoBehaviour:
   relicName: Fortress
   description: Gain 5 defense on start of each battle.
   icon: {fileID: 21300000, guid: 7e4c8d7a876388e4c9502b93563999a8, type: 3}
+  type: 256
+  numOfExtraRolls: 0
+  lifestealPercentage: 0
+  invincibleFirstDamageTaken: 0
+  thornsTurns: 0
+  burnPercentage: 0
+  poisonPercentage: 0
+  debuffType: 0
+  debuffDuration: 0
+  extraCoinsRewardPercentage: 0
+  shieldBoostTurns: 2
+  strengthTurns: 0

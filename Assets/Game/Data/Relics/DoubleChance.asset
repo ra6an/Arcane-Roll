@@ -14,5 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   relicName: Double Chance
-  description: You can throw your dices twice every turn.
+  description: You get +1 extra roll per turn.
   icon: {fileID: 21300000, guid: a2a6b7f95f54526439a37940861beba7, type: 3}
+  type: 1
+  numOfExtraRolls: 1
+  lifestealPercentage: 0
+  invincibleFirstDamageTaken: 0
+  thornsTurns: 0
+  burnPercentage: 0
+  poisonPercentage: 0
+  debuffType: 0
+  debuffDuration: 0
+  extraCoinsRewardPercentage: 0
+  shieldBoostTurns: 0
+  strengthTurns: 0
