@@ -6,9 +6,12 @@ public class EndTurnPhase : IBattleState
 {
     private BattleStateMachine _battleStateMachine;
 
+    public bool canChangeState { get; set; }
+
     public EndTurnPhase(BattleStateMachine _bsm)
     {
         _battleStateMachine = _bsm;
+        canChangeState = false;
     }
 
     public void EnterState()
@@ -24,5 +27,10 @@ public class EndTurnPhase : IBattleState
     public void UpdateState()
     {
         throw new System.NotImplementedException();
+    }
+
+    public void ChangeState()
+    {
+
     }
 }

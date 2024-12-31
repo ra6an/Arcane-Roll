@@ -1,7 +1,9 @@
 using DG.Tweening;
 using Kamgam.UGUIWorldImage;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +11,7 @@ using UnityEngine.UI;
 public class MonsterDetailsController : MonoBehaviour
 {
     public int id;
-    private CardSO cardDetails;
+    public CardSO cardDetails;
     [SerializeField] private GameObject monsterIconGO;
     [SerializeField] private GameObject skillsContainerGO;
 
@@ -25,12 +27,57 @@ public class MonsterDetailsController : MonoBehaviour
     [SerializeField] private GameObject worldImageContainer;
     [SerializeField] private GameObject diceWorldView;
     [SerializeField] private GameObject rolledDiceGO;
+    [SerializeField] private GameObject lockDiceBtnGO;
+    [SerializeField] private GameObject iconLockedGO;
+    [SerializeField] private Image rolledDiceSprite;
     [SerializeField] private List<Sprite> diceFaces = new List<Sprite>(6);
+
+    private int _currRolledNum = 0;
+
+    private void Update()
+    {
+        CheckForRolledNumbersAndSetIt();
+        HinghlightSkillBasedOnRolledNumber();
+        CheckIfDiceNumberIsLocked();
+    }
+
+    private void HinghlightSkillBasedOnRolledNumber()
+    {
+        if (_currRolledNum == 0)
+        {
+            HideAllShadersFromSkills();
+            return;
+        }
+
+        if(_currRolledNum > 0 && _currRolledNum < 7)
+        {
+            HideAllShadersFromSkills();
+
+            for (int i = 0; i < skillsContainerGO.transform.childCount; i++)
+            {
+                if(i == _currRolledNum - 1)
+                {
+                    Transform currSkill = skillsContainerGO.transform.GetChild(i);
+                    currSkill.GetComponent<SkillController>().SetSkillActive();
+                }
+            }
+        }
+    }
+
+    private void HideAllShadersFromSkills()
+    {
+        foreach(Transform _s in skillsContainerGO.transform)
+        {
+            SkillController _sController = _s.GetComponent<SkillController>();
+
+            _sController.SetSkillInactive();
+        }
+    }
 
     public void SetMonsterDetails (CardSO cd, int num)
     {
         if (cd == null) return;
-
+        
         id = num;
         cardDetails = cd;
         monsterIconGO.GetComponent<Image>().sprite = cardDetails.art;
@@ -77,12 +124,70 @@ public class MonsterDetailsController : MonoBehaviour
     public void ShowDiceWorldImage()
     {
         float wiHeight = worldImageContainer.GetComponent<RectTransform>().rect.height;
-        worldImageContainer.transform.DOMoveY(wiHeight / 2 - 5f, 0.6f);
+        
+        worldImageContainer.transform.DOMoveY(wiHeight - 20, 0.6f);
+        //worldImageContainer.transform.DOMoveY(wiHeight / 2, 0.6f);
     }
 
     public void HideDiceWorldImage()
     {
         float wiHeight = worldImageContainer.GetComponent<RectTransform>().rect.height;
-        worldImageContainer.transform.DOMoveY(-(wiHeight / 2 - 5f), 0.6f);
+
+        worldImageContainer.transform.DOMoveY(-wiHeight + 20, 0.6f);
+        //worldImageContainer.transform.DOMoveY(-(wiHeight / 2), 0.6f);
+    }
+
+    private void CheckForRolledNumbersAndSetIt()
+    {
+        DiceManager dm = DiceManager.Instance;
+        DiceRollState drs = dm.GetPositionForCard(cardDetails);
+
+        if(drs.CurrRolledNumber > 0 && drs.CurrRolledNumber != _currRolledNum)
+        {
+            SetDiceSprite(drs.CurrRolledNumber);
+        }
+    }
+
+    public void ShowLockDiceBtn()
+    {
+        if (iconLockedGO.activeInHierarchy) return;
+        lockDiceBtnGO.SetActive(true);
+    }
+    public void HideLockDiceBtn()
+    {
+        lockDiceBtnGO.SetActive(false);
+    }
+
+    private void SetDiceSprite(int value)
+    {
+        if(value > 0 && value < 7)
+        {
+            rolledDiceSprite.sprite = diceFaces[value - 1];
+            rolledDiceGO.SetActive(true);
+            _currRolledNum = value;
+        }
+    }
+
+    public void LockDiceNumber()
+    {
+        DiceManager.Instance.LockDiceForDiceRollState(cardDetails);
+    }
+
+    private void CheckIfDiceNumberIsLocked()
+    {
+        DiceManager dm = DiceManager.Instance;
+        DiceRollState drs = dm.GetPositionForCard(cardDetails);
+
+        if(drs.Locked)
+        {
+            iconLockedGO.SetActive(true);
+            if(lockDiceBtnGO.activeInHierarchy)
+            {
+                lockDiceBtnGO.SetActive(false);
+            }
+        } else
+        {
+            iconLockedGO.SetActive(false);
+        }
     }
 }

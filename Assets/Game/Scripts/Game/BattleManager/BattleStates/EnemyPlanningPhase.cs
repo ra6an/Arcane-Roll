@@ -7,18 +7,18 @@ public class EnemyPlanningPhase : IBattleState
     private BattleStateMachine _battleStateMachine;
     private BattleManager _battleManager;
     private EnemiesController _enemiesController;
+    public bool canChangeState { get; set; }
 
     public EnemyPlanningPhase(BattleStateMachine _bsm)
     {
         _battleStateMachine = _bsm;
         _battleManager = GameManager.Instance.GetComponent<BattleManager>();
         _enemiesController = GameManager.Instance.GetComponent<EnemiesController>();
+        canChangeState = false;
     }
 
     public void EnterState()
     {
-        Debug.Log("Entering enemy prep phase!");
-        //_enemiesController.SetEnemiesAttacks();
         GameManager.Instance.GetComponent<BattleManager>().StartCoroutine(SetEnemiesAttack());
     }
 
@@ -27,7 +27,7 @@ public class EnemyPlanningPhase : IBattleState
         if (_enemiesController == null) return;
         if(_enemiesController.CheckIfEnemiesAreReady())
         {
-            _battleStateMachine.ChangeState<PlayerPreparationPhase>();
+            canChangeState = true;
         }
     }
 
@@ -40,5 +40,10 @@ public class EnemyPlanningPhase : IBattleState
     {
         yield return new WaitForSeconds(1f);
         _enemiesController.SetEnemiesAttacks();
+    }
+
+    public void ChangeState()
+    {
+        _battleStateMachine.ChangeState<PlayerPreparationPhase>();
     }
 }

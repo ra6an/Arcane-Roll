@@ -70,4 +70,15 @@ public class PlayerTeamController : MonoBehaviour
 
         return listToReturn;
     }
+
+    public void SetMonsterRolledDice(CardSO _card, int _rolledDice)
+    {
+        foreach(Transform ally in teamContainer.transform)
+        {
+            AllyCrystalController acc = ally.GetComponent<AllyCrystalController>();
+            if (acc == null || acc.CardData != _card) continue;
+
+            acc.SetRolledDice(_rolledDice);
+        }
+    }
 }

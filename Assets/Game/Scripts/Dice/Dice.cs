@@ -21,6 +21,8 @@ public class Dice : MonoBehaviour
     [SerializeField] private int forceTwo = 15;
     [SerializeField] private int forceThree = 20;
 
+    public int rolledNumber = 0;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -29,11 +31,6 @@ public class Dice : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && !isRolling)
-        {
-            //RollDice();
-        }
-
         if(isRolling && !isDiceStopped)
         {
             if(rb.velocity.magnitude < velocityThreshold && rb.angularVelocity.magnitude < angularVelocityThreshold)
@@ -56,6 +53,7 @@ public class Dice : MonoBehaviour
         isRolling = true;
         isDiceStopped = false;
         stableFrameCount = 0;
+        rolledNumber = 0;
 
         Vector3 diceForce = new Vector3(Random.Range(-forceOne, forceOne), Random.Range(forceOne, forceThree), Random.Range(-forceOne, forceOne));
         Vector3 torqueForce = new Vector3(Random.Range(-forceTwo, forceTwo), Random.Range(-forceTwo, forceTwo), Random.Range(-forceTwo, forceTwo));
@@ -67,17 +65,11 @@ public class Dice : MonoBehaviour
     private void OnDiceStopped()
     {
         isRolling = false;
-        SetSideTouchingGround();
+        rolledNumber = transform.GetComponent<DiceStats>().side;
     }
 
-    public void SetSideTouchingGround()
+    public int GetRolledNumber()
     {
-        foreach (var side in sides)
-        {
-            if(side.isTouchingTable)
-            {
-                DiceManager.Instance.SetRolledNumber(side.GetNumber());
-            }
-        }
+        return rolledNumber;
     }
 }

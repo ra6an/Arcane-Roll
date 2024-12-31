@@ -24,4 +24,43 @@ public class PlayerMonstersController : MonoBehaviour
         GameObject go = Instantiate(monsterDetailsPrefab, monstersContainerGO.transform);
         go.GetComponent<MonsterDetailsController>().SetMonsterDetails(_card, position);
     }
+
+    public void ShowMonstersDiceViewImage()
+    {
+        foreach(Transform mon in monstersContainerGO.transform)
+        {
+            if(mon == null) continue;
+            MonsterDetailsController mdc = mon.GetComponent<MonsterDetailsController>();
+
+            if(mdc != null)
+            {
+                mdc.ShowDiceWorldImage();
+            }
+        }
+    }
+
+    public void ShowLockDiceBtn(CardSO _card)
+    {
+        foreach(Transform mon in monstersContainerGO.transform)
+        {
+            if(mon == null) continue;
+            MonsterDetailsController mdc = mon.GetComponent<MonsterDetailsController>();
+
+            if(mdc != null && _card.id == mdc.cardDetails.id)
+            {
+                mdc.ShowLockDiceBtn();
+            }
+        }
+    }
+
+    public void HideLockBtns()
+    {
+        foreach (Transform mon in monstersContainerGO.transform)
+        {
+            if (mon == null) continue;
+            MonsterDetailsController mdc = mon.GetComponent<MonsterDetailsController>();
+
+            mdc.HideLockDiceBtn();
+        }
+    }
 }

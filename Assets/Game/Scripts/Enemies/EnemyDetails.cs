@@ -78,8 +78,7 @@ public class EnemyDetails : MonoBehaviour
     public void ToggleAbilityDescription()
     {
         IBattleState currState = GameManager.Instance.GetComponent<BattleManager>().GetState();
-        Debug.Log(currState is not EnemyPlanningPhase);
-        Debug.Log(currState);
+        
         if (currState is not EnemyPlanningPhase)
         {
             abilityDescriptionGO.SetActive(!abilityDescriptionGO.activeInHierarchy);

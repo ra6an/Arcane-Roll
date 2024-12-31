@@ -445,6 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillSpriteGO: {fileID: 2814240968400566161}
   skillNoneGO: {fileID: 6400840761351917112}
+  activeShaderGO: {fileID: 4727609979719191382}
 --- !u!1001 &5210577244391943244
 PrefabInstance:
   m_ObjectHideFlags: 0

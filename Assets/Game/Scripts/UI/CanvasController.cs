@@ -25,7 +25,7 @@ public class CanvasController : MonoBehaviour
     [SerializeField] public RectTransform linePanelTransform;
 
     [Foldout("Buttons UI Panel")]
-    [SerializeField] private GameObject UIButtonsPanel;
+    [SerializeField] public GameObject UIButtonsPanel;
 
     [Foldout("Loading Panel")]
     [SerializeField] public GameObject loadingPanel;

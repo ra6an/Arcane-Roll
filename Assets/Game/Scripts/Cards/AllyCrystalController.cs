@@ -8,9 +8,11 @@ public class AllyCrystalController : MonoBehaviour
 {
     private CardSO cardData;
     private int position;
+    private int rolledDice;
 
     public CardSO CardData => cardData;
     public int Position => position;
+    public int RolledDice => rolledDice;
 
     private void Awake()
     {
@@ -54,5 +56,10 @@ public class AllyCrystalController : MonoBehaviour
         transform.DOMoveY(transform.position.y + 0.2f, 3f)
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void SetRolledDice(int _rolledDice)
+    {
+        rolledDice = _rolledDice;
     }
 }

@@ -6,12 +6,16 @@ public class DiceRollState
 {
     private AllyCrystalController crystal;
     private DiceRollMachineController dice;
+    private int currRolledNumber;
     private bool isRolled;
+    private bool locked;
     private bool reroll;
 
     public AllyCrystalController Crystal => crystal;
     public DiceRollMachineController Dice => dice;
+    public int CurrRolledNumber => currRolledNumber;
     public bool IsRolled => isRolled;
+    public bool Locked => locked;
     public bool Reroll => reroll;
 
     public DiceRollState(DiceRollMachineController _dice)
@@ -19,6 +23,7 @@ public class DiceRollState
         if (_dice == null) return;
         
         dice = _dice;
+        locked = false;
     }
 
     public void SetCrystal (AllyCrystalController _crystal)
@@ -28,6 +33,26 @@ public class DiceRollState
         crystal = _crystal;
         isRolled = false;
         reroll = false;
+    }
+
+    public void SetRolledNumber(int _num)
+    {
+        currRolledNumber = _num;
+    }
+
+    public void SetIsRolled(bool _isRolled)
+    {
+        isRolled = _isRolled;
+    }
+
+    public void SetLocked(bool _locked)
+    {
+        locked = _locked;
+    }
+
+    public void SerReroll(bool _setReroll)
+    {
+        reroll = _setReroll;
     }
 }
 
@@ -57,16 +82,6 @@ public class DiceManager : MonoBehaviour
         SetStartDiceMachineStates();
     }
 
-    public int GetRolledNumber ()
-    {
-        return 1;
-    }
-
-    public void SetRolledNumber(int num)
-    {
-        //rolledNumber = num;
-    }
-
     private void SetStartDiceMachineStates()
     {
         foreach(DiceRollMachineController drmc in diceMachines)
@@ -82,15 +97,14 @@ public class DiceManager : MonoBehaviour
     public void SetCrystalInStates(AllyCrystalController _cc)
     {
         if (_cc == null) return;
-        bool isAdded = false;
-
+        
         foreach(DiceRollState drs in diceMachineStates)
         {
-            if(!isAdded && (drs.Crystal == null || !string.IsNullOrEmpty(drs.Crystal.CardData.cardName)))
-            {
-                drs.SetCrystal(_cc);
-                isAdded = true;
-            }
+            if (drs.Crystal != null) continue;
+            
+            drs.SetCrystal(_cc);
+            drs.Dice.SetupDiceRollMachineController(_cc.CardData);
+            break;
         }
     }
 
@@ -111,27 +125,67 @@ public class DiceManager : MonoBehaviour
 
     public void RollDices()
     {
-        foreach(DiceRollState _drs in diceMachineStates)
+        // LOGIKA ZA SAKRIVANJE LOCK BTNA
+        GameObject playerMonstersUI = GameManager.Instance.Canvas.GetComponent<CanvasController>().playerMonstersPanel;
+        if (playerMonstersUI != null)
         {
-            DiceRollMachineController _drsMachineController = _drs.Dice;
-
-            if(!_drs.IsRolled)
-            {
-                _drsMachineController.RollDice();
-            }
+            playerMonstersUI.GetComponent<PlayerMonstersController>().HideLockBtns();
         }
-    }
 
-    public void RerollDices()
-    {
+        // LOKIGA ZA ROLL
         foreach (DiceRollState _drs in diceMachineStates)
         {
             DiceRollMachineController _drsMachineController = _drs.Dice;
 
-            if (_drs.Reroll)
+            if(_drsMachineController != null && !_drs.Locked)
             {
                 _drsMachineController.RollDice();
+                _drs.SetIsRolled(true);
             }
         }
+        GameManager.Instance.GetComponent<BattleManager>().RemoveOneRoll();
+    }
+
+    public void SetRolledNumberToDiceRollState(CardSO _c, int _rolledNumber)
+    {
+        foreach(DiceRollState _drs in diceMachineStates)
+        {
+            if(_c.id == _drs.Dice.CardData.id)
+            {
+                _drs.SetRolledNumber(_rolledNumber);
+                GameObject playerMonstersUI = GameManager.Instance.Canvas.GetComponent<CanvasController>().playerMonstersPanel;
+                if (playerMonstersUI != null)
+                {
+                    playerMonstersUI.GetComponent<PlayerMonstersController>().ShowLockDiceBtn(_c);
+                }
+            }
+        }
+    }
+
+    public void LockDiceForDiceRollState(CardSO _c)
+    {
+        foreach (DiceRollState _drs in diceMachineStates)
+        {
+            if (_c.id == _drs.Dice.CardData.id)
+            {
+                _drs.SetLocked(true);
+            }
+        }
+    }
+
+    public bool AllDicesAreLocked()
+    {
+        bool allDicesAreLocked = true;
+
+        foreach(DiceRollState _drs in diceMachineStates)
+        {
+            if(!_drs.Locked)
+            {
+                allDicesAreLocked = false;
+                break;
+            }
+        }
+
+        return allDicesAreLocked;
     }
 }

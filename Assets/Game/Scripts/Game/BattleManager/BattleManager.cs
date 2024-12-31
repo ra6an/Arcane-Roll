@@ -88,7 +88,11 @@ public class BattleManager : MonoBehaviour
     public void SetCurrentAmountOfRolls()
     {
         currentAmountOfRolls = initialDiceRolls + additionalDiceRolls;
-        Debug.Log(currentAmountOfRolls);
+    }
+
+    public void RemoveOneRoll()
+    {
+        currentAmountOfRolls--;
     }
 
     private void OnDestroy()
