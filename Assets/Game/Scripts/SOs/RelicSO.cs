@@ -30,10 +30,10 @@ public class RelicSO : ScriptableObject
     [SerializeField] public RelicEffectType type;
 
     // Public Delegates
-    public event Action OnExtraRollsActivated;
-    public event Action OnLifestealActivated;
-    public event Action OnShieldBoostActivated;
-    public event Action OnStrengthActivated;
+    //public event Action OnExtraRollsActivated;
+    //public event Action OnLifestealActivated;
+    //public event Action OnShieldBoostActivated;
+    //public event Action OnStrengthActivated;
 
     // Extra Rolls
     public int numOfExtraRolls;
@@ -67,21 +67,21 @@ public class RelicSO : ScriptableObject
     public int strengthTurns;
 
     // EVENT METODE ZA RAZLICITE EFFECT-E
-    public void ActivateRelevantEvents()
-    {
-        if(type.HasFlag(RelicEffectType.ExtraRolls) && OnExtraRollsActivated != null)
-        {
-            OnExtraRollsActivated?.Invoke();
-        }
+    //public void ActivateRelevantEvents()
+    //{
+    //    if(type.HasFlag(RelicEffectType.ExtraRolls) && OnExtraRollsActivated != null)
+    //    {
+    //        OnExtraRollsActivated?.Invoke();
+    //    }
 
-        if (type.HasFlag(RelicEffectType.ShieldBoost) && OnShieldBoostActivated != null)
-        {
-            OnLifestealActivated?.Invoke();
-        }
+    //    if (type.HasFlag(RelicEffectType.ShieldBoost) && OnShieldBoostActivated != null)
+    //    {
+    //        OnLifestealActivated?.Invoke();
+    //    }
 
-        if (type.HasFlag(RelicEffectType.Strength) && OnStrengthActivated != null)
-        {
-            OnStrengthActivated?.Invoke();
-        }
-    }
+    //    if (type.HasFlag(RelicEffectType.Strength) && OnStrengthActivated != null)
+    //    {
+    //        OnStrengthActivated?.Invoke();
+    //    }
+    //}
 }

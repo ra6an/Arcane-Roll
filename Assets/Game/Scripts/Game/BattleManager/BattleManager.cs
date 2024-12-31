@@ -3,35 +3,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//public enum BattlePhase
-//{
-//    EnemyPreparation,
-//    PlayerPreparation,
-//    PlayerBattle,
-//    EnemyBattle,
-//    EndTurn
-//}
-
 public class BattleManager : MonoBehaviour
 {
     private EnemyTeamSO enemyTeam;
+    private int initialDiceRolls = 1;
+    private int additionalDiceRolls = 0;
+    private int currentAmountOfRolls = 0;
     private int currentTurn;
     private bool battleIsOver = false;
 
     public EnemyTeamSO EnemyTeam => enemyTeam;
     public int CurrentTurn => currentTurn;
     public bool BattleIsOver => battleIsOver;
+    public int CurrentAmountOfRolls => currentAmountOfRolls;
 
     private BattleStateMachine _battleStateMachine;
 
     private void Start()
     {
-        _battleStateMachine = new BattleStateMachine();
+        if(BattleStateMachine.Instance == null)
+        {
+            _battleStateMachine = new BattleStateMachine();
+        } else
+        {
+            _battleStateMachine = BattleStateMachine.Instance;
+        }
+
+        _battleStateMachine.Initialize();
+        // Subscribe na event u bsm
+        _battleStateMachine.OnBattleStateChanged += HandleBattleStateChanged;
     }
 
     private void Update()
     {
+        if (_battleStateMachine == null) return;
         _battleStateMachine.Update();
+    }
+
+    private void HandleBattleStateChanged(Type newState)
+    {
+        if(newState == typeof(PlayerPreparationPhase))
+        {
+            RelicsManager.Instance.OnPlayerPreparationPhaseStarted();
+        }
     }
 
     public void SetEnemyTeam(EnemyTeamSO et)
@@ -45,6 +59,8 @@ public class BattleManager : MonoBehaviour
     private void ResetBattleState()
     {
         currentTurn = 0;
+        additionalDiceRolls = 0;
+        currentAmountOfRolls = 0;
         battleIsOver = false;
     }
 
@@ -52,8 +68,7 @@ public class BattleManager : MonoBehaviour
     {
         ResetBattleState();
         enemyTeam = et;
-        _battleStateMachine = new BattleStateMachine();
-        _battleStateMachine.StartState();
+        _battleStateMachine.ChangeState<EnemyPlanningPhase>();
     }
 
     public IBattleState GetState()
@@ -63,5 +78,22 @@ public class BattleManager : MonoBehaviour
         if (currState == null) return null;
 
         return currState;
+    }
+
+    public void AddMoreDiceRolls(int _extraRolls)
+    {
+        additionalDiceRolls += _extraRolls;
+    }
+
+    public void SetCurrentAmountOfRolls()
+    {
+        currentAmountOfRolls = initialDiceRolls + additionalDiceRolls;
+        Debug.Log(currentAmountOfRolls);
+    }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe od evenata na bsm-u
+        _battleStateMachine.OnBattleStateChanged -= HandleBattleStateChanged;
     }
 }

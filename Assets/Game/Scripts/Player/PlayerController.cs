@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         MoveCrystalsContainer();
     }
 
-    private void AddNewRelic(RelicSO r)
+    public void AddNewRelic(RelicSO r)
     {
         if (currentGameState.relics.Count == 6) return;
         
@@ -103,10 +103,8 @@ public class PlayerController : MonoBehaviour
 
     public void SetStarterSet(StarterSetSO _starterSet)
     {
-        AddNewRelic(_starterSet.relic);
+        RelicsManager.Instance.AddRelic(_starterSet.relic);
         currentGameState.deck = _starterSet.deck;
-        //SetupAllyMonsters();
-        //_canvas.playerMonstersPanel.GetComponent<PlayerMonstersController>().SetupPlayersMonstersUI(_starterSet.deck);
     }
 
     public void SetupAllyMonsters()
@@ -148,12 +146,14 @@ public class PlayerController : MonoBehaviour
         crystalsContainer.transform.rotation = transform.rotation;
     }
 
-    internal void GetAvailableRolls()
+    public void RemoveRelic(RelicSO relic)
     {
-        int _availableRolls = 1;
-
-        List<RelicSO> _relics = currentGameState.relics;
-
-        
+        foreach(RelicSO _r in currentGameState.relics)
+        {
+            if (_r == relic)
+            {
+                currentGameState.relics.Remove(relic);
+            }
+        }
     }
 }

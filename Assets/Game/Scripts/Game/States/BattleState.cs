@@ -21,16 +21,14 @@ public class BattleState : IGameState
     public void EnterState()
     {
         GameManager.Instance.GetComponent<EnemiesController>().InstantiateEnemies(enemyTeam, battleRoom);
-        //CameraController _mainCamera = Camera.main.GetComponent<CameraController>();
-        //PlayerController.Instance.SetPlayerPosition(battleRoom);
+        
         PlayerController.Instance.MovePlayerOnBattleStart(battleRoom, ExitStateSetup);
-        //_mainCamera.MoveCameraToTarget(ExitStateSetup);
+        
         CanvasController cc = GameManager.Instance.Canvas.GetComponent<CanvasController>();
         cc.ShowBattleUI();
 
         if(enemyTeam != null)
         {
-            //cc.enemyTeamPanel.GetComponent<EnemyTeamController>().SetEnemyTeamDetails(enemyTeam);
             GameManager.Instance.GetComponent<BattleManager>().SetupBattleState(enemyTeam);
         }
     }
