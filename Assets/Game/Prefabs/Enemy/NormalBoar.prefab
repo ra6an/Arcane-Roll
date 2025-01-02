@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 600757839182937662}
   - component: {fileID: 4280563374098518870}
   - component: {fileID: 3300159344932796601}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3485229652063838101}
   - component: {fileID: 4074286426980850264}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: R Thigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -685,7 +685,7 @@ GameObject:
   m_Component:
   - component: {fileID: 129243597139210816}
   - component: {fileID: 5207896121107036047}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: L UpperArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -741,7 +741,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8501584253464928079}
   - component: {fileID: 4203783684989872328}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -960,7 +960,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4924821145248873848}
   - component: {fileID: 257106650246549615}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: Spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1751,7 +1751,7 @@ GameObject:
   - component: {fileID: 1036395656219324430}
   - component: {fileID: 8072914583238199132}
   - component: {fileID: 4003936486754607272}
-  m_Layer: 23
+  m_Layer: 8
   m_Name: NormalBoar
   m_TagString: Animal
   m_Icon: {fileID: 0}
@@ -1808,6 +1808,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d16dea0d40371419d3cd5e066e23e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
 --- !u!1 &6547130957232799028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1966,7 +1968,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3281004422473121797}
   - component: {fileID: 8902082348941638604}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: L Thigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2147,7 +2149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9174950816808927633}
   - component: {fileID: 420658881038235148}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: R UpperArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

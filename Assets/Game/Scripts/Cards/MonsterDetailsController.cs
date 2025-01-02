@@ -12,6 +12,7 @@ public class MonsterDetailsController : MonoBehaviour
 {
     public int id;
     public CardSO cardDetails;
+    private DiceRollState diceRollState;
     [SerializeField] private GameObject monsterIconGO;
     [SerializeField] private GameObject skillsContainerGO;
 
@@ -31,6 +32,11 @@ public class MonsterDetailsController : MonoBehaviour
     [SerializeField] private GameObject iconLockedGO;
     [SerializeField] private Image rolledDiceSprite;
     [SerializeField] private List<Sprite> diceFaces = new List<Sprite>(6);
+
+    [Header("Combat Buttons")]
+    [SerializeField] private GameObject combatBtnsGO;
+    [SerializeField] private GameObject activateSpellBtnGO;
+    [SerializeField] private Image abilitySprite;
 
     private int _currRolledNum = 0;
 
@@ -59,9 +65,16 @@ public class MonsterDetailsController : MonoBehaviour
                 {
                     Transform currSkill = skillsContainerGO.transform.GetChild(i);
                     currSkill.GetComponent<SkillController>().SetSkillActive();
+                    SetActiveAbilityToBattleBtn(i);
                 }
             }
         }
+    }
+
+    private void SetActiveAbilityToBattleBtn(int _activeAbility)
+    {
+        Sprite activeAbilitySprite = cardDetails.Abilities[_activeAbility].icon;
+        abilitySprite.sprite = activeAbilitySprite;
     }
 
     private void HideAllShadersFromSkills()
@@ -189,5 +202,14 @@ public class MonsterDetailsController : MonoBehaviour
         {
             iconLockedGO.SetActive(false);
         }
+    }
+
+    public void ShowCombatButtons()
+    {
+        combatBtnsGO.SetActive(true);
+    }
+    public void HideCombatButtons()
+    {
+        combatBtnsGO.SetActive(false);
     }
 }

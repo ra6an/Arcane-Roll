@@ -77,12 +77,20 @@ public class AbilitySO : ScriptableObject, IAbility
     public NumOfEnemies numOfDebufEnemies;
     public int debuffDuration;
 
-    // Event-driven effecti
+    public virtual void Activate(GameObject monster, GameObject[] targets)
+    {
+        if(type == AbilityType.Attack)
+        {
+            // Logika za napad
+            Debug.Log($"Attack for: {attack}");
+        }
+    }
 
+    // Random Picka Targete
     public virtual List<Damageable> PickTargets(List<Damageable> targets)
     {
         List<Damageable> selectedTargets = new();
-        //Debug.Log($"NumOfTargets: {targets.Count}");
+        
         if(type == AbilityType.Attack)
         {
             int targetsToAttack = 0;
@@ -105,17 +113,8 @@ public class AbilitySO : ScriptableObject, IAbility
 
             selectedTargets = GetTargets(targets, targetsToAttack);
         }
-        //Debug.Log($"NumOf Selected Targets: {selectedTargets}");
+        
         return selectedTargets;
-    }
-
-    public virtual void Activate(GameObject monster, GameObject[] targets)
-    {
-        if(type == AbilityType.Attack)
-        {
-            // Logika za napar
-            Debug.Log($"Attack for: {attack}");
-        }
     }
 
     private List<Damageable> GetTargets(List<Damageable> targets, int numOfTargets)

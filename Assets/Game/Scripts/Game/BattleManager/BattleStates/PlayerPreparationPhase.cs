@@ -50,14 +50,15 @@ public class PlayerPreparationPhase : IBattleState
 
     public void UpdateState()
     {
+        TopUIAnimator tuia = _canvasController.UIButtonsPanel.GetComponent<TopUIAnimator>();
         if(_battleManager.CurrentAmountOfRolls == 0 || _diceManager.AllDicesAreLocked())
         {
+            tuia.HideRollBtn();
             canChangeState = true;
         } else
         {
             if(firstRoll)
             {
-                TopUIAnimator tuia = _canvasController.UIButtonsPanel.GetComponent<TopUIAnimator>();
                 tuia.ShowRollBtn();
                 firstRoll = false;
             }
@@ -70,6 +71,8 @@ public class PlayerPreparationPhase : IBattleState
         // SAKRITI ROLLS UI
         TopUIAnimator tuia = _canvasController.UIButtonsPanel.GetComponent<TopUIAnimator>();
         tuia.ShowRolls();
+        PlayerMonstersController pmc = _canvasController.playerMonstersPanel.GetComponent<PlayerMonstersController>();
+        pmc.HideMonstersDiceViewImage();
     }
 
     private IEnumerator HideAbilities()
@@ -80,6 +83,10 @@ public class PlayerPreparationPhase : IBattleState
 
     public void ChangeState() 
     {
+        if(!_diceManager.AllDicesAreLocked())
+        {
+            _diceManager.LockAllDices();
+        }
         _battleStateMachine.ChangeState<PlayerBattlePhase>();
     }
 

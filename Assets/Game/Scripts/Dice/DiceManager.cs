@@ -54,6 +54,13 @@ public class DiceRollState
     {
         reroll = _setReroll;
     }
+
+    public void Reset()
+    {
+        locked = false;
+        currRolledNumber = 0;
+        isRolled = false;
+    }
 }
 
 public class DiceManager : MonoBehaviour
@@ -159,6 +166,30 @@ public class DiceManager : MonoBehaviour
                     playerMonstersUI.GetComponent<PlayerMonstersController>().ShowLockDiceBtn(_c);
                 }
             }
+        }
+    }
+
+    public void ResetAllDiceRollStates()
+    {
+        foreach (DiceRollState _drs in DiceMachineStates)
+        {
+            _drs.Reset();
+        }
+    }
+
+    public void LockAllDices()
+    {
+        foreach(DiceRollState _drs in DiceMachineStates)
+        {
+            if (!_drs.Locked) _drs.SetLocked(true);
+        }
+    }
+
+    public void UnlockAllDices()
+    {
+        foreach (DiceRollState _drs in DiceMachineStates)
+        {
+            if (_drs.Locked) _drs.SetLocked(false);
         }
     }
 

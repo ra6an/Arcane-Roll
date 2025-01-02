@@ -284,7 +284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8981304213011837500}
   - component: {fileID: 6879617560885351606}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: R UpperArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,7 +509,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8030261883803728779}
   - component: {fileID: 5359164029957354935}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: L Thigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4045756729638288067}
   - component: {fileID: 8941610168035289200}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -654,7 +654,7 @@ GameObject:
   - component: {fileID: 8226021272804344570}
   - component: {fileID: 4630973078983961758}
   - component: {fileID: 2543432897505231646}
-  m_Layer: 23
+  m_Layer: 8
   m_Name: ViperBoar
   m_TagString: Animal
   m_Icon: {fileID: 0}
@@ -711,6 +711,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d16dea0d40371419d3cd5e066e23e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
 --- !u!1 &2750750152204366113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,7 +1054,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1099196461386102174}
   - component: {fileID: 3941883084876724110}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: R Thigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1245,7 +1247,7 @@ GameObject:
   - component: {fileID: 2492884926390374043}
   - component: {fileID: 5476312856155560337}
   - component: {fileID: 4683041543479019434}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1395,7 +1397,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7162338513131202246}
   - component: {fileID: 8089910303628982593}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: L UpperArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1707,7 +1709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4138239860841371757}
   - component: {fileID: 3846680812133063319}
-  m_Layer: 23
+  m_Layer: 7
   m_Name: Spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

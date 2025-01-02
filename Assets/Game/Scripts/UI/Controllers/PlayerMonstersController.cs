@@ -38,6 +38,19 @@ public class PlayerMonstersController : MonoBehaviour
             }
         }
     }
+    public void HideMonstersDiceViewImage()
+    {
+        foreach (Transform mon in monstersContainerGO.transform)
+        {
+            if (mon == null) continue;
+            MonsterDetailsController mdc = mon.GetComponent<MonsterDetailsController>();
+
+            if (mdc != null)
+            {
+                mdc.HideDiceWorldImage();
+            }
+        }
+    }
 
     public void ShowLockDiceBtn(CardSO _card)
     {
@@ -61,6 +74,16 @@ public class PlayerMonstersController : MonoBehaviour
             MonsterDetailsController mdc = mon.GetComponent<MonsterDetailsController>();
 
             mdc.HideLockDiceBtn();
+        }
+    }
+
+    public void ShowCombatBtns()
+    {
+        foreach (Transform mon in monstersContainerGO.transform)
+        {
+            if (mon == null) continue;
+            MonsterDetailsController mdc = mon.GetComponent<MonsterDetailsController>();
+            mdc.ShowCombatButtons();
         }
     }
 }
