@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Flags]
 public enum AbilityType
 {
     None,
@@ -11,10 +13,9 @@ public enum AbilityType
     Buff,
     Debuff,
     Heal,
-    Multiply,
 }
 
-public enum NumOfEnemies
+public enum NumOfTargets
 {
     None,
     One,
@@ -60,29 +61,151 @@ public class AbilitySO : ScriptableObject, IAbility
     public AbilityType type;
     [Header("Attack")]
     public int attack;
-    public NumOfEnemies numOfTargetsToAttack;
+    public NumOfTargets numOfTargetsToAttack;
     public int numOfAttacks;
     public bool lifesteal = false;
     public bool execute = false;
+    public bool attackRandom = false;
     [Header("Defense")]
     public int defense;
+    public NumOfTargets numOfTargetsToDefense;
+    public bool defenseRandom = false;
+    public bool lethalBoost = false;
     [Header("Crowd Control")]
-    public CC crowdControl;
-    public NumOfEnemies numOfCcEnemies;
-    public int crowdControlDuration;
+    public CC crowdControlType;
+    public NumOfTargets numOfTargetsToCC;
+    public int ccDuration = 1;
+    public bool ccRandom = false;
     [Header("Buff")]
     public Buff buff;
+    public NumOfTargets numOfTargetsToBuff;
+    public int buffDuration = 1;
+    public bool buffRandom = false;
     [Header("Debuff")]
     public Debuff debuff;
-    public NumOfEnemies numOfDebufEnemies;
-    public int debuffDuration;
+    public NumOfTargets numOfTargetsToDebuff;
+    public int debuffDuration = 1;
+    public bool debuffRandom = false;
+    [Header("Heal")]
+    public int heal;
+    public NumOfTargets numOfTargetsToHeal;
+    public bool healRandom = false;
 
-    public virtual void Activate(GameObject monster, GameObject[] targets)
+    public virtual void Activate(GameObject caster, List<Damageable> enemyTargets, List<Damageable> allyTargets)
     {
-        if(type == AbilityType.Attack)
+        Debug.Log($"AKTIVIRA SE ABILITY {abilityName}");
+        // Aktivacija Attacka
+        if (type.HasFlag(AbilityType.Attack))
         {
+            List<Damageable> selectedEnemyTargets = attackRandom ? PickTargets(enemyTargets) : enemyTargets;
+            if (selectedEnemyTargets.Count == 0) return;
             // Logika za napad
-            Debug.Log($"Attack for: {attack}");
+            ExecuteAttack(selectedEnemyTargets);
+
+            if(type.HasFlag(AbilityType.Debuff))
+            {
+                ExecuteDebuff(selectedEnemyTargets);
+            }
+            if (type.HasFlag(AbilityType.CrowdControl))
+            {
+                ExecuteCc(selectedEnemyTargets);
+            }
+        }
+        // Aktivacija Debuffa
+        if(type.HasFlag(AbilityType.Debuff) && !type.HasFlag(AbilityType.Attack))
+        {
+            List<Damageable> selectedEnemyTargets = debuffRandom ? PickTargets(enemyTargets) : enemyTargets;
+            if (selectedEnemyTargets.Count == 0) return;
+
+            ExecuteDebuff(selectedEnemyTargets);
+        }
+        // Aktivacija CC-a
+        if (type.HasFlag(AbilityType.CrowdControl) && !type.HasFlag(AbilityType.Attack))
+        {
+            List<Damageable> selectedEnemyTargets = ccRandom ? PickTargets(enemyTargets) : enemyTargets;
+            if (selectedEnemyTargets.Count == 0) return;
+
+            ExecuteDebuff(selectedEnemyTargets);
+        }
+        // Aktivacija Defense-a
+        if (type.HasFlag(AbilityType.Defense))
+        {
+            Debug.Log($"Postavlja defense!!! A BROJ TARGETA JE: {allyTargets.Count}");
+            List<Damageable> selectedAllyTargets = defenseRandom ? PickTargets(allyTargets) : allyTargets;
+            if (selectedAllyTargets.Count == 0) return;
+            ExecuteDefense(selectedAllyTargets);
+
+            if (type.HasFlag(AbilityType.Buff))
+            {
+                ExecuteBuff(selectedAllyTargets);
+            }
+        }
+        // Aktivacija Heal-a
+        if (type.HasFlag(AbilityType.Heal) && allyTargets.Count > 0)
+        {
+            List<Damageable> selectedAllyTargets = healRandom ? PickTargets(allyTargets) : allyTargets;
+            if (selectedAllyTargets.Count == 0) return;
+            ExecuteHeal(selectedAllyTargets);
+
+            if (type.HasFlag(AbilityType.Buff))
+            {
+                ExecuteBuff(selectedAllyTargets);
+            }
+        }
+        // Aktivacija Buff-a
+        if(type.HasFlag(AbilityType.Buff) && !(type.HasFlag(AbilityType.Defense) || type.HasFlag(AbilityType.Heal)))
+        {
+            List<Damageable> selectedAllyTargets = buffRandom ? PickTargets(allyTargets) : allyTargets;
+            if (selectedAllyTargets.Count == 0) return;
+            ExecuteBuff(selectedAllyTargets);
+        }
+    }
+
+    private void ExecuteAttack(List<Damageable> targets)
+    {
+        foreach(Damageable target in targets)
+        {
+            Debug.Log($"{target.name} is damaged with {attack} DMG.");
+        }
+    }
+
+    private void ExecuteDefense(List<Damageable> targets)
+    {
+        foreach (Damageable target in targets)
+        {
+            Debug.Log($"{target.name} got {defense} shield.");
+        }
+    }
+
+    private void ExecuteBuff(List<Damageable> targets)
+    {
+        foreach (Damageable target in targets)
+        {
+            Debug.Log($"{target.name} is buffed with {buff}.");
+        }
+    }
+
+    private void ExecuteDebuff(List<Damageable> targets)
+    {
+        foreach (Damageable target in targets)
+        {
+            Debug.Log($"{target.name} is debuffed with {debuff}.");
+        }
+    }
+
+    private void ExecuteCc(List<Damageable> targets)
+    {
+        foreach (Damageable target in targets)
+        {
+            Debug.Log($"{target.name} is cc-ed with {crowdControlType}.");
+        }
+    }
+
+    private void ExecuteHeal(List<Damageable> targets)
+    {
+        foreach (Damageable target in targets)
+        {
+            Debug.Log($"{target.name} is healed with {attack} health.");
         }
     }
 
@@ -93,24 +216,7 @@ public class AbilitySO : ScriptableObject, IAbility
         
         if(type == AbilityType.Attack)
         {
-            int targetsToAttack = 0;
-
-            if(numOfTargetsToAttack == NumOfEnemies.None)
-            {
-                targetsToAttack = 0;
-            } else if (numOfTargetsToAttack == NumOfEnemies.One) {
-                targetsToAttack = 1;
-            } else if (numOfTargetsToAttack == NumOfEnemies.Two)
-            {
-                targetsToAttack = 2;
-            } else if (numOfTargetsToAttack == NumOfEnemies.Three)
-            {
-                targetsToAttack = 3;
-            } else if (numOfTargetsToAttack == NumOfEnemies.All)
-            {
-                targetsToAttack = 4;
-            }
-
+            int targetsToAttack = ConvertEnumToInt(numOfTargetsToAttack);
             selectedTargets = GetTargets(targets, targetsToAttack);
         }
         
@@ -130,11 +236,60 @@ public class AbilitySO : ScriptableObject, IAbility
 
         for(int i = 0; i < numOfTargets; i++)
         {
-            int randomIndex = Random.Range(0, copyOfTargets.Count);
+            int randomIndex = UnityEngine.Random.Range(0, copyOfTargets.Count);
             selectedTargets.Add(copyOfTargets[randomIndex]);
             copyOfTargets.RemoveAt(randomIndex);
         }
 
         return selectedTargets;
+    }
+
+    private int ConvertEnumToInt(NumOfTargets not)
+    {
+        int enumToInt = 0;
+        if (not == NumOfTargets.None)
+        {
+            enumToInt = 0;
+        }
+        else if (not == NumOfTargets.One)
+        {
+            enumToInt = 1;
+        }
+        else if (not == NumOfTargets.Two)
+        {
+            enumToInt = 2;
+        }
+        else if (not == NumOfTargets.Three)
+        {
+            enumToInt = 3;
+        }
+        else if (not == NumOfTargets.All)
+        {
+            enumToInt = 4;
+        }
+
+        return enumToInt;
+    }
+
+    public int AbilityNeedEnemyTargets()
+    {
+        int needTargets = 0;
+
+        if (type.HasFlag(AbilityType.Attack) && !attackRandom) needTargets = ConvertEnumToInt(numOfTargetsToAttack);
+        if (type.HasFlag(AbilityType.CrowdControl) && !ccRandom) needTargets = ConvertEnumToInt(numOfTargetsToCC);
+        if (type.HasFlag(AbilityType.Debuff) && !debuffRandom) needTargets = ConvertEnumToInt(numOfTargetsToDebuff);
+
+        return needTargets;
+    }
+
+    public int AbilityNeedAllyTargets()
+    {
+        int needTargets = 0;
+
+        if (type.HasFlag(AbilityType.Defense) && !defenseRandom) needTargets = ConvertEnumToInt(numOfTargetsToDefense);
+        if (type.HasFlag(AbilityType.Buff) && !buffRandom) needTargets = ConvertEnumToInt(numOfTargetsToBuff);
+        if (type.HasFlag(AbilityType.Heal) && !healRandom) needTargets = ConvertEnumToInt(numOfTargetsToHeal);
+
+        return needTargets;
     }
 }

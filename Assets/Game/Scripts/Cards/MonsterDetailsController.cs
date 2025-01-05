@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class MonsterDetailsController : MonoBehaviour
 {
+    private PlayerMonstersController _playerMonstersController;
     public int id;
     public CardSO cardDetails;
     private DiceRollState diceRollState;
@@ -37,14 +38,42 @@ public class MonsterDetailsController : MonoBehaviour
     [SerializeField] private GameObject combatBtnsGO;
     [SerializeField] private GameObject activateSpellBtnGO;
     [SerializeField] private Image abilitySprite;
+    [SerializeField] private GameObject selectCheckBox;
+    [SerializeField] private Image selectedIcon;
 
     private int _currRolledNum = 0;
+
+    private bool _abilityActivated = false;
+    private int _needAllyTargets = 0;
+    private int _needEnemyTargets = 0;
+
+    public bool AbilityActivated => _abilityActivated;
+    public int NeedAllyTargets => _needAllyTargets;
+    public int NeedEnemyTargets => _needEnemyTargets;
+
+    private void Awake()
+    {
+        CanvasController _c = GameManager.Instance.Canvas.GetComponent<CanvasController>();
+        if( _c != null )
+        {
+            _playerMonstersController = _c.playerMonstersPanel.GetComponent<PlayerMonstersController>();
+        }
+    }
 
     private void Update()
     {
         CheckForRolledNumbersAndSetIt();
         HinghlightSkillBasedOnRolledNumber();
         CheckIfDiceNumberIsLocked();
+        ActivateAbilityWhenItIsReady();
+        HandleShowCheckBox();
+    }
+
+    public void SetDiceRollState(DiceRollState _drs)
+    {
+        if (_drs == null) return;
+
+        diceRollState = _drs;
     }
 
     private void HinghlightSkillBasedOnRolledNumber()
@@ -52,6 +81,7 @@ public class MonsterDetailsController : MonoBehaviour
         if (_currRolledNum == 0)
         {
             HideAllShadersFromSkills();
+            HideCombatButtons();
             return;
         }
 
@@ -76,6 +106,10 @@ public class MonsterDetailsController : MonoBehaviour
         Sprite activeAbilitySprite = cardDetails.Abilities[_activeAbility].icon;
         abilitySprite.sprite = activeAbilitySprite;
     }
+    //private void HideActiveAbilityBtn()
+    //{
+
+    //}
 
     private void HideAllShadersFromSkills()
     {
@@ -90,7 +124,8 @@ public class MonsterDetailsController : MonoBehaviour
     public void SetMonsterDetails (CardSO cd, int num)
     {
         if (cd == null) return;
-        
+
+        transform.name = cd.name;
         id = num;
         cardDetails = cd;
         monsterIconGO.GetComponent<Image>().sprite = cardDetails.art;
@@ -155,9 +190,16 @@ public class MonsterDetailsController : MonoBehaviour
         DiceManager dm = DiceManager.Instance;
         DiceRollState drs = dm.GetPositionForCard(cardDetails);
 
-        if(drs.CurrRolledNumber > 0 && drs.CurrRolledNumber != _currRolledNum)
+        if(drs.CurrRolledNumber > 0)
         {
-            SetDiceSprite(drs.CurrRolledNumber);
+            if(drs.CurrRolledNumber != _currRolledNum)
+            {
+                SetDiceSprite(drs.CurrRolledNumber);
+            }
+        } else
+        {
+            _currRolledNum = drs.CurrRolledNumber;
+            rolledDiceGO.SetActive(false);
         }
     }
 
@@ -188,10 +230,14 @@ public class MonsterDetailsController : MonoBehaviour
 
     private void CheckIfDiceNumberIsLocked()
     {
-        DiceManager dm = DiceManager.Instance;
-        DiceRollState drs = dm.GetPositionForCard(cardDetails);
+        if (diceRollState == null)
+        {
+            DiceManager dm = DiceManager.Instance;
+            diceRollState = dm.GetPositionForCard(cardDetails);
+            //DiceRollState drs = dm.GetPositionForCard(cardDetails);
+        }
 
-        if(drs.Locked)
+        if(diceRollState.Locked)
         {
             iconLockedGO.SetActive(true);
             if(lockDiceBtnGO.activeInHierarchy)
@@ -211,5 +257,104 @@ public class MonsterDetailsController : MonoBehaviour
     public void HideCombatButtons()
     {
         combatBtnsGO.SetActive(false);
+    }
+
+    private void HandleShowCheckBox()
+    {
+        if(_playerMonstersController == null)
+        {
+            CanvasController _c = GameManager.Instance.Canvas.GetComponent<CanvasController>();
+            if (_c != null)
+            {
+                _playerMonstersController = _c.playerMonstersPanel.GetComponent<PlayerMonstersController>();
+            }
+        }
+
+        if (_playerMonstersController.ActivatedAbility.monster != null && _playerMonstersController.ActivatedAbility.monster._needAllyTargets > 0)
+        {
+            selectCheckBox.SetActive(true);
+            List<Damageable> selectedTargets = _playerMonstersController.ActivatedAbility.allyTargets;
+            Damageable d = diceRollState.Crystal.gameObject.GetComponent<Damageable>();
+            if(selectedTargets.Contains(d))
+            {
+                selectedIcon.gameObject.SetActive(true);
+            } else
+            {
+                selectedIcon.gameObject.SetActive(false);
+            }
+        } else
+        {
+            selectCheckBox.SetActive(false);
+        }
+    }
+
+    public void ActivateAbility()
+    {
+        AbilitySO abilityToActivate = cardDetails.Abilities[_currRolledNum - 1];
+        _needAllyTargets = abilityToActivate.AbilityNeedAllyTargets();
+        _needEnemyTargets = abilityToActivate.AbilityNeedEnemyTargets();
+
+        _playerMonstersController.SetActivatedAbility(this, abilityToActivate);
+        _abilityActivated = true;
+    }
+
+    private void ExecuteAbility()
+    {
+        AbilitySO abilityToActivate = cardDetails.Abilities[_currRolledNum - 1];
+        GameObject caster = diceRollState.Crystal.gameObject;
+        List<Damageable> enemyTargets = diceRollState.EnemyTargets;
+        List<Damageable> allyTargets = diceRollState.AllyTargets;
+
+        abilityToActivate.Activate(caster, enemyTargets, allyTargets);
+        _playerMonstersController.ActivatedAbility.ResetData();
+        _abilityActivated = false;
+        _currRolledNum = 0;
+        diceRollState.Reset();
+    }
+
+    private void ActivateAbilityWhenItIsReady()
+    {
+        if (!_abilityActivated) return;
+        
+        if(_needAllyTargets == 0 && _needEnemyTargets == 0)
+        {
+            ExecuteAbility();
+        }
+    }
+
+    public void OnSelectTargetClick()
+    {
+        if(_playerMonstersController.ActivatedAbility.monster.GetRemainingAllyTargetSpots() > 0)
+        {
+            Damageable d = diceRollState.Crystal.GetComponent<Damageable>();
+            _playerMonstersController.ActivatedAbility.monster.SetDiceRollStateAllyTarget(d);
+            _playerMonstersController.AddAllyTarget(d);
+        }
+    }
+
+    public void SetDiceRollStateAllyTarget(Damageable d)
+    {
+        diceRollState.SetAllyTarget(d);
+    }
+
+    public int GetRemainingAllyTargetSpots()
+    {
+        return _needAllyTargets;
+    }
+    public void RemoveAllySpot()
+    {
+        if( _needAllyTargets > 0 ) _needAllyTargets--;
+    }
+    public void AddAllySpot()
+    {
+        AbilitySO abilityToActivate = cardDetails.Abilities[_currRolledNum - 1];
+        if ( _needAllyTargets < abilityToActivate.AbilityNeedAllyTargets())
+        {
+            _needAllyTargets++;
+        }
+    }
+    public int GetRemainingEnemyTargetSpots()
+    {
+        return _needEnemyTargets;
     }
 }

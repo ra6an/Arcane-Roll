@@ -76,4 +76,25 @@ public class EnemiesController : MonoBehaviour
             enemy.HideAbility();
         }
     }
+
+    public List<Damageable> GetAllEnemies()
+    {
+        List<Damageable> aliveEnemies = new();
+
+        foreach(Transform enemy in enemySpawns.transform)
+        {
+            if (enemy == null) continue;
+
+            Damageable ed = enemy.GetComponent<Damageable>();
+
+            if(ed == null) continue;
+
+            if(ed.IsAlive())
+            {
+                aliveEnemies.Add(ed);
+            }
+        }
+
+        return aliveEnemies;
+    }
 }

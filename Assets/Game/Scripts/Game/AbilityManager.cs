@@ -23,7 +23,7 @@ public class AbilityManager : MonoBehaviour
     {
         if(ability != null)
         {
-            ability.Activate(monster, targets);
+            //ability.Activate(monster, targets);
         } else
         {
             Debug.LogWarning("No ability assigned.");

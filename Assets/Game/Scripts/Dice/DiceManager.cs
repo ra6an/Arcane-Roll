@@ -6,17 +6,19 @@ public class DiceRollState
 {
     private AllyCrystalController crystal;
     private DiceRollMachineController dice;
+    private List<Damageable> allyTargets = new();
+    private List<Damageable> enemyTargets = new();
     private int currRolledNumber;
     private bool isRolled;
     private bool locked;
-    private bool reroll;
 
     public AllyCrystalController Crystal => crystal;
     public DiceRollMachineController Dice => dice;
+    public List<Damageable> AllyTargets => allyTargets;
+    public List<Damageable > EnemyTargets => enemyTargets;
     public int CurrRolledNumber => currRolledNumber;
     public bool IsRolled => isRolled;
     public bool Locked => locked;
-    public bool Reroll => reroll;
 
     public DiceRollState(DiceRollMachineController _dice)
     {
@@ -24,6 +26,9 @@ public class DiceRollState
         
         dice = _dice;
         locked = false;
+        isRolled = false;
+        allyTargets = new();
+        enemyTargets = new();
     }
 
     public void SetCrystal (AllyCrystalController _crystal)
@@ -32,7 +37,16 @@ public class DiceRollState
         
         crystal = _crystal;
         isRolled = false;
-        reroll = false;
+    }
+
+    public void SetAllyTarget (Damageable target)
+    {
+        allyTargets.Add(target);
+    }
+
+    public void SetEnemyTarget (Damageable target)
+    {
+        enemyTargets.Add(target);
     }
 
     public void SetRolledNumber(int _num)
@@ -50,16 +64,14 @@ public class DiceRollState
         locked = _locked;
     }
 
-    public void SerReroll(bool _setReroll)
-    {
-        reroll = _setReroll;
-    }
-
     public void Reset()
     {
         locked = false;
         currRolledNumber = 0;
         isRolled = false;
+        allyTargets.Clear();
+        enemyTargets.Clear();
+        Debug.Log(allyTargets.Count);
     }
 }
 

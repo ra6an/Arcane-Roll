@@ -28,7 +28,8 @@ public class AllyCrystalController : MonoBehaviour
 
     public void SetMonster(CardSO _card, int _position)
     {
-        if (string.IsNullOrEmpty(_card.cardName)) return;
+        if (_card == null || string.IsNullOrEmpty(_card.cardName)) return;
+        transform.name = _card.cardName;
         cardData = _card;
         position = _position;
         transform.GetComponent<Damageable>().SetCurrentHealth(cardData.health);

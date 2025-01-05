@@ -1,12 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+
+public class ActivatedAbility
+{
+    public MonsterDetailsController monster;
+    public AbilitySO ability;
+    public List<Damageable> enemyTargets = new();
+    public List<Damageable> allyTargets = new();
+
+    public void SetData(MonsterDetailsController mdc, AbilitySO a)
+    {
+        monster = mdc;
+        ability = a;
+        enemyTargets.Clear();
+        allyTargets.Clear();
+    }
+
+    public void AddEnemy(Damageable target)
+    {
+        enemyTargets.Add(target);
+    }
+    public void RemoveEnemy(Damageable target)
+    {
+        enemyTargets.Remove(target);
+    }
+    public void AddAlly(Damageable target)
+    {
+        allyTargets.Add(target);
+    }
+    public void RemoveAlly(Damageable target)
+    {
+        allyTargets.Remove(target);
+    }
+
+    public void ResetData()
+    {
+        monster = null;
+        ability = null;
+        enemyTargets.Clear();
+        allyTargets.Clear();
+    }
+}
 
 public class PlayerMonstersController : MonoBehaviour
 {
     [SerializeField] private GameObject monstersContainerGO;
     
     [SerializeField] private GameObject monsterDetailsPrefab;
+
+    private ActivatedAbility activatedAbility = new();
+
+    public ActivatedAbility ActivatedAbility => activatedAbility;
 
     public void SetupPlayersMonstersUI(DeckSO _deck)
     {
@@ -85,5 +131,27 @@ public class PlayerMonstersController : MonoBehaviour
             MonsterDetailsController mdc = mon.GetComponent<MonsterDetailsController>();
             mdc.ShowCombatButtons();
         }
+    }
+
+    public void SetActivatedAbility(MonsterDetailsController mdc, AbilitySO _ability)
+    {
+        activatedAbility.SetData(mdc, _ability);
+    }
+
+    public void AddAllyTarget(Damageable _target)
+    {
+        activatedAbility.AddAlly(_target);
+        activatedAbility.monster.RemoveAllySpot();
+    }
+
+    public void RemoveAllyTarget(Damageable _target)
+    {
+        activatedAbility.RemoveAlly(_target);
+        activatedAbility.monster.AddAllySpot();
+    }
+
+    public bool AbilityIsActivated()
+    {
+        return activatedAbility.ability != null;
     }
 }

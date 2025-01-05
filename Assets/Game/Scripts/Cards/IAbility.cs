@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IAbility
 {
-    void Activate(GameObject monster, GameObject[] targets);
+    void Activate(GameObject caster, List<Damageable> enemyTargets, List<Damageable> allyTargets);
 }
