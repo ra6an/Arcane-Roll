@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    private int spawnId;
     private CanvasController canvasController;
     private EnemySO enemyData;
     //private int currentHealth;
     private int rolledNumber;
     private GameObject enemyUIDetails;
 
+    public int SpawnId => spawnId;
     public EnemySO EnemyData => enemyData;
     //public int CurrentHealth => currentHealth;
     public int RolledNumber => rolledNumber;
@@ -20,10 +22,11 @@ public class EnemyController : MonoBehaviour
         canvasController = GameManager.Instance.Canvas.GetComponent<CanvasController>();
     }
 
-    public void SetEnemyData(EnemySO ed)
+    public void SetEnemyData(EnemySO ed, int _spawnId)
     {
         if(ed != null)
         {
+            spawnId = _spawnId;
             enemyData = ed;
             //currentHealth = ed.health;
             transform.GetComponent<Damageable>().SetCurrentHealth(ed.health);
@@ -31,7 +34,7 @@ public class EnemyController : MonoBehaviour
             if(canvasController != null)
             {
                 //SET UI DETAILS AND SAVE REFFERENCE FOR FUTURE EDITS
-                GameObject go = canvasController.enemyTeamPanel.GetComponent<EnemyTeamController>().SetEnemyDetails(ed);
+                GameObject go = canvasController.enemyTeamPanel.GetComponent<EnemyTeamController>().SetEnemyDetails(ed, _spawnId);
                 enemyUIDetails = go;
             }
         }

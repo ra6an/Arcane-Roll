@@ -149,6 +149,16 @@ public class PlayerMonstersController : MonoBehaviour
         activatedAbility.RemoveAlly(_target);
         activatedAbility.monster.AddAllySpot();
     }
+    public void AddEnemyTarget(Damageable _target)
+    {
+        activatedAbility.AddEnemy(_target);
+        activatedAbility.monster.RemoveEnemySpot();
+    }
+    public void RemoveEnemySpot(Damageable _target)
+    {
+        activatedAbility.RemoveEnemy(_target);
+        activatedAbility.monster.AddEnemySpot();
+    }
 
     public bool AbilityIsActivated()
     {

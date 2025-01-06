@@ -19,8 +19,8 @@ MonoBehaviour:
   health: 10
   abilities:
   - {fileID: 11400000, guid: fefb10130a5c2914dac54605c37ecd5b, type: 2}
-  - {fileID: 11400000, guid: 4b9c742f519f0854bbb6372590c3f5e2, type: 2}
   - {fileID: 11400000, guid: fefb10130a5c2914dac54605c37ecd5b, type: 2}
   - {fileID: 11400000, guid: fefb10130a5c2914dac54605c37ecd5b, type: 2}
-  - {fileID: 11400000, guid: 4b9c742f519f0854bbb6372590c3f5e2, type: 2}
+  - {fileID: 11400000, guid: fefb10130a5c2914dac54605c37ecd5b, type: 2}
+  - {fileID: 11400000, guid: fefb10130a5c2914dac54605c37ecd5b, type: 2}
   - {fileID: 11400000, guid: b52825dc743b1cc4194569f044af0caa, type: 2}

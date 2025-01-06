@@ -17,15 +17,27 @@ MonoBehaviour:
   description: Gave 5 shield to one of your ally.
   type: 2
   attack: 0
-  attackEnemies: 0
+  numOfTargetsToAttack: 0
   numOfAttacks: 0
   lifesteal: 0
   execute: 0
+  attackRandom: 0
   defense: 5
-  crowdControl: 0
-  numOfCcEnemies: 0
-  crowdControlDuration: 0
+  numOfTargetsToDefense: 2
+  defenseRandom: 1
+  lethalBoost: 0
+  crowdControlType: 0
+  numOfTargetsToCC: 0
+  ccDuration: 1
+  ccRandom: 0
   buff: 0
+  numOfTargetsToBuff: 0
+  buffDuration: 1
+  buffRandom: 0
   debuff: 0
-  numOfDebufEnemies: 0
+  numOfTargetsToDebuff: 0
   debuffDuration: 0
+  debuffRandom: 0
+  heal: 0
+  numOfTargetsToHeal: 0
+  healRandom: 0

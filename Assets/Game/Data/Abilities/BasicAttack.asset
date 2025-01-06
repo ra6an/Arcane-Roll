@@ -17,15 +17,27 @@ MonoBehaviour:
   description: Hit one enemy with 5 DMG.
   type: 1
   attack: 5
-  numOfTargetsToAttack: 1
+  numOfTargetsToAttack: 3
   numOfAttacks: 1
   lifesteal: 0
   execute: 0
+  attackRandom: 0
   defense: 0
-  crowdControl: 0
-  numOfCcEnemies: 0
-  crowdControlDuration: 0
+  numOfTargetsToDefense: 0
+  defenseRandom: 0
+  lethalBoost: 0
+  crowdControlType: 0
+  numOfTargetsToCC: 0
+  ccDuration: 1
+  ccRandom: 0
   buff: 0
+  numOfTargetsToBuff: 0
+  buffDuration: 1
+  buffRandom: 0
   debuff: 0
-  numOfDebufEnemies: 0
+  numOfTargetsToDebuff: 0
   debuffDuration: 0
+  debuffRandom: 0
+  heal: 0
+  numOfTargetsToHeal: 0
+  healRandom: 0

@@ -35,7 +35,7 @@ public class EnemiesController : MonoBehaviour
                 }
             
                 EnemyController enemyController = ego.GetComponent<EnemyController>();
-                enemyController.SetEnemyData(e);
+                enemyController.SetEnemyData(e, count);
 
                 count++;
             }
@@ -96,5 +96,22 @@ public class EnemiesController : MonoBehaviour
         }
 
         return aliveEnemies;
+    }
+
+    public Damageable GetEnemyDamageableBySpawnId(int _spawnId)
+    {
+        Damageable selectedEnemy = null;
+
+        foreach(Transform enemy in enemySpawns.transform)
+        {
+            EnemyController ecEnemy = enemy.GetComponent<EnemyController>();
+            if(ecEnemy.SpawnId == _spawnId)
+            {
+                selectedEnemy = enemy.GetComponent<Damageable>();
+                break;
+            }
+        }
+
+        return selectedEnemy;
     }
 }

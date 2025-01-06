@@ -270,7 +270,7 @@ public class MonsterDetailsController : MonoBehaviour
             }
         }
 
-        if (_playerMonstersController.ActivatedAbility.monster != null && _playerMonstersController.ActivatedAbility.monster._needAllyTargets > 0)
+        if (_playerMonstersController.ActivatedAbility.monster != null && _playerMonstersController.ActivatedAbility.monster.NeedAllyTargets > 0)
         {
             selectCheckBox.SetActive(true);
             List<Damageable> selectedTargets = _playerMonstersController.ActivatedAbility.allyTargets;
@@ -296,6 +296,38 @@ public class MonsterDetailsController : MonoBehaviour
 
         _playerMonstersController.SetActivatedAbility(this, abilityToActivate);
         _abilityActivated = true;
+
+        // OVO PROBATI KADA BROJ ZIVIH IGRACA JE MANJI OD TRAZENOG BROJA TARGETA //
+        
+        PlayerTeamController ptc = GameManager.Instance.GetComponent<PlayerTeamController>();
+        EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
+        if(ptc != null)
+        {
+            List<Damageable> aliveAllyMonsters = ptc.GetAllyMonstersDamageable();
+            if(_needAllyTargets >= aliveAllyMonsters.Count)
+            {
+                _needAllyTargets = aliveAllyMonsters.Count;
+                foreach(Damageable d in aliveAllyMonsters)
+                {
+                    _playerMonstersController.ActivatedAbility.monster.SetDiceRollStateAllyTarget(d);
+                    _playerMonstersController.AddAllyTarget(d);
+                }
+            }
+        }
+        if(ec != null)
+        {
+            List<Damageable> aliveEnemyMonsters = ec.GetAllEnemies();
+            if(_needEnemyTargets >= aliveEnemyMonsters.Count)
+            {
+                _needEnemyTargets = aliveEnemyMonsters.Count;
+                foreach (Damageable d in aliveEnemyMonsters)
+                {
+                    Debug.Log($"Damageable: {d.transform.name} !!!!!!!!!!!!!!!!!!");
+                    _playerMonstersController.ActivatedAbility.monster.SetDiceRollStateEnemyTarget(d);
+                    _playerMonstersController.AddEnemyTarget(d);
+                }
+            }
+        }
     }
 
     private void ExecuteAbility()
@@ -305,11 +337,34 @@ public class MonsterDetailsController : MonoBehaviour
         List<Damageable> enemyTargets = diceRollState.EnemyTargets;
         List<Damageable> allyTargets = diceRollState.AllyTargets;
 
+        if(enemyTargets.Count == 0)
+        {
+            // Dodati logiku za ubacivanje svih zivih enemy damageable script-i
+            EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
+            List<Damageable> aliveEnemyMonsters = ec.GetAllEnemies(); // Vraca samo alive enemiese
+            foreach(Damageable aem in aliveEnemyMonsters)
+            {
+                SetDiceRollStateEnemyTarget(aem);
+            }
+        }
+
+        if(allyTargets.Count == 0)
+        {
+            // Dodati logiku za ubacivanje svih zivih ally damageable script-i
+            PlayerTeamController ptc = GameManager.Instance.GetComponent<PlayerTeamController>();
+            List<Damageable> aliveAllyMonsters = ptc.GetAllyMonstersDamageable();
+            foreach(Damageable aam in aliveAllyMonsters)
+            {
+                SetDiceRollStateAllyTarget(aam);
+            }
+        }
+
         abilityToActivate.Activate(caster, enemyTargets, allyTargets);
         _playerMonstersController.ActivatedAbility.ResetData();
         _abilityActivated = false;
         _currRolledNum = 0;
-        diceRollState.Reset();
+        diceRollState.ActivateAbility();
+        //diceRollState.Reset();
     }
 
     private void ActivateAbilityWhenItIsReady()
@@ -327,6 +382,7 @@ public class MonsterDetailsController : MonoBehaviour
         if(_playerMonstersController.ActivatedAbility.monster.GetRemainingAllyTargetSpots() > 0)
         {
             Damageable d = diceRollState.Crystal.GetComponent<Damageable>();
+            if (_playerMonstersController.ActivatedAbility.allyTargets.Contains(d)) return;
             _playerMonstersController.ActivatedAbility.monster.SetDiceRollStateAllyTarget(d);
             _playerMonstersController.AddAllyTarget(d);
         }
@@ -335,6 +391,11 @@ public class MonsterDetailsController : MonoBehaviour
     public void SetDiceRollStateAllyTarget(Damageable d)
     {
         diceRollState.SetAllyTarget(d);
+    }
+    public void SetDiceRollStateEnemyTarget(Damageable d)
+    {
+        Debug.Log($"Prije dodavanja {d}");
+        diceRollState.SetEnemyTarget(d);
     }
 
     public int GetRemainingAllyTargetSpots()
@@ -351,6 +412,18 @@ public class MonsterDetailsController : MonoBehaviour
         if ( _needAllyTargets < abilityToActivate.AbilityNeedAllyTargets())
         {
             _needAllyTargets++;
+        }
+    }
+    public void RemoveEnemySpot()
+    {
+        if( _needEnemyTargets > 0 ) _needEnemyTargets--;
+    }
+    public void AddEnemySpot()
+    {
+        AbilitySO abilityToActivate = cardDetails.Abilities[_currRolledNum - 1];
+        if (_needEnemyTargets < abilityToActivate.AbilityNeedEnemyTargets())
+        {
+            _needEnemyTargets++;
         }
     }
     public int GetRemainingEnemyTargetSpots()

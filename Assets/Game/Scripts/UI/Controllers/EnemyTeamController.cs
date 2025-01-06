@@ -14,19 +14,33 @@ public class EnemyTeamController : MonoBehaviour
 
         enemyTeam = _enemyTeam;
 
+        int count = 0;
         foreach (EnemySO enemy in enemyTeam.Enemies)
         {
             GameObject go = Instantiate(enemyDetailsPrefab, enemyTeamContainer.transform);
-            go.GetComponent<EnemyDetails>().SetEnemyDetails(enemy);
+            go.GetComponent<EnemyDetails>().SetEnemyDetails(enemy, count);
+            count++;
         }
     }
 
-    public GameObject SetEnemyDetails(EnemySO e)
+    public GameObject SetEnemyDetails(EnemySO e, int _spawnId)
     {
         if(e == null || e.enemyName == null) return null;
 
         GameObject go = Instantiate(enemyDetailsPrefab, enemyTeamContainer.transform);
-        go.GetComponent<EnemyDetails>().SetEnemyDetails(e);
+        go.GetComponent<EnemyDetails>().SetEnemyDetails(e, _spawnId);
         return go;
+    }
+
+    public void ShowEnemiesCheckBoxes()
+    {
+        foreach (GameObject e in transform)
+        {
+            EnemyDetails eDetails = e.GetComponent<EnemyDetails>();
+            if(eDetails != null)
+            {
+                eDetails.ShowCheckBox();
+            }
+        }
     }
 }

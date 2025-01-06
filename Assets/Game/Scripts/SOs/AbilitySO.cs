@@ -219,6 +219,12 @@ public class AbilitySO : ScriptableObject, IAbility
             int targetsToAttack = ConvertEnumToInt(numOfTargetsToAttack);
             selectedTargets = GetTargets(targets, targetsToAttack);
         }
+
+        if(type.HasFlag(AbilityType.Defense))
+        {
+            int targetsToDefense = ConvertEnumToInt(numOfTargetsToDefense);
+            selectedTargets = GetTargets(targets, targetsToDefense);
+        }
         
         return selectedTargets;
     }

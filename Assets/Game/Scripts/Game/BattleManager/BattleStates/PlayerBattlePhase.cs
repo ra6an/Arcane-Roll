@@ -6,6 +6,7 @@ public class PlayerBattlePhase : IBattleState
 {
     private BattleStateMachine _battleStateMachine;
     private CanvasController _canvasController;
+    private DiceManager _diceManager;
 
     public bool canChangeState {  get; set; }
 
@@ -13,6 +14,7 @@ public class PlayerBattlePhase : IBattleState
     {
         _battleStateMachine = _bsm;
         _canvasController = GameManager.Instance.Canvas.GetComponent<CanvasController>();
+        _diceManager = GameManager.Instance.GetComponent<DiceManager>();
         canChangeState = false;
     }
 
@@ -25,15 +27,20 @@ public class PlayerBattlePhase : IBattleState
     public void UpdateState()
     {
         // LOGIKA ZA UPDATE STATE
+        if(_diceManager.CheckIfAllAbilitiesAreActivated())
+        {
+            canChangeState = true;
+        }
     }
 
     public void ExitState()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Izlazimo iz player battle phasea!");
+        _diceManager.ResetAllDiceRollStates();
     }
 
     public void ChangeState()
     {
-
+        _battleStateMachine.ChangeState<EnemyBattlePhase>();
     }
 }

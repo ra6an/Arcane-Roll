@@ -16,21 +16,21 @@ public class EnemyBattlePhase : IBattleState
 
     public void EnterState()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public void ExitState()
-    {
-        throw new System.NotImplementedException();
+        Debug.Log("U enemy battle phaseu smo");
     }
 
     public void UpdateState()
     {
-        throw new System.NotImplementedException();
+        // Dodati logiku za dozvolu prelaska u end phase
+    }
+
+    public void ExitState()
+    {
+        
     }
 
     public void ChangeState()
     {
-
+        _battleStateMachine.ChangeState<EndTurnPhase>();
     }
 }

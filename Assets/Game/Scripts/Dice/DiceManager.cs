@@ -11,6 +11,7 @@ public class DiceRollState
     private int currRolledNumber;
     private bool isRolled;
     private bool locked;
+    private bool abilityActivated;
 
     public AllyCrystalController Crystal => crystal;
     public DiceRollMachineController Dice => dice;
@@ -19,6 +20,7 @@ public class DiceRollState
     public int CurrRolledNumber => currRolledNumber;
     public bool IsRolled => isRolled;
     public bool Locked => locked;
+    public bool AbilityActivated => abilityActivated;
 
     public DiceRollState(DiceRollMachineController _dice)
     {
@@ -29,6 +31,7 @@ public class DiceRollState
         isRolled = false;
         allyTargets = new();
         enemyTargets = new();
+        abilityActivated = false;
     }
 
     public void SetCrystal (AllyCrystalController _crystal)
@@ -64,6 +67,16 @@ public class DiceRollState
         locked = _locked;
     }
 
+    public void ActivateAbility()
+    {
+        locked = false;
+        currRolledNumber = 0;
+        isRolled = false;
+        allyTargets.Clear();
+        enemyTargets.Clear();
+        abilityActivated = true;
+    }
+
     public void Reset()
     {
         locked = false;
@@ -71,7 +84,7 @@ public class DiceRollState
         isRolled = false;
         allyTargets.Clear();
         enemyTargets.Clear();
-        Debug.Log(allyTargets.Count);
+        abilityActivated = false;
     }
 }
 
@@ -230,5 +243,21 @@ public class DiceManager : MonoBehaviour
         }
 
         return allDicesAreLocked;
+    }
+
+    public bool CheckIfAllAbilitiesAreActivated()
+    {
+        bool allAbilitiesAreActivated = true;
+
+        foreach (DiceRollState _drs in diceMachineStates)
+        {
+            if(!_drs.AbilityActivated)
+            {
+                allAbilitiesAreActivated = false;
+                break;
+            }
+        }
+
+        return allAbilitiesAreActivated;
     }
 }

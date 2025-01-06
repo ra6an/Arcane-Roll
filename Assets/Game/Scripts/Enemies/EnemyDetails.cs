@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class EnemyDetails : MonoBehaviour
 {
+    private PlayerMonstersController _playerMonstersController;
+
+    private int spawnId;
     private EnemySO enemyData;
     private AbilitySO activeAbility;
     private List<Damageable> targets;
@@ -23,18 +26,34 @@ public class EnemyDetails : MonoBehaviour
     [SerializeField] private GameObject targetPrefab;
     [SerializeField] private GameObject arrowIcon;
 
+    [Header("Checkbox")]
+    [SerializeField] private GameObject checkBoxGO;
+    [SerializeField] private GameObject checkboxIconGO;
+
+    public int SpawnId => spawnId;
     public EnemySO EnemyData => enemyData;
     public List<Damageable> Targets => targets;
+
+    private void Awake()
+    {
+        CanvasController _c = GameManager.Instance.Canvas.GetComponent<CanvasController>();
+        if (_c != null)
+        {
+            _playerMonstersController = _c.playerMonstersPanel.GetComponent<PlayerMonstersController>();
+        }
+    }
 
     private void Update()
     {
         abilityGO.SetActive(activeAbility != null);
+        HandleShowCheckBox();
     }
 
-    public void SetEnemyDetails(EnemySO _data)
+    public void SetEnemyDetails(EnemySO _data, int _spawnId)
     {
         if (_data == null) return;
 
+        spawnId = _spawnId;
         enemyData = _data;
 
         if(!string.IsNullOrEmpty(_data.enemyName))
@@ -91,5 +110,68 @@ public class EnemyDetails : MonoBehaviour
     public void HideAbilityDescription()
     {
         abilityDescriptionGO.SetActive(false);
+    }
+
+    public void ShowCheckBox()
+    {
+        checkboxIconGO.SetActive(false);
+        checkBoxGO.SetActive(true);
+    }
+    public void HideCheckBox()
+    {
+        checkboxIconGO.SetActive(false);
+        checkBoxGO.SetActive(false);
+    }
+
+    private void HandleShowCheckBox()
+    {
+        if (_playerMonstersController == null)
+        {
+            CanvasController _c = GameManager.Instance.Canvas.GetComponent<CanvasController>();
+            if (_c != null)
+            {
+                _playerMonstersController = _c.playerMonstersPanel.GetComponent<PlayerMonstersController>();
+            }
+        }
+
+        if (_playerMonstersController.ActivatedAbility.monster != null && _playerMonstersController.ActivatedAbility.monster.NeedEnemyTargets > 0)
+        {
+            checkBoxGO.SetActive(true);
+            List<Damageable> selectedTargets = _playerMonstersController.ActivatedAbility.enemyTargets;
+            EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
+            Damageable d = ec.GetEnemyDamageableBySpawnId(spawnId);
+
+            if(d != null)
+            {
+                if (selectedTargets.Contains(d))
+                {
+                    checkboxIconGO.SetActive(true);
+                }
+                else
+                {
+                    checkboxIconGO.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            checkBoxGO.SetActive(false);
+        }
+    }
+
+    public void OnCheckBoxClicked()
+    {
+        if (_playerMonstersController.ActivatedAbility.monster.GetRemainingEnemyTargetSpots() > 0)
+        {
+            EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
+            Damageable d = ec.GetEnemyDamageableBySpawnId(spawnId);
+            
+            if( d != null )
+            {
+                if (_playerMonstersController.ActivatedAbility.enemyTargets.Contains(d)) return;
+                _playerMonstersController.ActivatedAbility.monster.SetDiceRollStateEnemyTarget(d);
+                _playerMonstersController.AddEnemyTarget(d);
+            }
+        }
     }
 }
