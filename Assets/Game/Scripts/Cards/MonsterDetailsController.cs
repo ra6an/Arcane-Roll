@@ -67,6 +67,8 @@ public class MonsterDetailsController : MonoBehaviour
         CheckIfDiceNumberIsLocked();
         ActivateAbilityWhenItIsReady();
         HandleShowCheckBox();
+
+        UpdateHealth();
     }
 
     public void SetDiceRollState(DiceRollState _drs)
@@ -150,11 +152,26 @@ public class MonsterDetailsController : MonoBehaviour
         }
     }
 
-    public void SetHealth(int newHealth)
+    public void SetHealth(int _newHealth)
     {
-        currentHealthSliderGO.GetComponent<Image>().fillAmount = (float)newHealth / cardDetails.health;
-        healthText.text = $"{newHealth} / {cardDetails.health}";
-        currentHealth = newHealth;
+        if(diceRollState != null)
+        {
+            int newHealth = _newHealth;
+            Damageable dmg = diceRollState.Crystal.GetComponent<Damageable>();
+            int maxHealth = dmg.MaxHealth;
+
+            if(newHealth > maxHealth) newHealth = maxHealth;
+
+            healthText.text = $"{newHealth} / {maxHealth}";
+            currentHealth = newHealth;
+
+            //Postaviti health bar
+
+            currentHealthSliderGO.GetComponent<Image>().fillAmount = newHealth / (float)maxHealth;
+        }
+        //currentHealthSliderGO.GetComponent<Image>().fillAmount = (float)newHealth / cardDetails.health;
+        //healthText.text = $"{newHealth} / {cardDetails.health}";
+        //currentHealth = newHealth;
     }
 
     public void SetRolledDice(int _rolledNumber)
@@ -429,5 +446,21 @@ public class MonsterDetailsController : MonoBehaviour
     public int GetRemainingEnemyTargetSpots()
     {
         return _needEnemyTargets;
+    }
+
+    private void UpdateHealth()
+    {
+        if(diceRollState == null) return;
+
+        Damageable dmg = diceRollState.Crystal.GetComponent<Damageable>();
+
+        if( dmg != null )
+        {
+            int crystalHealth = dmg.GetHealth();
+            if(currentHealth != crystalHealth)
+            {
+                SetHealth(crystalHealth);
+            }
+        }
     }
 }

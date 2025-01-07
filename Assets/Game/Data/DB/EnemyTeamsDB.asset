@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: EnemyTeamsDB
   m_EditorClassIdentifier: 
   enemyTeams:
-  - {fileID: 11400000, guid: cd075f53612432a42892bc0cb894b95c, type: 2}
-  - {fileID: 11400000, guid: c5866ddd8b6219a4099b3a81cba37649, type: 2}
+  - {fileID: 11400000, guid: 0d1b9eb24599f4844897d34d7540ebda, type: 2}
   - {fileID: 11400000, guid: 0d1b9eb24599f4844897d34d7540ebda, type: 2}

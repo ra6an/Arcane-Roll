@@ -11,6 +11,7 @@ public class EnemyDetails : MonoBehaviour
 
     private int spawnId;
     private EnemySO enemyData;
+    private int currentHealth;
     private AbilitySO activeAbility;
     private List<Damageable> targets;
     [SerializeField] private TextMeshProUGUI titleText;
@@ -30,8 +31,12 @@ public class EnemyDetails : MonoBehaviour
     [SerializeField] private GameObject checkBoxGO;
     [SerializeField] private GameObject checkboxIconGO;
 
+    [Header("Health")]
+    [SerializeField] private GameObject currentHealthSliderGO;
+
     public int SpawnId => spawnId;
     public EnemySO EnemyData => enemyData;
+    public AbilitySO ActiveAbility => activeAbility;
     public List<Damageable> Targets => targets;
 
     private void Awake()
@@ -47,6 +52,43 @@ public class EnemyDetails : MonoBehaviour
     {
         abilityGO.SetActive(activeAbility != null);
         HandleShowCheckBox();
+        UpdateHealth();
+    }
+
+    private void SetHealth(int _newHealth)
+    {
+        if (true)
+        {
+            int newHealth = _newHealth;
+            EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
+            Damageable eDmg = ec.GetEnemyDamageableBySpawnId(spawnId);
+            int maxHealth = eDmg.MaxHealth;
+
+            if (newHealth > maxHealth) newHealth = maxHealth;
+
+            //healthText.text = $"{newHealth} / {maxHealth}";
+            currentHealth = newHealth;
+
+            //Postaviti health bar
+
+            currentHealthSliderGO.GetComponent<Image>().fillAmount = newHealth / (float)maxHealth;
+        }
+    }
+
+    private void UpdateHealth()
+    {
+        //Damageable dmg = diceRollState.Crystal.GetComponent<Damageable>();
+        EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
+        Damageable eDmg = ec.GetEnemyDamageableBySpawnId(spawnId);
+
+        if (eDmg != null)
+        {
+            int enemyHealth = eDmg.GetHealth();
+            if (currentHealth != enemyHealth)
+            {
+                SetHealth(enemyHealth);
+            }
+        }
     }
 
     public void SetEnemyDetails(EnemySO _data, int _spawnId)
@@ -55,6 +97,7 @@ public class EnemyDetails : MonoBehaviour
 
         spawnId = _spawnId;
         enemyData = _data;
+        currentHealth = _data.health;
 
         if(!string.IsNullOrEmpty(_data.enemyName))
         {
@@ -79,7 +122,8 @@ public class EnemyDetails : MonoBehaviour
             arrowIcon.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
 
             targets = _targets;
-            foreach(Damageable target in targets)
+            ClearTargetsContainer();
+            foreach (Damageable target in targets)
             {
                 GameObject got = Instantiate(targetPrefab, targetContainerGO.transform);
                 got.GetComponent<TargetUI>().SetTarget(target);
@@ -92,6 +136,15 @@ public class EnemyDetails : MonoBehaviour
         abilityDescriptionText.text = _ability.description;
         abilityImageGO.GetComponent<Image>().sprite = _ability.icon;
         activeAbility = _ability;
+    }
+
+    private void ClearTargetsContainer()
+    {
+        foreach (Transform t in targetContainerGO.transform)
+        {
+            if (t == null) continue;
+            Destroy(t.gameObject);
+        }
     }
 
     public void ToggleAbilityDescription()
@@ -123,6 +176,15 @@ public class EnemyDetails : MonoBehaviour
         checkBoxGO.SetActive(false);
     }
 
+    public bool IsAlive()
+    {
+        EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
+        Damageable eDmg = ec.GetEnemyDamageableBySpawnId(spawnId);
+        bool isAlive = eDmg.IsAlive();
+
+        return isAlive;
+    }
+
     private void HandleShowCheckBox()
     {
         if (_playerMonstersController == null)
@@ -136,6 +198,7 @@ public class EnemyDetails : MonoBehaviour
 
         if (_playerMonstersController.ActivatedAbility.monster != null && _playerMonstersController.ActivatedAbility.monster.NeedEnemyTargets > 0)
         {
+            if (!IsAlive()) return;
             checkBoxGO.SetActive(true);
             List<Damageable> selectedTargets = _playerMonstersController.ActivatedAbility.enemyTargets;
             EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
@@ -172,6 +235,34 @@ public class EnemyDetails : MonoBehaviour
                 _playerMonstersController.ActivatedAbility.monster.SetDiceRollStateEnemyTarget(d);
                 _playerMonstersController.AddEnemyTarget(d);
             }
+        }
+    }
+
+    public void ActivateAbility()
+    {
+        // Aktivacija ability-a
+        Debug.Log("Abiliti aktiviran");
+        EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
+        Damageable d = ec.GetEnemyDamageableBySpawnId(spawnId);
+        EnemyController enemyController = d.GetComponent<EnemyController>();
+        enemyController.ActivateAbility(activeAbility, targets);
+        // Animacije monster napada
+
+        // applianje dmga/buffa/debuffa/etc
+
+        // javljanje EnemyBattlePhaseu da je ability uspjesno aktiviran i zavrsen
+        StartCoroutine(FinnishAbility());
+    }
+
+    private IEnumerator FinnishAbility()
+    {
+        yield return new WaitForSeconds(4);
+        IBattleState currState = GameManager.Instance.GetComponent<BattleManager>().GetState();
+        if (currState is EnemyBattlePhase ebp)
+        {
+            ebp.AbilityFinished();
+            activeAbility = null;
+            targets.Clear();
         }
     }
 }

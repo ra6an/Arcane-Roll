@@ -41,7 +41,10 @@ public class BattleState : IGameState
         }
     }
 
-    public void ExitState() { }
+    public void ExitState()
+    {
+        Debug.Log("Zavrsio se Battle!");
+    }
 
     private void ExitStateSetup()
     {

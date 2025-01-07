@@ -5,12 +5,19 @@ using UnityEngine;
 
 public class Damageable : MonoBehaviour, IDamageable
 {
+    private CombatAnimatorController _combatAnimator;
     [VInspector.ReadOnly]
     [SerializeField]
     private int maxHealth;
     [VInspector.ReadOnly]
     [SerializeField]
     private int currentHealth;
+    public int MaxHealth => maxHealth;
+
+    private void Start()
+    {
+        _combatAnimator = GetComponent<CombatAnimatorController>();
+    }
 
     public void Heal(int amount)
     {
@@ -33,6 +40,10 @@ public class Damageable : MonoBehaviour, IDamageable
         else
         {
             currentHealth -= amount;
+            if(_combatAnimator != null)
+            {
+                _combatAnimator.TakeDamageAnimation();
+            }
         }
     }
 
@@ -56,5 +67,10 @@ public class Damageable : MonoBehaviour, IDamageable
     protected virtual void Die()
     {
         Debug.Log($"{gameObject.name} died.");
+
+        if( _combatAnimator != null )
+        {
+            _combatAnimator.DieAnimation();
+        }
     }
 }

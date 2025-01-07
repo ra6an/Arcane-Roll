@@ -51,8 +51,12 @@ public class EnemyController : MonoBehaviour
         
         PlayerTeamController ptc = GameManager.Instance.GetComponent<PlayerTeamController>();
         List<Damageable> targetsToAttack = enemyData.Abilities[rolledNumber].PickTargets(ptc.GetAllyMonstersDamageable());
-        
-        enemyUIDetails.GetComponent<EnemyDetails>().SetAbilityDetails(rolledNumber, targetsToAttack);
+
+        AbilityType type = enemyData.Abilities[rolledNumber].type;
+        if ((type & (AbilityType.Attack | AbilityType.Debuff | AbilityType.CrowdControl)) != 0)
+        {
+            enemyUIDetails.GetComponent<EnemyDetails>().SetAbilityDetails(rolledNumber, targetsToAttack);
+        }
     }
 
     public void ShowAbility()
@@ -63,5 +67,30 @@ public class EnemyController : MonoBehaviour
     public void HideAbility()
     {
         enemyUIDetails.GetComponent<EnemyDetails>().HideAbilityDescription();
+    }
+
+    public void ActivateAbility(AbilitySO a, List<Damageable> _enemyTargets = null)
+    {
+        CombatAnimatorController cac = transform.GetComponent<CombatAnimatorController>();
+        EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
+        List<Damageable> enemyTargets = _enemyTargets;
+        if(enemyTargets == null || enemyTargets.Count == 0)
+        {
+            PlayerTeamController ptc = GameManager.Instance.GetComponent<PlayerTeamController>();
+            enemyTargets = ptc.GetAllyMonstersDamageable();
+        }
+        List<Damageable> allies = ec.GetAllEnemies();
+
+        if(a.type.HasFlag(AbilityType.Attack))
+        {
+            cac.AttackAnimation();
+            StartCoroutine(ActivateAbilitySO(a, enemyTargets, allies));
+        }
+    }
+
+    private IEnumerator ActivateAbilitySO(AbilitySO a, List<Damageable> enemyTargets, List<Damageable> allyTargets)
+    {
+        yield return new WaitForSeconds(1);
+        a.Activate(gameObject, enemyTargets, allyTargets);
     }
 }

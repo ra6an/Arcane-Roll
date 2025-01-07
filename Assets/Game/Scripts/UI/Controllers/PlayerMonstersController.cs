@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -163,5 +164,25 @@ public class PlayerMonstersController : MonoBehaviour
     public bool AbilityIsActivated()
     {
         return activatedAbility.ability != null;
+    }
+
+    public void ClearContainer()
+    {
+        int childCount = monstersContainerGO.transform.childCount;
+        if (childCount == 0) return;
+
+        Debug.Log($"Brisemo ally monstere u UI - trenutno ima {childCount}");
+        for (int i = childCount - 1; i >= 0; i--)
+        {
+            Transform child = monstersContainerGO.transform.GetChild(i);
+            Destroy(child.gameObject);
+        }
+        Debug.Log($"Ally monstera nakon brisanja: {monstersContainerGO.transform.childCount}");
+        //if (monstersContainerGO.transform.childCount == 0) return;
+
+        //foreach (Transform child in monstersContainerGO.transform)
+        //{
+        //    Destroy(child.gameObject);
+        //}
     }
 }

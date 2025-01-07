@@ -30,6 +30,7 @@ public class MapState : IGameState
     public void EnterState()
     {
         _canvasController = GameManager.Instance.Canvas.GetComponent<CanvasController>();
+        _canvasController.ShowRoomsMapPanel();
         _canvasController.HideStarterSetPanel();
     }
 
@@ -63,10 +64,26 @@ public class MapState : IGameState
 
         if (pickedRoom.Type == RoomType.BATTLE || pickedRoom.Type == RoomType.BOSS)
         {
+            CleanEnemyAndAllyUIContainers();
             BattleState bs = _stateMachine.GetState<BattleState>();
             BattleRoomSO br = GameManager.Instance.GetBattleRoom();
             bs.SetEnemyTeam(pickedRoom.EnemyTeam, br);
             PlayerController.Instance.SetupAllyMonsters();
+            pickedRoom = null;
+        }
+    }
+
+    private void CleanEnemyAndAllyUIContainers()
+    {
+        PlayerMonstersController pmc = _canvasController.playerMonstersPanel.GetComponent<PlayerMonstersController>();
+        EnemyTeamController etc = _canvasController.enemyTeamPanel.GetComponent<EnemyTeamController>();
+        if( pmc != null )
+        {
+            pmc.ClearContainer();
+        }
+        if( etc != null )
+        {
+            etc.ClearContainer();
         }
     }
 

@@ -1751,6 +1751,8 @@ GameObject:
   - component: {fileID: 1036395656219324430}
   - component: {fileID: 8072914583238199132}
   - component: {fileID: 4003936486754607272}
+  - component: {fileID: 2841258960413549593}
+  - component: {fileID: 1071450685520297648}
   m_Layer: 8
   m_Name: NormalBoar
   m_TagString: Animal
@@ -1785,7 +1787,7 @@ Animator:
   m_GameObject: {fileID: 6544756308272640223}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: df3ded2e79620c14fb6b457eacbd34c9, type: 3}
-  m_Controller: {fileID: 9100000, guid: 242878eef575dfa44b6c492f58ef7eb0, type: 2}
+  m_Controller: {fileID: 9100000, guid: a83f2845593766843ae629617a2a985f, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 1
   m_ApplyRootMotion: 1
@@ -1810,6 +1812,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+--- !u!114 &2841258960413549593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6544756308272640223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f367cc6b75a8344449ab7d2707a53c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1071450685520297648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6544756308272640223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc26b7c27014834caf109f5c5792438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6547130957232799028
 GameObject:
   m_ObjectHideFlags: 0

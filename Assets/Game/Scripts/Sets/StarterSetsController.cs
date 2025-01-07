@@ -19,7 +19,8 @@ public class StarterSetsController : MonoBehaviour
 
     public void RemoveStarterSets()
     {
-        foreach (Transform child in setsContainer.GetComponentsInChildren<Transform>())
+        if (setsContainer.transform.childCount == 0) return;
+        foreach (Transform child in setsContainer.transform)
         {
             Destroy(child.gameObject);
         }

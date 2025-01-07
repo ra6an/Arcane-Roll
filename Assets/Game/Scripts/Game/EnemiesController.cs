@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class EnemiesController : MonoBehaviour
@@ -15,6 +16,7 @@ public class EnemiesController : MonoBehaviour
     public void InstantiateEnemies(EnemyTeamSO et, BattleRoomSO bs)
     {
         if(et == null || bs  == null) return;
+        ClearEnemies();
 
         enemySpawns.transform.localPosition = bs.EnemyPositions;
 
@@ -42,15 +44,43 @@ public class EnemiesController : MonoBehaviour
         }
     }
 
+    private void ClearEnemies()
+    {
+        int childCount = enemySpawns.transform.childCount;
+        if (childCount == 0) return;
+
+        Debug.Log($"Brisemo enemy monstere u UI - trenutno ima {childCount}");
+        for (int i = childCount - 1; i >= 0; i--)
+        {
+            Transform child = enemySpawns.transform.GetChild(i);
+            Destroy(child.gameObject);
+        }
+        Debug.Log($"Enemy monstera nakon brisanja: {enemySpawns.transform.childCount}");
+        //if (enemySpawns.transform.childCount == 0) return;
+
+        //foreach(Transform child in enemySpawns.transform)
+        //{
+        //    Destroy(child.gameObject);
+        //}
+    }
+
     public void SetEnemiesAttacks()
     {
         foreach(EnemyController enemy in  enemySpawns.GetComponentsInChildren<EnemyController>())
         {
-            enemy.SetRandomNumber();
+            bool isAlive = enemy.GetComponent<Damageable>().IsAlive();
+            if(isAlive)
+            {
+                enemy.SetRandomNumber();
+            }
         }
         foreach (EnemyController enemy in enemySpawns.GetComponentsInChildren<EnemyController>())
         {
-            enemy.ShowAbility();
+            bool isAlive = enemy.GetComponent<Damageable>().IsAlive();
+            if (isAlive)
+            {
+                enemy.ShowAbility();
+            }
         }
     }
 

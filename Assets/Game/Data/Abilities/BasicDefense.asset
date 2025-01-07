@@ -24,7 +24,7 @@ MonoBehaviour:
   attackRandom: 0
   defense: 5
   numOfTargetsToDefense: 2
-  defenseRandom: 1
+  defenseRandom: 0
   lethalBoost: 0
   crowdControlType: 0
   numOfTargetsToCC: 0

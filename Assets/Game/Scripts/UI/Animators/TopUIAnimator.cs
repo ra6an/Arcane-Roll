@@ -104,7 +104,7 @@ public class TopUIAnimator : MonoBehaviour
         if (rollBtnVisible) return;
 
         rollBtnRect.DOKill();
-
+        Debug.Log("POKAZI BUTTON ZA ROLL DICES!!!!!!!!!!!!!!!!");
         rollBtnRect.DOScale(Vector2.one, animDuration).SetEase(Ease.OutBack);
         rollBtnVisible = true;
     }

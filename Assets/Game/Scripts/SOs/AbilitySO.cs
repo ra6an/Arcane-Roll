@@ -166,6 +166,7 @@ public class AbilitySO : ScriptableObject, IAbility
         foreach(Damageable target in targets)
         {
             Debug.Log($"{target.name} is damaged with {attack} DMG.");
+            target.TakeDamage(attack);
         }
     }
 

@@ -80,6 +80,11 @@ public class BattleManager : MonoBehaviour
         return currState;
     }
 
+    public void ResetAditionalDiceRolls()
+    {
+        additionalDiceRolls = 0;
+    }
+
     public void AddMoreDiceRolls(int _extraRolls)
     {
         additionalDiceRolls += _extraRolls;
@@ -93,6 +98,16 @@ public class BattleManager : MonoBehaviour
     public void RemoveOneRoll()
     {
         currentAmountOfRolls--;
+    }
+
+    public void SetBattleIsOver()
+    {
+        battleIsOver = true;
+    }
+
+    public void SetNextTurn()
+    {
+        currentTurn++;
     }
 
     private void OnDestroy()

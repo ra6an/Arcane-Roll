@@ -1752,6 +1752,7 @@ MonoBehaviour:
   arrowIcon: {fileID: 7084353449643510850}
   checkBoxGO: {fileID: 4376065399098841137}
   checkboxIconGO: {fileID: 3876336639314692775}
+  currentHealthSliderGO: {fileID: 6603151648775428531}
 --- !u!1 &4652106201391425298
 GameObject:
   m_ObjectHideFlags: 0
@@ -3290,6 +3291,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 691859070312457535, guid: 3f147b50230d80e499903aeb66bed83c,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 691859070891586596, guid: 3f147b50230d80e499903aeb66bed83c,
         type: 3}
       propertyPath: m_Name
@@ -3420,6 +3426,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f147b50230d80e499903aeb66bed83c, type: 3}
+--- !u!1 &6603151648775428531 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 691859070312457533, guid: 3f147b50230d80e499903aeb66bed83c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5925296028634872974}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6603151650344372393 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 691859070891586599, guid: 3f147b50230d80e499903aeb66bed83c,

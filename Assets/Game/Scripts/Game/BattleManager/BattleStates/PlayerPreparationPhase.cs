@@ -25,6 +25,7 @@ public class PlayerPreparationPhase : IBattleState
         _canvasController = GameManager.Instance.Canvas.GetComponent<CanvasController>();
         _diceManager = DiceManager.Instance;
         canChangeState = false;
+        firstRoll = true;
     }
 
     public void EnterState()
@@ -45,6 +46,7 @@ public class PlayerPreparationPhase : IBattleState
             pmc.ShowMonstersDiceViewImage();
             TopUIAnimator tuia = _canvasController.UIButtonsPanel.GetComponent<TopUIAnimator>();
             tuia.ShowRolls();
+            tuia.ShowRollBtn();
         }
     }
 
@@ -59,7 +61,7 @@ public class PlayerPreparationPhase : IBattleState
         {
             if(firstRoll)
             {
-                tuia.ShowRollBtn();
+                //tuia.ShowRollBtn();
                 firstRoll = false;
             }
         }

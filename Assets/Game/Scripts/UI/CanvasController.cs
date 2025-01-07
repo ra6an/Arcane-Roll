@@ -35,6 +35,12 @@ public class CanvasController : MonoBehaviour
     [SerializeField] public GameObject enemyTeamPanel;
     [SerializeField] public RectTransform enemyTeamRect;
 
+    [Foldout("Info Panel")]
+    [SerializeField] public GameObject infoPanel;
+    [SerializeField] public RectTransform infoRect;
+    //[SerializeField] public GameObject infoMessagePanel;
+    //[SerializeField] public RectTransform infoMessageRect;
+
     public void CloseAllPanels()
     {
         starterSetPanel.SetActive(false);
