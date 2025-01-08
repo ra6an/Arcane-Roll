@@ -17,10 +17,13 @@ public class MonsterDetailsController : MonoBehaviour
     [SerializeField] private GameObject monsterIconGO;
     [SerializeField] private GameObject skillsContainerGO;
 
-    [Header("Health")]
+    [Header("Health & Shield")]
     [SerializeField] private int currentHealth;
     [SerializeField] private GameObject currentHealthSliderGO;
     [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private int currentShield;
+    [SerializeField] private GameObject currentShieldGO;
+    [SerializeField] private TextMeshProUGUI shieldText;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject skillPrefab;
@@ -69,6 +72,13 @@ public class MonsterDetailsController : MonoBehaviour
         HandleShowCheckBox();
 
         UpdateHealth();
+        UpdateShield();
+    }
+
+    private bool IsAlive()
+    {
+        if(diceRollState == null || diceRollState.Crystal == null) return false;
+        return diceRollState.Crystal.GetComponent<Damageable>().IsAlive();
     }
 
     public void SetDiceRollState(DiceRollState _drs)
@@ -80,7 +90,7 @@ public class MonsterDetailsController : MonoBehaviour
 
     private void HinghlightSkillBasedOnRolledNumber()
     {
-        if (_currRolledNum == 0)
+        if (_currRolledNum == 0 || !IsAlive())
         {
             HideAllShadersFromSkills();
             HideCombatButtons();
@@ -131,7 +141,7 @@ public class MonsterDetailsController : MonoBehaviour
         id = num;
         cardDetails = cd;
         monsterIconGO.GetComponent<Image>().sprite = cardDetails.art;
-        currentHealth = cardDetails.health;
+        //currentHealth = cardDetails.health;
 
         SetHealth(currentHealth);
 
@@ -169,9 +179,17 @@ public class MonsterDetailsController : MonoBehaviour
 
             currentHealthSliderGO.GetComponent<Image>().fillAmount = newHealth / (float)maxHealth;
         }
-        //currentHealthSliderGO.GetComponent<Image>().fillAmount = (float)newHealth / cardDetails.health;
-        //healthText.text = $"{newHealth} / {cardDetails.health}";
-        //currentHealth = newHealth;
+    }
+
+    public void SetShield(int _newShield)
+    {
+        if(diceRollState != null)
+        {
+            int newShield = _newShield;
+
+            shieldText.text = $"{newShield}";
+            currentShield = newShield;
+        }
     }
 
     public void SetRolledDice(int _rolledNumber)
@@ -188,6 +206,12 @@ public class MonsterDetailsController : MonoBehaviour
 
     public void ShowDiceWorldImage()
     {
+        if (!IsAlive()) 
+        {
+            HideDiceWorldImage(); 
+            return;
+        }
+
         float wiHeight = worldImageContainer.GetComponent<RectTransform>().rect.height;
         
         worldImageContainer.transform.DOMoveY(wiHeight - 20, 0.6f);
@@ -269,7 +293,15 @@ public class MonsterDetailsController : MonoBehaviour
 
     public void ShowCombatButtons()
     {
-        combatBtnsGO.SetActive(true);
+        bool abilityIsValid = diceRollState.CheckIfAbilityIsValid();
+
+        if(abilityIsValid)
+        {
+            combatBtnsGO.SetActive(true);
+        } else
+        {
+            combatBtnsGO.SetActive(false);
+        }
     }
     public void HideCombatButtons()
     {
@@ -386,7 +418,7 @@ public class MonsterDetailsController : MonoBehaviour
 
     private void ActivateAbilityWhenItIsReady()
     {
-        if (!_abilityActivated) return;
+        if (!_abilityActivated || currentHealth <= 0) return;
         
         if(_needAllyTargets == 0 && _needEnemyTargets == 0)
         {
@@ -461,6 +493,28 @@ public class MonsterDetailsController : MonoBehaviour
             {
                 SetHealth(crystalHealth);
             }
+        }
+    }
+
+    private void UpdateShield()
+    {
+        Damageable dmg = diceRollState.Crystal.GetComponent<Damageable>();
+
+        if(dmg != null)
+        {
+            int crystalShield = dmg.GetShield();
+            if(currentShield != crystalShield)
+            {
+                SetShield(crystalShield);
+            }
+        }
+
+        if(currentShield <= 0)
+        {
+            currentShieldGO.SetActive(false);
+        } else
+        {
+            currentShieldGO.SetActive(true);
         }
     }
 }

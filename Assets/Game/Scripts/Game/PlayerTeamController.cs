@@ -49,20 +49,16 @@ public class PlayerTeamController : MonoBehaviour
         int childCount = teamContainer.transform.childCount;
         if (childCount == 0) return;
 
-        Debug.Log($"Brisemo ally monstere u UI - trenutno ima {childCount}");
         for (int i = childCount - 1; i >= 0; i--)
         {
             Transform child = teamContainer.transform.GetChild(i);
             Destroy(child.gameObject);
         }
-        Debug.Log($"Ally monstera nakon brisanja: {teamContainer.transform.childCount}");
-        //if (teamContainer.transform.childCount == 0) return;
-        //Debug.Log($"Brisemo ally monstere u UI - trenutno ima {teamContainer.transform.childCount}");
-        //foreach(Transform child in teamContainer.transform)
-        //{
-        //    Destroy(child.gameObject);
-        //}
-        //Debug.Log($"Ally monstera nakon brisanja: {teamContainer.transform.childCount}");
+    }
+
+    public void ClearCrystalsPrefabs()
+    {
+        CleanTeam();
     }
 
     public void MaterializeCrystals()

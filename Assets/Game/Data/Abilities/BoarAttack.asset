@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b11df10b6c6495446a860ab6f7c72071, type: 3}
-  m_Name: AoeAttack
+  m_Name: BoarAttack
   m_EditorClassIdentifier: 
-  abilityName: AOE Attack
-  icon: {fileID: 21300000, guid: 8ec5b52b09d90074a83d61c1334190f9, type: 3}
-  description: Hit two random enemies with 3 DMG.
+  abilityName: Bite
+  icon: {fileID: 21300000, guid: a46ddf644b0369e47b8c9e18f1043579, type: 3}
+  description: Attack one enemy with 25 DMG.
   type: 1
-  attack: 3
-  numOfTargetsToAttack: 2
+  attack: 25
+  numOfTargetsToAttack: 1
   numOfAttacks: 1
   lifesteal: 0
   execute: 0
-  attackRandom: 1
+  attackRandom: 0
   defense: 0
   numOfTargetsToDefense: 0
   defenseRandom: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
   buffRandom: 0
   debuff: 0
   numOfTargetsToDebuff: 0
-  debuffDuration: 0
+  debuffDuration: 1
   debuffRandom: 0
   heal: 0
   numOfTargetsToHeal: 0

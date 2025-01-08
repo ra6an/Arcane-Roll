@@ -20,11 +20,11 @@ public class EndTurnPhase : IBattleState
         _battleManager = GameManager.Instance.GetComponent<BattleManager>();
         _enemyController = GameManager.Instance.GetComponent<EnemiesController>();
         _playerTeamController = GameManager.Instance.GetComponent<PlayerTeamController>();
-        canChangeState = false;
     }
 
     public void EnterState()
     {
+        canChangeState = false;
         enemyTeam = _enemyController.GetAllEnemies();
         allyTeam = _playerTeamController.GetAllyMonstersDamageable();
     }
@@ -39,6 +39,8 @@ public class EndTurnPhase : IBattleState
         {
             _battleManager.SetNextTurn();
             _battleManager.ResetAditionalDiceRolls();
+            HandleAllyTeamBuffsDebuffsAndShields();
+            HandleEnemyTeamBuffsDebuffsAndShields();
             _battleStateMachine.ChangeState<EnemyPlanningPhase>();
         }
     }
@@ -51,5 +53,20 @@ public class EndTurnPhase : IBattleState
     public void ChangeState()
     {
         Debug.Log("Mjenja state");
+    }
+
+    private void HandleAllyTeamBuffsDebuffsAndShields()
+    {
+        foreach(Damageable ally in allyTeam)
+        {
+            ally.ClearShield();
+        }
+    }
+    private void HandleEnemyTeamBuffsDebuffsAndShields()
+    {
+        foreach(Damageable enemy in enemyTeam)
+        {
+            enemy.ClearShield();
+        }
     }
 }

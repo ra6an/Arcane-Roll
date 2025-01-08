@@ -67,6 +67,36 @@ public class DiceRollState
         locked = _locked;
     }
 
+    public AbilitySO GetActiveAbility()
+    {
+        if(currRolledNumber == 0) return null;
+
+        AbilitySO abilityToReturn = crystal.CardData.Abilities[currRolledNumber - 1];
+        if (string.IsNullOrEmpty(abilityToReturn.abilityName))
+        {
+            return null;
+        } else
+        {
+            return abilityToReturn;
+        }
+    }
+
+    public bool CheckIfAbilityIsValid()
+    {
+        bool abilityIsValid = true;
+
+        AbilitySO _ca = GetActiveAbility();
+        if (_ca != null && !string.IsNullOrEmpty(_ca.abilityName))
+        {
+            abilityIsValid = true;
+        }
+        else
+        {
+            abilityIsValid = false;
+        }
+
+        return abilityIsValid;
+    }
     public void ActivateAbility()
     {
         locked = false;
@@ -111,6 +141,12 @@ public class DiceManager : MonoBehaviour
 
     private void Start()
     {
+        SetStartDiceMachineStates();
+    }
+
+    public void ClearDiceRollStates()
+    {
+        diceMachineStates.Clear();
         SetStartDiceMachineStates();
     }
 
@@ -168,6 +204,9 @@ public class DiceManager : MonoBehaviour
         foreach (DiceRollState _drs in diceMachineStates)
         {
             DiceRollMachineController _drsMachineController = _drs.Dice;
+            Damageable _dmgable = _drs.Crystal.GetComponent<Damageable>();
+
+            if (!_dmgable.IsAlive()) continue;
 
             if(_drsMachineController != null && !_drs.Locked)
             {
@@ -235,7 +274,9 @@ public class DiceManager : MonoBehaviour
 
         foreach(DiceRollState _drs in diceMachineStates)
         {
-            if(!_drs.Locked)
+            Damageable _d = _drs.Crystal.GetComponent<Damageable>();
+            bool isAlive = _d.IsAlive();
+            if(!_drs.Locked && isAlive)
             {
                 allDicesAreLocked = false;
                 break;
@@ -251,7 +292,25 @@ public class DiceManager : MonoBehaviour
 
         foreach (DiceRollState _drs in diceMachineStates)
         {
-            if(!_drs.AbilityActivated)
+            Damageable _d = _drs.Crystal.GetComponent<Damageable>();
+            bool isAlive = _d.IsAlive();
+            
+            AbilitySO currAbility = null;
+
+            if (_drs.CurrRolledNumber > 0)
+            {
+                AbilitySO _ca = _drs.GetActiveAbility();
+                bool abilityIsValid = _drs.CheckIfAbilityIsValid();
+                if(abilityIsValid)
+                {
+                    currAbility = _ca;
+                } else
+                {
+                    currAbility = null;
+                }
+            }
+
+            if (!_drs.AbilityActivated && isAlive && currAbility != null)
             {
                 allAbilitiesAreActivated = false;
                 break;

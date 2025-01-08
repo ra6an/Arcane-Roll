@@ -1753,6 +1753,7 @@ GameObject:
   - component: {fileID: 4003936486754607272}
   - component: {fileID: 2841258960413549593}
   - component: {fileID: 1071450685520297648}
+  - component: {fileID: 9136681546874655764}
   m_Layer: 8
   m_Name: NormalBoar
   m_TagString: Animal
@@ -1790,7 +1791,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: a83f2845593766843ae629617a2a985f, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 1
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1836,6 +1837,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afc26b7c27014834caf109f5c5792438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &9136681546874655764
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6544756308272640223}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6547130957232799028
 GameObject:
   m_ObjectHideFlags: 0

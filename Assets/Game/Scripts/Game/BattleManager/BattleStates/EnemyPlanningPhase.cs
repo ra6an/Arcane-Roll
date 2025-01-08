@@ -14,11 +14,11 @@ public class EnemyPlanningPhase : IBattleState
         _battleStateMachine = _bsm;
         _battleManager = GameManager.Instance.GetComponent<BattleManager>();
         _enemiesController = GameManager.Instance.GetComponent<EnemiesController>();
-        canChangeState = false;
     }
 
     public void EnterState()
     {
+        canChangeState = false;
         GameManager.Instance.GetComponent<BattleManager>().StartCoroutine(SetEnemiesAttack());
     }
 

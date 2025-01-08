@@ -171,18 +171,10 @@ public class PlayerMonstersController : MonoBehaviour
         int childCount = monstersContainerGO.transform.childCount;
         if (childCount == 0) return;
 
-        Debug.Log($"Brisemo ally monstere u UI - trenutno ima {childCount}");
         for (int i = childCount - 1; i >= 0; i--)
         {
             Transform child = monstersContainerGO.transform.GetChild(i);
             Destroy(child.gameObject);
         }
-        Debug.Log($"Ally monstera nakon brisanja: {monstersContainerGO.transform.childCount}");
-        //if (monstersContainerGO.transform.childCount == 0) return;
-
-        //foreach (Transform child in monstersContainerGO.transform)
-        //{
-        //    Destroy(child.gameObject);
-        //}
     }
 }

@@ -43,7 +43,22 @@ public class BattleState : IGameState
 
     public void ExitState()
     {
-        Debug.Log("Zavrsio se Battle!");
+        ClearAllBattlePrefabs();
+    }
+
+    private void ClearAllBattlePrefabs()
+    {
+        CanvasController cc = GameManager.Instance.Canvas.GetComponent<CanvasController>();
+        EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
+        PlayerTeamController ptc = GameManager.Instance.GetComponent<PlayerTeamController>();
+        PlayerMonstersController pmc = cc.playerMonstersPanel.GetComponent<PlayerMonstersController>();
+        EnemyTeamController etc = cc.enemyTeamPanel.GetComponent<EnemyTeamController>();
+
+        ec.ClearEnemiesPrefab();
+        ptc.ClearCrystalsPrefabs();
+        pmc.ClearContainer();
+        etc.ClearContainer();
+        DiceManager.Instance.ClearDiceRollStates();
     }
 
     private void ExitStateSetup()

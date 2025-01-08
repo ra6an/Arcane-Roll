@@ -175,6 +175,7 @@ public class AbilitySO : ScriptableObject, IAbility
         foreach (Damageable target in targets)
         {
             Debug.Log($"{target.name} got {defense} shield.");
+            target.AddShield(defense);
         }
     }
 

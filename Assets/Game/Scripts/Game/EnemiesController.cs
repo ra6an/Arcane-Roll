@@ -64,6 +64,11 @@ public class EnemiesController : MonoBehaviour
         //}
     }
 
+    public void ClearEnemiesPrefab()
+    {
+        ClearEnemies();
+    }
+
     public void SetEnemiesAttacks()
     {
         foreach(EnemyController enemy in  enemySpawns.GetComponentsInChildren<EnemyController>())

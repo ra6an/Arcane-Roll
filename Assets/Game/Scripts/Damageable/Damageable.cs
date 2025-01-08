@@ -12,7 +12,9 @@ public class Damageable : MonoBehaviour, IDamageable
     [VInspector.ReadOnly]
     [SerializeField]
     private int currentHealth;
+    private int currentShield;
     public int MaxHealth => maxHealth;
+    public int CurrentShield => currentShield;
 
     private void Start()
     {
@@ -32,19 +34,62 @@ public class Damageable : MonoBehaviour, IDamageable
 
     public void TakeDamage(int amount)
     {
-        if (currentHealth - amount <= 0)
+        int damageAfterShield = TakeShieldDamage(amount);
+
+        if (currentHealth - damageAfterShield <= 0)
         {
             currentHealth = 0;
             Die();
         }
         else
         {
-            currentHealth -= amount;
+            currentHealth -= damageAfterShield;
             if(_combatAnimator != null)
             {
                 _combatAnimator.TakeDamageAnimation();
             }
         }
+    }
+
+    private int TakeShieldDamage(int _amount)
+    {
+        int unblockedDamage = 0;
+
+        if(_amount > currentShield)
+        {
+            unblockedDamage = _amount - currentShield;
+            ClearShield();
+            return unblockedDamage;
+        }
+
+        if (currentShield > _amount)
+        {
+            AddShield(-_amount);
+            return unblockedDamage;
+        }
+
+        if(currentShield == _amount)
+        {
+            ClearShield();
+            return unblockedDamage;
+        }
+
+        return unblockedDamage;
+    }
+
+    public int GetShield()
+    {
+        return currentShield;
+    }
+
+    public void AddShield(int amount)
+    {
+        currentShield += amount;
+    }
+
+    public void ClearShield()
+    {
+        currentShield = 0;
     }
 
     public void SetCurrentHealth(int amount)

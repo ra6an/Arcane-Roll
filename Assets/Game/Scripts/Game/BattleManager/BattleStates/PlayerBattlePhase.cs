@@ -15,11 +15,11 @@ public class PlayerBattlePhase : IBattleState
         _battleStateMachine = _bsm;
         _canvasController = GameManager.Instance.Canvas.GetComponent<CanvasController>();
         _diceManager = GameManager.Instance.GetComponent<DiceManager>();
-        canChangeState = false;
     }
 
     public void EnterState()
     {
+        canChangeState = false;
         PlayerMonstersController pmc = _canvasController.playerMonstersPanel.GetComponent<PlayerMonstersController>();
         pmc.ShowCombatBtns();
     }

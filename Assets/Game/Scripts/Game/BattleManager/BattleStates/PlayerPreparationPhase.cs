@@ -12,7 +12,6 @@ public class PlayerPreparationPhase : IBattleState
     private DiceManager _diceManager;
 
     private bool firstRoll = true;
-    private bool hasNoRolls = false;
 
     public bool canChangeState { get; set; }
     
@@ -24,12 +23,12 @@ public class PlayerPreparationPhase : IBattleState
         _battleManager = GameManager.Instance.GetComponent<BattleManager>();
         _canvasController = GameManager.Instance.Canvas.GetComponent<CanvasController>();
         _diceManager = DiceManager.Instance;
-        canChangeState = false;
-        firstRoll = true;
     }
 
     public void EnterState()
     {
+        canChangeState = false;
+        firstRoll = true;
         if(_enemiesController != null )
         {
             GameManager.Instance.GetComponent<BattleManager>().StartCoroutine(HideAbilities());
@@ -46,7 +45,7 @@ public class PlayerPreparationPhase : IBattleState
             pmc.ShowMonstersDiceViewImage();
             TopUIAnimator tuia = _canvasController.UIButtonsPanel.GetComponent<TopUIAnimator>();
             tuia.ShowRolls();
-            tuia.ShowRollBtn();
+            //tuia.ShowRollBtn();
         }
     }
 
@@ -61,7 +60,7 @@ public class PlayerPreparationPhase : IBattleState
         {
             if(firstRoll)
             {
-                //tuia.ShowRollBtn();
+                tuia.ShowRollBtn();
                 firstRoll = false;
             }
         }
