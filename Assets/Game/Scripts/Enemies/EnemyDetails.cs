@@ -50,7 +50,8 @@ public class EnemyDetails : MonoBehaviour
 
     private void Update()
     {
-        abilityGO.SetActive(activeAbility != null);
+        //abilityGO.SetActive(activeAbility != null);
+        HideAbilityIfDead();
         HandleShowCheckBox();
         UpdateHealth();
     }
@@ -103,6 +104,22 @@ public class EnemyDetails : MonoBehaviour
         {
             titleText.text = _data.enemyName;
             imageGO.GetComponent<Image>().sprite = _data.sprite;
+        }
+
+    }
+
+    private void HideAbilityIfDead()
+    {
+        EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
+        Damageable enemy = ec.GetEnemyDamageableBySpawnId(SpawnId);
+
+        if(!enemy.IsAlive())
+        {
+            ClearTargetsContainer();
+            abilityGO.SetActive(false);
+        } else
+        {
+            abilityGO.SetActive(activeAbility != null);
         }
 
     }

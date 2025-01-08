@@ -21,3 +21,4 @@ MonoBehaviour:
   attack: 0
   abilities:
   - {fileID: 11400000, guid: fc03fc2bb8882a94f8811c03e6fa625a, type: 2}
+  - {fileID: 11400000, guid: e63b52f82d7de104591340310ebdd980, type: 2}

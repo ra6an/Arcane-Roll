@@ -17,8 +17,7 @@ MonoBehaviour:
   enemyName: Boar
   enemyPrefab: {fileID: 6544756308272640223, guid: 9d9e2b9222e59b749a06501503f31be0,
     type: 3}
-  health: 15
+  health: 20
   attack: 0
   abilities:
   - {fileID: 11400000, guid: fc03fc2bb8882a94f8811c03e6fa625a, type: 2}
-  - {fileID: 11400000, guid: b52825dc743b1cc4194569f044af0caa, type: 2}
