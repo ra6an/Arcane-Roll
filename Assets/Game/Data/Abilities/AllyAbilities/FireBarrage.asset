@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b11df10b6c6495446a860ab6f7c72071, type: 3}
+  m_Name: FireBarrage
+  m_EditorClassIdentifier: 
+  id: 0
+  abilityName: Fire Barrage
+  icon: {fileID: 21300000, guid: dfd1655cb1387414fb4dec11da2c6d22, type: 3}
+  description: Deal 5 damage to two random enemy monsters.
+  type: 1
+  attack: 5
+  numOfTargetsToAttack: 2
+  numOfAttacks: 0
+  lifesteal: 0
+  execute: 0
+  piercing: 0
+  attackRandom: 1
+  defense: 0
+  numOfTargetsToDefense: 0
+  lethalDefenseBoost: 0
+  defenseRandom: 0
+  crowdControlType: 0
+  numOfTargetsToCC: 0
+  ccDuration: 1
+  ccRandom: 0
+  buff: 0
+  numOfTargetsToBuff: 0
+  buffDuration: 1
+  buffRandom: 0
+  debuff: 0
+  numOfTargetsToDebuff: 0
+  debuffDuration: 1
+  debuffRandom: 0
+  heal: 0
+  numOfTargetsToHeal: 0
+  lethalHealBoost: 0
+  healRandom: 0

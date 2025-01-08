@@ -3,6 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class AbilityExecutionContext
+{
+    public int amount;
+    public bool lethal;
+    public bool piercing;
+    public bool lifesteal;
+    public bool self;
+
+    public AbilityExecutionContext()
+    {
+        lethal = false;
+        piercing = false;
+        lifesteal = false;
+        self = false;
+    }
+}
+
 [Flags]
 public enum AbilityType
 {
@@ -55,6 +72,7 @@ public enum Debuff
 [CreateAssetMenu(menuName = "Data/Ability")]
 public class AbilitySO : ScriptableObject, IAbility
 {
+    public int id;
     public string abilityName;
     public Sprite icon;
     public string description;
@@ -65,12 +83,13 @@ public class AbilitySO : ScriptableObject, IAbility
     public int numOfAttacks;
     public bool lifesteal = false;
     public bool execute = false;
+    public bool piercing = false;
     public bool attackRandom = false;
     [Header("Defense")]
     public int defense;
     public NumOfTargets numOfTargetsToDefense;
+    public bool lethalDefenseBoost = false;
     public bool defenseRandom = false;
-    public bool lethalBoost = false;
     [Header("Crowd Control")]
     public CC crowdControlType;
     public NumOfTargets numOfTargetsToCC;
@@ -89,6 +108,7 @@ public class AbilitySO : ScriptableObject, IAbility
     [Header("Heal")]
     public int heal;
     public NumOfTargets numOfTargetsToHeal;
+    public bool lethalHealBoost = false;
     public bool healRandom = false;
 
     public virtual void Activate(GameObject caster, List<Damageable> enemyTargets, List<Damageable> allyTargets)
@@ -101,6 +121,15 @@ public class AbilitySO : ScriptableObject, IAbility
             if (selectedEnemyTargets.Count == 0) return;
             // Logika za napad
             ExecuteAttack(selectedEnemyTargets);
+            if(lifesteal)
+            {
+                AbilityExecutionContext aec = new()
+                {
+                    amount = (int)Mathf.Ceil(attack * 0.3f),
+                };
+
+                caster.GetComponent<Damageable>().Heal(aec);
+            }
 
             if(type.HasFlag(AbilityType.Debuff))
             {
@@ -166,7 +195,14 @@ public class AbilitySO : ScriptableObject, IAbility
         foreach(Damageable target in targets)
         {
             Debug.Log($"{target.name} is damaged with {attack} DMG.");
-            target.TakeDamage(attack);
+            AbilityExecutionContext aec = new()
+            {
+                amount = attack,
+                lethal = execute,
+                piercing = piercing
+            };
+
+            target.TakeDamage(aec);
         }
     }
 
@@ -175,7 +211,13 @@ public class AbilitySO : ScriptableObject, IAbility
         foreach (Damageable target in targets)
         {
             Debug.Log($"{target.name} got {defense} shield.");
-            target.AddShield(defense);
+            AbilityExecutionContext aec = new()
+            {
+                amount = defense,
+                lethal = lethalDefenseBoost,
+            };
+
+            target.AddShield(aec);
         }
     }
 
@@ -208,6 +250,13 @@ public class AbilitySO : ScriptableObject, IAbility
         foreach (Damageable target in targets)
         {
             Debug.Log($"{target.name} is healed with {attack} health.");
+            AbilityExecutionContext aec = new()
+            {
+                amount = heal,
+                lethal = lethalHealBoost
+            };
+
+            target.Heal(aec);
         }
     }
 

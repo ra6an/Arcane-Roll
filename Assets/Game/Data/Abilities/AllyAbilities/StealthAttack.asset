@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b11df10b6c6495446a860ab6f7c72071, type: 3}
+  m_Name: StealthAttack
+  m_EditorClassIdentifier: 
+  id: 0
+  abilityName: StealthAttack
+  icon: {fileID: 21300000, guid: db7e2809ef0b0dc4f894cfab4616aae9, type: 3}
+  description: Deal 6 damage to enemy monster, if it's under 40% health deal double
+    damage.
+  type: 1
+  attack: 7
+  numOfTargetsToAttack: 1
+  numOfAttacks: 0
+  lifesteal: 0
+  execute: 1
+  piercing: 0
+  attackRandom: 0
+  defense: 0
+  numOfTargetsToDefense: 0
+  lethalDefenseBoost: 0
+  defenseRandom: 0
+  crowdControlType: 0
+  numOfTargetsToCC: 0
+  ccDuration: 1
+  ccRandom: 0
+  buff: 0
+  numOfTargetsToBuff: 0
+  buffDuration: 1
+  buffRandom: 0
+  debuff: 0
+  numOfTargetsToDebuff: 0
+  debuffDuration: 1
+  debuffRandom: 0
+  heal: 0
+  numOfTargetsToHeal: 0
+  lethalHealBoost: 0
+  healRandom: 0

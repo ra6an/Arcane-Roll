@@ -15,12 +15,13 @@ MonoBehaviour:
   id: 0
   cardName: Ember Colossus
   art: {fileID: 21300000, guid: a72ac5b24ccf340b38c6a0309bc578d7, type: 3}
+  role: 0
   rarity: 3
   health: 30
   abilities:
+  - {fileID: 11400000, guid: 7457124399d5e96499db780e6305ab90, type: 2}
+  - {fileID: 11400000, guid: 0dd8375eab1049741bd028dfe6136996, type: 2}
   - {fileID: 11400000, guid: 4b9c742f519f0854bbb6372590c3f5e2, type: 2}
-  - {fileID: 11400000, guid: fefb10130a5c2914dac54605c37ecd5b, type: 2}
-  - {fileID: 11400000, guid: 30b2ccc31bc93bf4e839481b54b68c0b, type: 2}
+  - {fileID: 11400000, guid: 7457124399d5e96499db780e6305ab90, type: 2}
   - {fileID: 11400000, guid: 4b9c742f519f0854bbb6372590c3f5e2, type: 2}
-  - {fileID: 11400000, guid: 30b2ccc31bc93bf4e839481b54b68c0b, type: 2}
-  - {fileID: 11400000, guid: b52825dc743b1cc4194569f044af0caa, type: 2}
+  - {fileID: 11400000, guid: 6fb33920dfb73cf429640677f4cd3760, type: 2}

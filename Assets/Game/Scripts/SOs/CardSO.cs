@@ -10,12 +10,21 @@ public enum CardRarity
     LEGENDARY
 }
 
+public enum MonsterRole
+{
+    Tank,
+    Assasin,
+    Damager,
+    Support
+}
+
 [CreateAssetMenu(menuName = "Data/Card")]
 public class CardSO : ScriptableObject
 {
     public int id;
     public string cardName;
     public Sprite art;
+    public MonsterRole role;
     public CardRarity rarity;
     public int health;
     [SerializeField] private AbilitySO[] abilities = new AbilitySO[6];

@@ -10,22 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b11df10b6c6495446a860ab6f7c72071, type: 3}
-  m_Name: BoarAttack
+  m_Name: Bite
   m_EditorClassIdentifier: 
+  id: 0
   abilityName: Bite
   icon: {fileID: 21300000, guid: a46ddf644b0369e47b8c9e18f1043579, type: 3}
-  description: Attack one enemy with 25 DMG.
+  description: Attack one enemy with 7 damage.
   type: 1
-  attack: 25
+  attack: 8
   numOfTargetsToAttack: 1
   numOfAttacks: 1
   lifesteal: 0
   execute: 0
+  piercing: 0
   attackRandom: 0
   defense: 0
   numOfTargetsToDefense: 0
+  lethalDefenseBoost: 0
   defenseRandom: 0
-  lethalBoost: 0
   crowdControlType: 0
   numOfTargetsToCC: 0
   ccDuration: 1
@@ -40,4 +42,5 @@ MonoBehaviour:
   debuffRandom: 0
   heal: 0
   numOfTargetsToHeal: 0
+  lethalHealBoost: 0
   healRandom: 0

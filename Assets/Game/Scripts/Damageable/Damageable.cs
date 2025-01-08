@@ -21,20 +21,33 @@ public class Damageable : MonoBehaviour, IDamageable
         _combatAnimator = GetComponent<CombatAnimatorController>();
     }
 
-    public void Heal(int amount)
+    public void Heal(AbilityExecutionContext aec)
     {
+        int amount = aec.lethal ? aec.amount * 2 : aec.amount;
+
         if(currentHealth + amount > maxHealth)
         {
             currentHealth = maxHealth;
         } else
         {
-            currentHealth = amount;
+            currentHealth += amount;
         }
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(AbilityExecutionContext aec)
     {
-        int damageAfterShield = TakeShieldDamage(amount);
+        int amount = aec.amount;
+        Debug.Log($"Damage is: {amount}");
+        if (aec.lethal)
+        {
+            bool isInLethalRange = IsInLethalRange();
+
+            amount = isInLethalRange ? amount * 2 : amount;
+            Debug.Log($"Damage is lethal: {amount}");
+        }
+
+        
+        int damageAfterShield = aec.piercing ? amount : TakeShieldDamage(amount);
 
         if (currentHealth - damageAfterShield <= 0)
         {
@@ -64,7 +77,12 @@ public class Damageable : MonoBehaviour, IDamageable
 
         if (currentShield > _amount)
         {
-            AddShield(-_amount);
+            AbilityExecutionContext aec = new()
+            {
+                amount = -_amount
+            };
+
+            AddShield(aec);
             return unblockedDamage;
         }
 
@@ -82,8 +100,10 @@ public class Damageable : MonoBehaviour, IDamageable
         return currentShield;
     }
 
-    public void AddShield(int amount)
+    public void AddShield(AbilityExecutionContext aec)
     {
+        int amount = aec.lethal ? aec.amount * 2 : aec.amount;
+
         currentShield += amount;
     }
 
@@ -117,5 +137,15 @@ public class Damageable : MonoBehaviour, IDamageable
         {
             _combatAnimator.DieAnimation();
         }
+    }
+
+    private bool IsInLethalRange()
+    {
+        int amount = (int)Mathf.Ceil(maxHealth * 0.4f);
+        bool isLethal = false;
+
+        if (currentHealth <= amount) isLethal = true;
+
+        return isLethal;
     }
 }

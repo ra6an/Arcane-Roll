@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    void TakeDamage(int amount);
-    void Heal(int amount);
+    void TakeDamage(AbilityExecutionContext aec);
+    void Heal(AbilityExecutionContext aec);
 }

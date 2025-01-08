@@ -15,12 +15,13 @@ MonoBehaviour:
   id: 3
   cardName: Flarelle
   art: {fileID: 21300000, guid: 07076ae3be5f74abab9bbb9d3eb19e26, type: 3}
+  role: 2
   rarity: 2
   health: 18
   abilities:
-  - {fileID: 11400000, guid: 30b2ccc31bc93bf4e839481b54b68c0b, type: 2}
-  - {fileID: 11400000, guid: fefb10130a5c2914dac54605c37ecd5b, type: 2}
+  - {fileID: 11400000, guid: 6fd1c371d2150db46a86ad2bd5b686b4, type: 2}
+  - {fileID: 11400000, guid: 6fd1c371d2150db46a86ad2bd5b686b4, type: 2}
   - {fileID: 11400000, guid: 4b9c742f519f0854bbb6372590c3f5e2, type: 2}
-  - {fileID: 11400000, guid: 30b2ccc31bc93bf4e839481b54b68c0b, type: 2}
-  - {fileID: 11400000, guid: fefb10130a5c2914dac54605c37ecd5b, type: 2}
+  - {fileID: 11400000, guid: a88528097dcd42f44b76ace7e94543b7, type: 2}
   - {fileID: 11400000, guid: 4b9c742f519f0854bbb6372590c3f5e2, type: 2}
+  - {fileID: 11400000, guid: 384355e89bc1eb846a789a6971844cd0, type: 2}

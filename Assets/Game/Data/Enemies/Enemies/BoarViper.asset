@@ -17,7 +17,7 @@ MonoBehaviour:
   enemyName: Viper Boar
   enemyPrefab: {fileID: 2265013438705369228, guid: c47ddd6e997724546b131ba18778f7cb,
     type: 3}
-  health: 25
+  health: 50
   attack: 0
   abilities:
   - {fileID: 11400000, guid: fc03fc2bb8882a94f8811c03e6fa625a, type: 2}
