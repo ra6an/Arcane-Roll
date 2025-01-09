@@ -3,6 +3,44 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum RewardType
+{
+    Coin,
+    Relic,
+    Ability,
+}
+
+public class RewardContext
+{
+    public RewardType type;
+    public int amount;
+    public RelicSO relic;
+    public AbilitySO ability;
+
+    public void SetAbility(AbilitySO _ability, int _amount = 1)
+    {
+        if (_ability == null) return;
+        type = RewardType.Ability;
+        ability = _ability;
+        amount = _amount;
+    }
+
+    public void SetRelic(RelicSO _relic, int _amount = 1)
+    {
+        if (_relic == null) return;
+        type = RewardType.Relic;
+        relic = _relic;
+        amount = _amount;
+    }
+
+    public void SetCoins(int _amount)
+    {
+        if (_amount == 0) return;
+        type = RewardType.Coin;
+        amount = _amount;
+    }
+}
+
 public class Node
 {
     public RoomType Type;
@@ -10,6 +48,7 @@ public class Node
     public int NodeIndex;
     public EnemyTeamSO EnemyTeam;
     public bool PickedPath;
+    public List<RewardContext> Rewards;
     public List<Node> Connections = new List<Node>();
 }
 
@@ -91,6 +130,52 @@ public class MapState : IGameState
     {
         pickedRoom = room;
     }
+
+    private List<RewardContext> GenerateReward(EnemyTeamSO enemyTeam, MapSettings ms)
+    {
+        if (enemyTeam == null) return null;
+
+        List<RewardContext> rc = new();
+
+        int coinsAmount = 0;
+        foreach(EnemySO e in enemyTeam.Enemies)
+        {
+            if (e == null) continue;
+            coinsAmount += e.coinsReward;
+        }
+
+        RewardContext coins = new();
+        coins.SetCoins(coinsAmount);
+        rc.Add(coins);
+
+        /*
+        bool haveRelic = Random.Range(0, 100) <= ms.RelicChance;
+
+        if( haveRelic )
+        {
+            // Logika za dodavanje relica
+        }
+        */
+
+        bool haveAbility = Random.Range(0, 100) <= ms.AbilityChance;
+
+        if (haveAbility)
+        {
+            // Dodati logiku za ability
+            AbilitiesDB abilities = GameManager.Instance.AbilitiesDB;
+            int rndIndex = Random.Range(1, abilities.AllyAbilities.Count);
+            AbilitySO a = abilities.AllyAbilities[rndIndex];
+
+            if(a != null )
+            {
+                RewardContext _ability = new();
+                _ability.SetAbility(a);
+                rc.Add(_ability);
+            }
+        }
+
+        return rc;
+    }
     
     // MAP STATE LOGIC
     public void GenerateMap(int layers, int minNodes, int maxNodes)
@@ -106,12 +191,15 @@ public class MapState : IGameState
             for (int j = 0; j < nodeCount; j++)
             {
                 RoomType rt = GetRandomRoomType(ms.EnemyChance, ms.StoreChance, ms.TreasureChance);
+                EnemyTeamSO randomTeam = GetRandomTeam(rt);
+                List<RewardContext> _rewards = GenerateReward(randomTeam, ms);
                 Node newNode = new Node
                 {
                     Type = rt,
                     LayerIndex = i,
-                    EnemyTeam = GetRandomTeam(rt),
+                    EnemyTeam = randomTeam,
                     NodeIndex = j,
+                    Rewards = _rewards,
                     PickedPath = false,
                 };
                 layer.Add(newNode);
@@ -121,11 +209,15 @@ public class MapState : IGameState
 
         // ADDING FINAL BOSS BATTLE
         List<Node> finalLayer = new List<Node>();
+        // TODO: DODATI BOSS TEAMOVE I LOGIKU DA ODABERE RANDOM BOSS FIGHT
+        EnemyTeamSO ebt = new();
         Node finalNode = new Node
         {
             Type = RoomType.BOSS,
             LayerIndex = layers,
+            EnemyTeam = ebt,
             NodeIndex = 0,
+            Rewards = new(),
             PickedPath = false,
         };
 

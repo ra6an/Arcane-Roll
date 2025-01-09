@@ -11,6 +11,7 @@ public class EnemySO : ScriptableObject
     public GameObject enemyPrefab;
     public int health;
     public int attack;
+    public int coinsReward = 5;
     [SerializeField] private AbilitySO[] abilities = new AbilitySO[0];
 
     public AbilitySO[] Abilities => abilities;

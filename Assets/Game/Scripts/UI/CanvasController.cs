@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,6 +39,10 @@ public class CanvasController : MonoBehaviour
     [Foldout("Info Panel")]
     [SerializeField] public GameObject infoPanel;
     [SerializeField] public RectTransform infoRect;
+
+    [Foldout("End Battle Panel")]
+    [SerializeField] public GameObject endBattlePanel;
+    [SerializeField] public RectTransform endBattleRect;
     //[SerializeField] public GameObject infoMessagePanel;
     //[SerializeField] public RectTransform infoMessageRect;
 
@@ -136,5 +141,12 @@ public class CanvasController : MonoBehaviour
     {
         if(loadingPanel == null) return;
         loadingPanel.GetComponent <LoadingPanelAnimator>().HidePanel();
+    }
+
+    // END BATTLE UI
+    public void ShowEndBattlePanel(bool isVictory)
+    {
+        if(endBattlePanel == null) return;
+        endBattlePanel.GetComponent<EndBattleController>().ShowEndBattlePanel(isVictory);
     }
 }

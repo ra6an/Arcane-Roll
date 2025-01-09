@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SetsDB starterSetsDB;
     [SerializeField] private EnemyTeamsDB enemyTeamsDB;
     [SerializeField] private BattleRoomsDB battleRoomsDB;
+    [SerializeField] private AbilitiesDB abilitiesDB;
 
     private GameObject canvas;
 
@@ -19,13 +20,16 @@ public class GameManager : MonoBehaviour
 
     [Foldout("Game Settings")]
     [SerializeField] private MapSettings mapSettings;
+    [SerializeField] private BattleSettings battleSettings;
 
     public GameObject Canvas => canvas;
     public List<List<Node>> Map => _map;
     public MapSettings MapSettings => mapSettings;
+    public BattleSettings BattleSettings => battleSettings;
     public SetsDB StarterSetsDB => starterSetsDB;
     public EnemyTeamsDB EnemyTeamsDB => enemyTeamsDB;
     public BattleRoomsDB BattleRoomsDB => battleRoomsDB;
+    public AbilitiesDB AbilitiesDB => abilitiesDB;
 
     private void Awake()
     {

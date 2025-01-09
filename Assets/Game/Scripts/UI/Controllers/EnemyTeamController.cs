@@ -1,3 +1,4 @@
+using DG.Tweening;
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
@@ -91,6 +92,7 @@ public class EnemyTeamController : MonoBehaviour
         for (int i = childCount - 1; i >= 0; i--)
         {
             Transform child = enemyTeamContainer.transform.GetChild(i);
+            DOTween.Kill(child.transform);
             Destroy(child.gameObject);
         }
     }

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -174,6 +175,7 @@ public class PlayerMonstersController : MonoBehaviour
         for (int i = childCount - 1; i >= 0; i--)
         {
             Transform child = monstersContainerGO.transform.GetChild(i);
+            DOTween.Kill(child.transform);
             Destroy(child.gameObject);
         }
     }

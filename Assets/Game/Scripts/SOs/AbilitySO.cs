@@ -123,12 +123,13 @@ public class AbilitySO : ScriptableObject, IAbility
             ExecuteAttack(selectedEnemyTargets);
             if(lifesteal)
             {
-                AbilityExecutionContext aec = new()
-                {
-                    amount = (int)Mathf.Ceil(attack * 0.3f),
-                };
+                caster.GetComponent<Damageable>().Lifesteal(attack);
+                //AbilityExecutionContext aec = new()
+                //{
+                //    amount = (int)Mathf.Ceil(attack * 0.3f),
+                //};
 
-                caster.GetComponent<Damageable>().Heal(aec);
+                //caster.GetComponent<Damageable>().Heal(aec);
             }
 
             if(type.HasFlag(AbilityType.Debuff))

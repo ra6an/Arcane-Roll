@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
     public void AddPlayerPathNode(Node node)
     {
         currentGameState.playersPath.Add(node);
+        GameManager.Instance.GetComponent<BattleManager>().SetBattleData(node);
     }
 
     public bool CheckIfNodeIsAvailableToPick(Node n)

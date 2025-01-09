@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -53,6 +54,7 @@ public class EnemiesController : MonoBehaviour
         for (int i = childCount - 1; i >= 0; i--)
         {
             Transform child = enemySpawns.transform.GetChild(i);
+            DOTween.Kill(child.transform);
             Destroy(child.gameObject);
         }
         Debug.Log($"Enemy monstera nakon brisanja: {enemySpawns.transform.childCount}");

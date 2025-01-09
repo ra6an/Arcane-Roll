@@ -31,18 +31,12 @@ public class EndTurnPhase : IBattleState
 
     public void UpdateState()
     {
-        if(enemyTeam.Count == 0 || allyTeam.Count == 0)
-        {
-            // End Battle
-            _battleManager.SetBattleIsOver();
-        } else
-        {
-            _battleManager.SetNextTurn();
-            _battleManager.ResetAditionalDiceRolls();
-            HandleAllyTeamBuffsDebuffsAndShields();
-            HandleEnemyTeamBuffsDebuffsAndShields();
-            _battleStateMachine.ChangeState<EnemyPlanningPhase>();
-        }
+        _battleManager.SetNextTurn();
+        _battleManager.ResetAditionalDiceRolls();
+        HandleAllyTeamBuffsDebuffsAndShields();
+        HandleEnemyTeamBuffsDebuffsAndShields();
+        _battleStateMachine.ChangeState<EnemyPlanningPhase>();
+        
     }
 
     public void ExitState()

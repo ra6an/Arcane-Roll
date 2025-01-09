@@ -9,8 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0c0d78c2a76e646943c3eeacb8c0ce, type: 3}
-  m_Name: EnemyTeamsDB
+  m_Script: {fileID: 11500000, guid: 644f11792aad69d44b213e5081c8dca2, type: 3}
+  m_Name: Test
   m_EditorClassIdentifier: 
-  enemyTeams:
-  - {fileID: 11400000, guid: 39f71ca408b2f60478f4ba14f6917b39, type: 2}
+  id: 0
+  enemies:
+  - {fileID: 11400000, guid: ec11f9b7e3017654db54940631b044b1, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  difficulty: 0
+  bossFight: 0

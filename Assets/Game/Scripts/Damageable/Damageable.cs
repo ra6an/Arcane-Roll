@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Damageable : MonoBehaviour, IDamageable
 {
+    private BattleSettings _battleSettings;
     private CombatAnimatorController _combatAnimator;
     [VInspector.ReadOnly]
     [SerializeField]
@@ -19,6 +20,7 @@ public class Damageable : MonoBehaviour, IDamageable
     private void Start()
     {
         _combatAnimator = GetComponent<CombatAnimatorController>();
+        _battleSettings = GameManager.Instance.BattleSettings;
     }
 
     public void Heal(AbilityExecutionContext aec)
@@ -31,6 +33,20 @@ public class Damageable : MonoBehaviour, IDamageable
         } else
         {
             currentHealth += amount;
+        }
+    }
+
+    public void Lifesteal(int _damage)
+    {
+        int healthToRecover = (int)Mathf.Ceil(_damage * _battleSettings.Lifesteal);
+        
+        if (currentHealth + healthToRecover > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        else
+        {
+            currentHealth += healthToRecover;
         }
     }
 
@@ -102,7 +118,8 @@ public class Damageable : MonoBehaviour, IDamageable
 
     public void AddShield(AbilityExecutionContext aec)
     {
-        int amount = aec.lethal ? aec.amount * 2 : aec.amount;
+        bool inLethalRange = IsInLethalRange();
+        int amount = aec.lethal && inLethalRange ? aec.amount * 2 : aec.amount;
 
         currentShield += amount;
     }
@@ -141,7 +158,7 @@ public class Damageable : MonoBehaviour, IDamageable
 
     private bool IsInLethalRange()
     {
-        int amount = (int)Mathf.Ceil(maxHealth * 0.4f);
+        int amount = (int)Mathf.Ceil(maxHealth * _battleSettings.LethalRange);
         bool isLethal = false;
 
         if (currentHealth <= amount) isLethal = true;

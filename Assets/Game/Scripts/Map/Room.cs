@@ -88,6 +88,7 @@ public class Room : MonoBehaviour
             LayerIndex = _node.LayerIndex,
             NodeIndex = _node.NodeIndex,
             PickedPath = true,
+            Rewards = _node.Rewards,
             Connections = _node.Connections,
         };
 

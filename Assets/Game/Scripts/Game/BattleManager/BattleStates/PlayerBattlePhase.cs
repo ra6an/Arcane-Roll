@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerBattlePhase : IBattleState
 {
     private BattleStateMachine _battleStateMachine;
+    private BattleManager _battleManager;
     private CanvasController _canvasController;
     private DiceManager _diceManager;
 
@@ -13,6 +14,7 @@ public class PlayerBattlePhase : IBattleState
     public PlayerBattlePhase(BattleStateMachine _bsm)
     {
         _battleStateMachine = _bsm;
+        _battleManager = GameManager.Instance.GetComponent<BattleManager>();
         _canvasController = GameManager.Instance.Canvas.GetComponent<CanvasController>();
         _diceManager = GameManager.Instance.GetComponent<DiceManager>();
     }

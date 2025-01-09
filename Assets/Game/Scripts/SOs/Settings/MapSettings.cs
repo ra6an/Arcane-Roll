@@ -10,6 +10,9 @@ public class MapSettings : ScriptableObject
     [SerializeField] private int enemyChance = 85;
     [SerializeField] private int treasureChance = 5;
     [SerializeField] private int storeChance = 10;
+    [Header("Rewards Chance")]
+    [SerializeField] private int abilityChance = 5;
+    [SerializeField] private int relicChance = 5;
     [Header("Map Generator Values")]
     [SerializeField] private int layers = 12;
     [Range(1, 3)]
@@ -33,6 +36,9 @@ public class MapSettings : ScriptableObject
     public int EnemyChance => enemyChance;
     public int TreasureChance => treasureChance;
     public int StoreChance => storeChance;
+
+    public int AbilityChance => abilityChance;
+    public int RelicChance => relicChance;
 
     public int Layers => layers;
     public int MinNodes => minNodes;

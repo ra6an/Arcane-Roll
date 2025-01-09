@@ -76,6 +76,6 @@ public class BattleState : IGameState
 
     private bool CheckIfBattleEnded()
     {
-        return GameManager.Instance.GetComponent<BattleManager>().BattleIsOver;
+        return GameManager.Instance.GetComponent<BattleManager>().ExitFromBattle;
     }
 }
