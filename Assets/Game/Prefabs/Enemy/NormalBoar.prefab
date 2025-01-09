@@ -1754,7 +1754,7 @@ GameObject:
   - component: {fileID: 2841258960413549593}
   - component: {fileID: 1071450685520297648}
   - component: {fileID: 9136681546874655764}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: NormalBoar
   m_TagString: Animal
   m_Icon: {fileID: 0}

@@ -76,6 +76,10 @@ namespace INab.Dissolve
         [Tooltip("Materials the effect will be performed on in inverted manner.")]
         public List<Material> materialsInverted = new List<Material>();
 
+        // MOJ DODANI KOD pocinje
+        private Renderer renderer;
+        private Dictionary<Material, MaterialPropertyBlock> materialBlocks = new();
+        // MOJ DODANI KOD zavrsava
 
         #region VFXGraph
         // Delegates used with visual effect graph
@@ -93,6 +97,59 @@ namespace INab.Dissolve
             currentState = initialState;
         }
 
+        // MOJ DODANI KOD pocinje
+        public void Start()
+        {
+            updateValues = true;
+
+            renderer = GetComponentInChildren<Renderer>();
+
+            if (materials.Count == 0)
+            {
+                FindMaterials();
+            }
+
+            if(materialBlocks.Count == 0)
+            {
+                InitializeMaterialBlocks();
+            }
+            if(renderer == null)
+            {
+                SetInitialState();
+            }
+        }
+        private void InitializeMaterialBlocks()
+        {
+            Debug.Log(materials.Count);
+            foreach (var material in materials)
+            {
+                materialBlocks[material] = new MaterialPropertyBlock();
+            }
+
+            foreach (var material in materialsInverted)
+            {
+                materialBlocks[material] = new MaterialPropertyBlock();
+            }
+        }
+
+        private void SetInitialState()
+        {
+            float startValue = (initialState == DissolveState.Dissolved) ? 1f : 0f;
+            float invertedStartValue = 1 - startValue;
+
+            foreach (var material in materials)
+            {
+                ChangeDissolveAmount(material, startValue);
+            }
+
+            foreach (var material in materialsInverted)
+            {
+                ChangeDissolveAmount(material, invertedStartValue);
+            }
+        }
+        // MOJ DODANI KOD zavrsava
+
+        /*
         public void Start()
         {
             updateValues = true;
@@ -128,7 +185,7 @@ namespace INab.Dissolve
             }
 
         }
-
+        */
         public void Update()
         {
             if (manualControl && updateValues)
@@ -239,6 +296,27 @@ namespace INab.Dissolve
         /// </summary>
         /// <param name="material"></param>
         /// <param name="dissolveAmount"></param>
+        /// 
+
+        // MOJ DODANI KOD pocinje
+        private void ChangeDissolveAmount(Material material, float dissolveAmount)
+        {
+            if (materialBlocks.Count == 0) InitializeMaterialBlocks();
+            if(renderer == null)
+            {
+                renderer = GetComponentInChildren<Renderer>();
+            }
+
+            var block = materialBlocks[material];
+            block.SetFloat("_DissolveAmount", dissolveAmount);
+
+            renderer.SetPropertyBlock(block);
+
+            OnPropertyUpdate?.Invoke(dissolveAmount);
+        }
+        // MOJ DODANI KOD zavrsava
+
+        /*
         private void ChangeDissolveAmount(Material material, float dissolveAmount)
         {
             // Change material value
@@ -247,6 +325,7 @@ namespace INab.Dissolve
             // Call event for visual effect
             if (OnPropertyUpdate != null) OnPropertyUpdate(dissolveAmount);
         }
+        */
 
 
         /// <summary>

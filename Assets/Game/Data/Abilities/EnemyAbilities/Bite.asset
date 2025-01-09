@@ -17,7 +17,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: a46ddf644b0369e47b8c9e18f1043579, type: 3}
   description: Attack one enemy with 7 damage.
   type: 1
-  attack: 8
+  attack: 7
   numOfTargetsToAttack: 1
   numOfAttacks: 1
   lifesteal: 0

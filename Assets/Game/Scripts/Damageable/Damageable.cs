@@ -69,6 +69,12 @@ public class Damageable : MonoBehaviour, IDamageable
         {
             currentHealth = 0;
             Die();
+            if(transform.gameObject.layer == LayerMask.NameToLayer("Ally"))
+            {
+                Debug.Log("Disolvamo");
+                AllyCrystalController acc = transform.GetComponent<AllyCrystalController>();
+                acc.Dissolve();
+            }
         }
         else
         {

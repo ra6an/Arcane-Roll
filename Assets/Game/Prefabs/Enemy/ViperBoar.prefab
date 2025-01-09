@@ -657,7 +657,7 @@ GameObject:
   - component: {fileID: 5245161990335802045}
   - component: {fileID: 3592937137617362436}
   - component: {fileID: 7968318436500986950}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: ViperBoar
   m_TagString: Animal
   m_Icon: {fileID: 0}

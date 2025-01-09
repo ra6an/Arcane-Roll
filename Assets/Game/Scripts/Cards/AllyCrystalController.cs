@@ -37,12 +37,13 @@ public class AllyCrystalController : MonoBehaviour
 
     public void Materialize()
     {
-        this.GetComponent<Dissolver>().Materialize();
+        transform.GetComponent<Dissolver>().Materialize();
     }
 
     public void Dissolve()
     {
-        this.GetComponent<Dissolver>().Dissolve();
+        Debug.Log(transform.name);
+        transform.GetComponent<Dissolver>().Dissolve();
     }
 
     private void StartRotation()
