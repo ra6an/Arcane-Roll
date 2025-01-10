@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b11df10b6c6495446a860ab6f7c72071, type: 3}
   m_Name: PhoenixSoul
   m_EditorClassIdentifier: 
-  id: 0
+  id: 10
   abilityName: Phoenix Soul
   icon: {fileID: 21300000, guid: 32dfdc8a9ddd9aa4eb24c12dea823183, type: 3}
   description: Heal all ally monsters for 4 health.
-  type: 6
+  type: 32
   attack: 0
   numOfTargetsToAttack: 0
   numOfAttacks: 0

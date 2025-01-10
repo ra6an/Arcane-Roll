@@ -7,7 +7,9 @@ using UnityEngine;
 public class EnemiesController : MonoBehaviour
 {
     private GameObject enemySpawns;
+    [SerializeField] private Vector3[] oneEnemyPosition;
     [SerializeField] private Vector3[] positions;
+    [SerializeField] private Vector3[] twoEnemiesPositions;
 
     private void Awake()
     {
@@ -20,6 +22,7 @@ public class EnemiesController : MonoBehaviour
         ClearEnemies();
 
         enemySpawns.transform.localPosition = bs.EnemyPositions;
+        int enemiesInTeam = ReturnNumOfEnemiesInTeam(et);
 
         int count = 0;
         foreach(EnemySO e in et.Enemies)
@@ -27,8 +30,20 @@ public class EnemiesController : MonoBehaviour
             if(e != null && e.enemyPrefab != null)
             {
                 GameObject ego = Instantiate(e.enemyPrefab, enemySpawns.transform);
+                Vector3 pickedPoss = new();
 
-                ego.transform.SetLocalPositionAndRotation(positions[count], bs.EnemyRotation);
+                if(enemiesInTeam == 1)
+                {
+                    pickedPoss = oneEnemyPosition[count];
+                } else if(enemiesInTeam == 2)
+                {
+                    pickedPoss = twoEnemiesPositions[count];
+                } else if (enemiesInTeam == 3)
+                {
+                    pickedPoss = positions[count];
+                }
+
+                ego.transform.SetLocalPositionAndRotation(pickedPoss, bs.EnemyRotation);
                 EnemyController enemyControllerCheck = ego.GetComponent<EnemyController>();
 
                 if (enemyControllerCheck == null)
@@ -43,6 +58,19 @@ public class EnemiesController : MonoBehaviour
                 count++;
             }
         }
+    }
+
+    private int ReturnNumOfEnemiesInTeam(EnemyTeamSO et)
+    {
+        int enemiesInTeam = 0;
+
+        foreach(EnemySO enemy in et.Enemies)
+        {
+            if(enemy == null) continue;
+            enemiesInTeam++;
+        }
+
+        return enemiesInTeam;
     }
 
     private void ClearEnemies()

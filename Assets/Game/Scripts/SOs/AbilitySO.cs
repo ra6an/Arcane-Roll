@@ -23,13 +23,13 @@ public class AbilityExecutionContext
 [Flags]
 public enum AbilityType
 {
-    None,
-    Attack,
-    Defense,
-    CrowdControl,
-    Buff,
-    Debuff,
-    Heal,
+    None = 0,
+    Attack = 1 << 0,
+    Defense = 1 << 1,
+    CrowdControl = 1 << 2,
+    Buff = 1 << 3,
+    Debuff = 1 << 4,
+    Heal = 1 << 5,
 }
 
 public enum NumOfTargets

@@ -22,8 +22,8 @@ public class AllyCrystalController : MonoBehaviour
 
     private void Start()
     {
-        StartRotation();
-        StartLevitation();
+        StartCoroutine(StartRotation());
+        StartCoroutine(StartLevitation());
     }
 
     public void SetMonster(CardSO _card, int _position)
@@ -46,16 +46,23 @@ public class AllyCrystalController : MonoBehaviour
         transform.GetComponent<Dissolver>().Dissolve();
     }
 
-    private void StartRotation()
+    private IEnumerator StartRotation()
     {
-        transform.DORotate(new Vector3(0, 0, 360), 2f, RotateMode.LocalAxisAdd)
+        float delay = Random.Range(0, 0.2f);
+        float animDuration = Random.Range(1.8f, 2.2f);
+        yield return new WaitForSeconds(delay);
+        transform.DORotate(new Vector3(0, 0, 360), animDuration, RotateMode.LocalAxisAdd)
             .SetEase(Ease.Linear)
             .SetLoops(-1, LoopType.Incremental);
     }
 
-    private void StartLevitation()
+    private IEnumerator StartLevitation()
     {
-        transform.DOMoveY(transform.position.y + 0.2f, 3f)
+        float delay = Random.Range(0, 0.2f);
+        float animDuration = Random.Range(2.8f, 3.4f);
+        yield return new WaitForSeconds(delay);
+
+        transform.DOMoveY(transform.position.y + 0.2f, animDuration)
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
     }

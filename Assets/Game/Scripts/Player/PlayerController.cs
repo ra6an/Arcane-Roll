@@ -157,4 +157,20 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    public void AddCoins(int _amount)
+    {
+        currentGameState.playersMoney += _amount;
+    }
+
+    public void RemoveCoins(int _amount)
+    {
+        currentGameState.playersMoney -= _amount;
+        if(currentGameState.playersMoney < 0) currentGameState.playersMoney = 0;
+    }
+
+    public bool HaveEnoughMoney(int _amount)
+    {
+        return currentGameState.playersMoney >= _amount;
+    }
 }

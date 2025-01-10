@@ -318,8 +318,11 @@ public class MonsterDetailsController : MonoBehaviour
                 _playerMonstersController = _c.playerMonstersPanel.GetComponent<PlayerMonstersController>();
             }
         }
+        
+        Damageable dmg = diceRollState.Crystal.GetComponent<Damageable>();
+        bool isAlive = dmg.IsAlive();
 
-        if (_playerMonstersController.ActivatedAbility.monster != null && _playerMonstersController.ActivatedAbility.monster.NeedAllyTargets > 0)
+        if (isAlive && _playerMonstersController.ActivatedAbility.monster != null && _playerMonstersController.ActivatedAbility.monster.NeedAllyTargets > 0)
         {
             selectCheckBox.SetActive(true);
             List<Damageable> selectedTargets = _playerMonstersController.ActivatedAbility.allyTargets;

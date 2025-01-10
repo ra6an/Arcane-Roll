@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: BoarViper
   m_EditorClassIdentifier: 
   id: 0
-  sprite: {fileID: 21300000, guid: e7ca1a05fea3b4ac9a70edd5ed82c23e, type: 3}
+  sprite: {fileID: 21300000, guid: 2c5055389c649a745b478cc145711cb1, type: 3}
   enemyName: Viper Boar
   enemyPrefab: {fileID: 2265013438705369228, guid: c47ddd6e997724546b131ba18778f7cb,
     type: 3}
-  health: 50
+  health: 35
   attack: 0
   coinsReward: 25
   abilities:

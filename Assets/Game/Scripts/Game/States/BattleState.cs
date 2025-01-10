@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,20 @@ public class BattleState : IGameState
     public void ExitState()
     {
         ClearAllBattlePrefabs();
+        GetRewards(battleRoom);
+    }
+
+    private void GetRewards(BattleRoomSO _battleRoom)
+    {
+        PlayerController pc = PlayerController.Instance;
+        List<RewardContext> rc = pc.CurrentGameState.playersPath[pc.CurrentGameState.playersPath.Count - 1].Rewards;
+        foreach(RewardContext rewardContext in rc)
+        {
+            if(rewardContext != null && rewardContext.type == RewardType.Coin)
+            {
+                pc.AddCoins(rewardContext.amount);
+            }
+        }
     }
 
     private void ClearAllBattlePrefabs()
