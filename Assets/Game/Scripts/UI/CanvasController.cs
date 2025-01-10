@@ -43,6 +43,10 @@ public class CanvasController : MonoBehaviour
     [Foldout("End Battle Panel")]
     [SerializeField] public GameObject endBattlePanel;
     [SerializeField] public RectTransform endBattleRect;
+
+    [Foldout("State Change Panel")]
+    [SerializeField] public GameObject stateChangePanel;
+    [SerializeField] public RectTransform stateChangeMsgRect;
     //[SerializeField] public GameObject infoMessagePanel;
     //[SerializeField] public RectTransform infoMessageRect;
 
