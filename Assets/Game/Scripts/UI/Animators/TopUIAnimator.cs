@@ -35,54 +35,26 @@ public class TopUIAnimator : MonoBehaviour
 
     public void ShowTopUI()
     {
-        //if(mapButtonRect == null ||  coinsRect == null) return;
-
         if (isVisible) return;
 
-        //mapButtonRect.DOKill();
-        //coinsRect.DOKill();
         RectTransform rt = transform.GetComponent<RectTransform>();
 
         rt.DOKill();
         rt.DOAnchorPos(new Vector2(initialPosition.x - distance, initialPosition.y), animDuration).SetEase(Ease.InOutQuad);
-        //relicsPanel.DOAnchorPos(new Vector2(initialPosition.x + moveDistance, initialPosition.y), animationSpeed).SetEase(Ease.InOutQuad);
+        
         isVisible = true;
-        //mapButtonRect.localScale = Vector3.zero;
-        //mapButtonRect.DOScale(Vector3.one, animDuration)
-        //    .SetEase(Ease.OutBack);
-
-        //coinsRect.localScale = Vector3.zero;
-        //coinsRect.DOScale(Vector3.one, animDuration)
-        //    .SetEase(Ease.OutBack)
-        //    .SetDelay(delayBetweenAnim);
     }
 
     public void HideTopUI()
     {
-        //if (mapButtonRect == null || coinsRect == null) return;
-
         if(!isVisible) return;
 
         RectTransform rt = transform.GetComponent<RectTransform>();
 
         rt.DOKill();
-        //rt.DOMoveX(initialPosition.x + distance, animDuration).SetEase(Ease.OutBack);
+        
         rt.DOAnchorPos(new Vector2(initialPosition.x + distance, initialPosition.y), animDuration).SetEase(Ease.InOutQuad);
         isVisible = false;
-
-        //isVisible = false;
-
-        //mapButtonRect.DOKill();
-        //coinsRect.DOKill();
-
-        //mapButtonRect.localScale = Vector3.one;
-        //mapButtonRect.DOScale(Vector3.zero, animDuration)
-        //    .SetEase(Ease.OutBack);
-
-        //coinsRect.localScale = Vector3.one;
-        //coinsRect.DOScale(Vector3.zero, animDuration)
-        //    .SetEase(Ease.OutBack)
-        //    .SetDelay(delayBetweenAnim);
     }
 
     public void ShowRolls()
@@ -104,7 +76,7 @@ public class TopUIAnimator : MonoBehaviour
         if (rollBtnVisible) return;
 
         rollBtnRect.DOKill();
-        Debug.Log("POKAZI BUTTON ZA ROLL DICES!!!!!!!!!!!!!!!!");
+        
         rollBtnRect.DOScale(Vector2.one, animDuration).SetEase(Ease.OutBack);
         rollBtnVisible = true;
     }

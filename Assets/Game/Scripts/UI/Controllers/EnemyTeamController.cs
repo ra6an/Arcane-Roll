@@ -74,7 +74,7 @@ public class EnemyTeamController : MonoBehaviour
         {
             EnemyDetails eDetails = e.GetComponent<EnemyDetails>();
             Damageable eDamageable = ec.GetEnemyDamageableBySpawnId(eDetails.SpawnId);
-            Debug.Log($"{e.name}: IS ALIVE - {eDamageable.IsAlive()} === have ability - {eDetails.ActiveAbility}");
+            
             if (eDamageable.IsAlive() && eDetails.ActiveAbility != null)
             {
                 enemies.Add(eDetails);

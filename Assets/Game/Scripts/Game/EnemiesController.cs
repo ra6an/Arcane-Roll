@@ -78,20 +78,12 @@ public class EnemiesController : MonoBehaviour
         int childCount = enemySpawns.transform.childCount;
         if (childCount == 0) return;
 
-        Debug.Log($"Brisemo enemy monstere u UI - trenutno ima {childCount}");
         for (int i = childCount - 1; i >= 0; i--)
         {
             Transform child = enemySpawns.transform.GetChild(i);
             DOTween.Kill(child.transform);
             Destroy(child.gameObject);
         }
-        Debug.Log($"Enemy monstera nakon brisanja: {enemySpawns.transform.childCount}");
-        //if (enemySpawns.transform.childCount == 0) return;
-
-        //foreach(Transform child in enemySpawns.transform)
-        //{
-        //    Destroy(child.gameObject);
-        //}
     }
 
     public void ClearEnemiesPrefab()

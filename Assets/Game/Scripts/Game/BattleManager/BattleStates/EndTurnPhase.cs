@@ -12,6 +12,8 @@ public class EndTurnPhase : IBattleState
     List<Damageable> enemyTeam;
     List<Damageable> allyTeam;
 
+    bool stateChanged = false;
+
     public bool canChangeState { get; set; }
 
     public EndTurnPhase(BattleStateMachine _bsm)
@@ -31,17 +33,20 @@ public class EndTurnPhase : IBattleState
 
     public void UpdateState()
     {
-        _battleManager.SetNextTurn();
-        _battleManager.ResetAditionalDiceRolls();
-        HandleAllyTeamBuffsDebuffsAndShields();
-        HandleEnemyTeamBuffsDebuffsAndShields();
-        _battleStateMachine.ChangeState<EnemyPlanningPhase>();
-        
+        if(!stateChanged)
+        {
+            _battleManager.SetNextTurn();
+            _battleManager.ResetAditionalDiceRolls();
+            HandleAllyTeamBuffsDebuffsAndShields();
+            HandleEnemyTeamBuffsDebuffsAndShields();
+            _battleStateMachine.ChangeState<EnemyPlanningPhase>();
+            stateChanged = true;
+        }
     }
 
     public void ExitState()
     {
-        Debug.Log("Izlaz iz endturna");
+        stateChanged = false;
     }
 
     public void ChangeState()

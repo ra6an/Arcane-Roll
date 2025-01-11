@@ -45,3 +45,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: ArtSpriteLayer
+    uniqueID: 2763070099
+    locked: 0
+  - name: CardLayer
+    uniqueID: 4233860631
+    locked: 0

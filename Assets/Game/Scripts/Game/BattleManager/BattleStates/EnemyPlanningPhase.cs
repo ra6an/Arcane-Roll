@@ -19,7 +19,8 @@ public class EnemyPlanningPhase : IBattleState
     public void EnterState()
     {
         canChangeState = false;
-        GameManager.Instance.GetComponent<BattleManager>().StartCoroutine(SetEnemiesAttack());
+        //GameManager.Instance.GetComponent<BattleManager>().StartCoroutine(SetEnemiesAttack());
+        _enemiesController.SetEnemiesAttacks();
     }
 
     public void UpdateState()
@@ -33,7 +34,7 @@ public class EnemyPlanningPhase : IBattleState
 
     public void ExitState()
     {
-        Debug.Log("Exiting enemy prep phase!");
+        _enemiesController.HideEnemiesAbilitieDetails();
     }
 
     private IEnumerator SetEnemiesAttack()

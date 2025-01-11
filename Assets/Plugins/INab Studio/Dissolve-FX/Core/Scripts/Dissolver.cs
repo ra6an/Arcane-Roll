@@ -120,7 +120,6 @@ namespace INab.Dissolve
         }
         private void InitializeMaterialBlocks()
         {
-            Debug.Log(materials.Count);
             foreach (var material in materials)
             {
                 materialBlocks[material] = new MaterialPropertyBlock();

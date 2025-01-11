@@ -37,7 +37,6 @@ public class PlayerBattlePhase : IBattleState
 
     public void ExitState()
     {
-        Debug.Log("Izlazimo iz player battle phasea!");
         _diceManager.ResetAllDiceRollStates();
     }
 

@@ -124,12 +124,6 @@ public class AbilitySO : ScriptableObject, IAbility
             if(lifesteal)
             {
                 caster.GetComponent<Damageable>().Lifesteal(attack);
-                //AbilityExecutionContext aec = new()
-                //{
-                //    amount = (int)Mathf.Ceil(attack * 0.3f),
-                //};
-
-                //caster.GetComponent<Damageable>().Heal(aec);
             }
 
             if(type.HasFlag(AbilityType.Debuff))
@@ -160,7 +154,6 @@ public class AbilitySO : ScriptableObject, IAbility
         // Aktivacija Defense-a
         if (type.HasFlag(AbilityType.Defense))
         {
-            Debug.Log($"Postavlja defense!!! A BROJ TARGETA JE: {allyTargets.Count}");
             List<Damageable> selectedAllyTargets = defenseRandom ? PickTargets(allyTargets) : allyTargets;
             if (selectedAllyTargets.Count == 0) return;
             ExecuteDefense(selectedAllyTargets);
@@ -195,7 +188,6 @@ public class AbilitySO : ScriptableObject, IAbility
     {
         foreach(Damageable target in targets)
         {
-            Debug.Log($"{target.name} is damaged with {attack} DMG.");
             AbilityExecutionContext aec = new()
             {
                 amount = attack,
@@ -211,7 +203,6 @@ public class AbilitySO : ScriptableObject, IAbility
     {
         foreach (Damageable target in targets)
         {
-            Debug.Log($"{target.name} got {defense} shield.");
             AbilityExecutionContext aec = new()
             {
                 amount = defense,
@@ -250,7 +241,6 @@ public class AbilitySO : ScriptableObject, IAbility
     {
         foreach (Damageable target in targets)
         {
-            Debug.Log($"{target.name} is healed with {attack} health.");
             AbilityExecutionContext aec = new()
             {
                 amount = heal,

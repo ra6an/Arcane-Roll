@@ -126,6 +126,7 @@ public class EnemyDetails : MonoBehaviour
 
     public void SetAbilityDetails(int abilityPosition, List<Damageable> _targets = null)
     {
+        if (this.transform == null) return;
         if (abilityPosition == -1 || abilityPosition > enemyData.Abilities.Length)
         {
             activeAbility = null;
@@ -160,6 +161,7 @@ public class EnemyDetails : MonoBehaviour
         foreach (Transform t in targetContainerGO.transform)
         {
             if (t == null) continue;
+            DOTween.Kill(t.transform);
             Destroy(t.gameObject);
         }
     }

@@ -29,7 +29,6 @@ public class EnemyBattlePhase : IBattleState
 
     public void EnterState()
     {
-        Debug.Log("U enemy battle phaseu smo");
         enemies = _enemyTeamController.GetEnemyDetailsWithActiveAbility();
         canChangeState = false;
     }
@@ -52,7 +51,6 @@ public class EnemyBattlePhase : IBattleState
 
     public void ExitState()
     {
-        Debug.Log("Izlazak iz enemy battle phasea!");
         enemies.Clear();
         enemiesThatTriggeredAbility.Clear();
     }
@@ -66,7 +64,7 @@ public class EnemyBattlePhase : IBattleState
     {
         FilterAliveEnemies();
         EnemyDetails e = enemies[0];
-        Debug.Log(enemies.Count);
+        
         if (e != null)
         {
             processingActivatedAbility = true;

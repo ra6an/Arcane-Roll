@@ -12,19 +12,16 @@ public class CombatAnimatorController : MonoBehaviour
 
     public void AttackAnimation()
     {
-        Debug.Log("Postavljamo animaciju attack");
         animator.SetTrigger("Attack");
     }
 
     public void TakeDamageAnimation()
     {
         animator.SetTrigger("Hit");
-        Debug.Log("Postavljamo animaciju hit");
     }
 
     public void DieAnimation()
     {
-        Debug.Log("Postavljamo animaciju die");
         animator.SetBool("Dead", true);
     }
 }

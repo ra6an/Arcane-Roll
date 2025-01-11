@@ -53,13 +53,12 @@ public class Damageable : MonoBehaviour, IDamageable
     public void TakeDamage(AbilityExecutionContext aec)
     {
         int amount = aec.amount;
-        Debug.Log($"Damage is: {amount}");
+        
         if (aec.lethal)
         {
             bool isInLethalRange = IsInLethalRange();
 
             amount = isInLethalRange ? amount * 2 : amount;
-            Debug.Log($"Damage is lethal: {amount}");
         }
 
         
@@ -71,7 +70,6 @@ public class Damageable : MonoBehaviour, IDamageable
             Die();
             if(transform.gameObject.layer == LayerMask.NameToLayer("Ally"))
             {
-                Debug.Log("Disolvamo");
                 AllyCrystalController acc = transform.GetComponent<AllyCrystalController>();
                 acc.Dissolve();
             }
@@ -139,7 +137,6 @@ public class Damageable : MonoBehaviour, IDamageable
     {
         maxHealth = amount;
         currentHealth = amount;
-        //Debug.Log(currentHealth.ToString());
     }
 
     public int GetHealth()
@@ -154,8 +151,6 @@ public class Damageable : MonoBehaviour, IDamageable
 
     protected virtual void Die()
     {
-        Debug.Log($"{gameObject.name} died.");
-
         if( _combatAnimator != null )
         {
             _combatAnimator.DieAnimation();

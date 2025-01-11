@@ -29,10 +29,6 @@ public class PlayerPreparationPhase : IBattleState
     {
         canChangeState = false;
         firstRoll = true;
-        if(_enemiesController != null )
-        {
-            GameManager.Instance.GetComponent<BattleManager>().StartCoroutine(HideAbilities());
-        }
 
         if(_battleManager != null )
         {
@@ -45,7 +41,6 @@ public class PlayerPreparationPhase : IBattleState
             pmc.ShowMonstersDiceViewImage();
             TopUIAnimator tuia = _canvasController.UIButtonsPanel.GetComponent<TopUIAnimator>();
             tuia.ShowRolls();
-            //tuia.ShowRollBtn();
         }
     }
 
@@ -68,7 +63,6 @@ public class PlayerPreparationPhase : IBattleState
 
     public void ExitState()
     {
-        Debug.Log("Exiting player prep phase!");
         // SAKRITI ROLLS UI
         TopUIAnimator tuia = _canvasController.UIButtonsPanel.GetComponent<TopUIAnimator>();
         tuia.ShowRolls();

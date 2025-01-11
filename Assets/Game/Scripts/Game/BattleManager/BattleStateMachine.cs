@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class BattleStateMachine 
 {
+    private bool isChangingState = false;
     private CanvasController _canvasController;
     public static BattleStateMachine Instance { get; private set; }
     public IBattleState CurrentBattleState { get; private set; }
@@ -46,21 +47,23 @@ public class BattleStateMachine
     public void Update()
     {
         if (CurrentBattleState == null) return;
+
+        isChangingState = true;
+
         CurrentBattleState?.UpdateState();
     }
 
     public void ChangeState<T>() where T : IBattleState
     {
-        CurrentBattleState?.ExitState();
+        //CurrentBattleState?.ExitState();
 
-        OnBattleStateChanged.Invoke(typeof(T));
+        //OnBattleStateChanged.Invoke(typeof(T));
 
-        CurrentBattleState = _battleStates[typeof(T)];
-        GameManager.Instance.StartCoroutine(ShowUIAndChangeState());
-        //CurrentBattleState.EnterState();
+        //CurrentBattleState = _battleStates[typeof(T)];
+        GameManager.Instance.StartCoroutine(ShowUIAndChangeState(typeof(T)));
     }
 
-    private IEnumerator ShowUIAndChangeState()
+    private IEnumerator ShowUIAndChangeState(Type nextStateType)
     {
         if(_canvasController == null)
         {
@@ -69,7 +72,7 @@ public class BattleStateMachine
 
         RectTransform scmr = _canvasController.stateChangeMsgRect;
         scmr.localScale = Vector3.zero;
-        scmr.GetComponent<TextMeshProUGUI>().text = GetStateToString();
+        scmr.GetComponent<TextMeshProUGUI>().text = GetStateToString(nextStateType);
         scmr.gameObject.SetActive(true);
 
         scmr.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutQuad);
@@ -78,37 +81,45 @@ public class BattleStateMachine
             
         scmr.DOScale(Vector3.zero, 0.3f).SetEase(Ease.OutQuad).OnComplete(() =>
         {
+            CurrentBattleState?.ExitState();
+
+            OnBattleStateChanged.Invoke(nextStateType);
+            
+            CurrentBattleState = _battleStates[nextStateType];
+
             CurrentBattleState.EnterState();
+
             scmr.gameObject.SetActive(false);
+
+            isChangingState = false;
         });
-        
     }
 
-    private string GetStateToString()
+    private string GetStateToString(Type nextStateType)
     {
         string stateToString = "";
 
-        if(CurrentBattleState != null && CurrentBattleState.GetType() == typeof(EnemyPlanningPhase))
+        if(nextStateType != null && nextStateType == typeof(EnemyPlanningPhase))
         {
             stateToString = "Enemy Prep Phase";
         }
 
-        if(CurrentBattleState != null && CurrentBattleState.GetType() == typeof(PlayerPreparationPhase))
+        if(nextStateType != null && nextStateType == typeof(PlayerPreparationPhase))
         {
             stateToString = "Player Prep Phase";
         }
 
-        if (CurrentBattleState != null && CurrentBattleState.GetType() == typeof(PlayerBattlePhase))
+        if (nextStateType != null && nextStateType == typeof(PlayerBattlePhase))
         {
             stateToString = "Player Combat Phase";
         }
 
-        if (CurrentBattleState != null && CurrentBattleState.GetType() == typeof(EnemyBattlePhase))
+        if (nextStateType != null && nextStateType == typeof(EnemyBattlePhase))
         {
             stateToString = "Enemy Combat Phase";
         }
 
-        if (CurrentBattleState != null && CurrentBattleState.GetType() == typeof(EndTurnPhase))
+        if (nextStateType != null && nextStateType == typeof(EndTurnPhase))
         {
             stateToString = "End Turn";
         }
