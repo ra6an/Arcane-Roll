@@ -26,8 +26,22 @@ public class PlayerTeamController : MonoBehaviour
             // INSTANTIATE 3D CRYSTAL AND SETUP SCRIPT FOR MONSTER
             GameObject go = Instantiate(teamMonsterPrefab, teamContainer.transform);
             AllyCrystalController acc = go.GetComponent<AllyCrystalController>();
+
+            if (acc == null)
+            {
+                go.AddComponent<AllyCrystalController>();
+                acc = go.GetComponent<AllyCrystalController>();
+            }
+
             acc.SetMonster(currentCard, i);
-            
+
+            Effectable eff = go.GetComponent<Effectable>();
+
+            if (eff == null)
+            {
+                go.AddComponent<Effectable>();
+            }
+
             CrystalsContainer cc = _crystalsContainerGO.GetComponent<CrystalsContainer>();
             Vector3 availablePos = cc.crystalsPositions[i];
             Vector3 ccPos = cc.transform.position;

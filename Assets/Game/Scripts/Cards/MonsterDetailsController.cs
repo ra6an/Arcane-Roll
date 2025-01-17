@@ -446,7 +446,6 @@ public class MonsterDetailsController : MonoBehaviour
     }
     public void SetDiceRollStateEnemyTarget(Damageable d)
     {
-        Debug.Log($"Prije dodavanja {d}");
         diceRollState.SetEnemyTarget(d);
     }
 

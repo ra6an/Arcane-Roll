@@ -51,6 +51,13 @@ public class EnemiesController : MonoBehaviour
                     ego.AddComponent<EnemyController>();
                     Debug.LogWarning("Enemy Prefab does not have EnemyController.cs Script!!!");
                 }
+
+                Effectable eff = ego.GetComponent<Effectable>();
+
+                if(eff == null)
+                {
+                    ego.AddComponent<Effectable>();
+                }
             
                 EnemyController enemyController = ego.GetComponent<EnemyController>();
                 enemyController.SetEnemyData(e, count);

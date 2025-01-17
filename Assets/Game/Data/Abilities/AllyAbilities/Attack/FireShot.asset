@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b11df10b6c6495446a860ab6f7c72071, type: 3}
   m_Name: FireShot
   m_EditorClassIdentifier: 
-  id: 0
+  id: 2
   abilityName: Fire Shot
   icon: {fileID: 21300000, guid: c84226b74f7e6d844944865021d3610a, type: 3}
-  description: Deal 7 damage to one enemy.
-  type: 1
+  description: Deal 7 damage to one enemy and apply 2 Burn.
+  type: 33
   attack: 7
   numOfTargetsToAttack: 1
   numOfAttacks: 0
@@ -24,6 +24,7 @@ MonoBehaviour:
   execute: 0
   piercing: 0
   attackRandom: 0
+  applyEffectToTarget: 1
   defense: 0
   numOfTargetsToDefense: 0
   lethalDefenseBoost: 0
@@ -36,10 +37,16 @@ MonoBehaviour:
   numOfTargetsToBuff: 0
   buffDuration: 1
   buffRandom: 0
+  applyDebuffOnSameTarget: 0
   debuff: 0
   numOfTargetsToDebuff: 0
   debuffDuration: 1
   debuffRandom: 0
+  status: 1
+  numOfTargetsToStatus: 1
+  chanceToApplyStatus: 0.5
+  statusDuration: 2
+  statusRandom: 0
   heal: 0
   numOfTargetsToHeal: 0
   lethalHealBoost: 0

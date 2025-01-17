@@ -12504,22 +12504,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: CardParalax
       objectReference: {fileID: 0}
+    - target: {fileID: 5731272752230212495, guid: 5375cab1a1271a9419780691d0a12a5e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3781851054747139552, guid: 5375cab1a1271a9419780691d0a12a5e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 6139182718542072161, guid: 5375cab1a1271a9419780691d0a12a5e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5063528590220645578, guid: 5375cab1a1271a9419780691d0a12a5e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5375cab1a1271a9419780691d0a12a5e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

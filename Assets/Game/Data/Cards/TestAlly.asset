@@ -19,9 +19,9 @@ MonoBehaviour:
   rarity: 0
   health: 50
   abilities:
-  - {fileID: 11400000, guid: b28c543ada899ba4588cc6b55d8b70b5, type: 2}
-  - {fileID: 11400000, guid: b28c543ada899ba4588cc6b55d8b70b5, type: 2}
-  - {fileID: 11400000, guid: b28c543ada899ba4588cc6b55d8b70b5, type: 2}
-  - {fileID: 11400000, guid: b28c543ada899ba4588cc6b55d8b70b5, type: 2}
-  - {fileID: 11400000, guid: b28c543ada899ba4588cc6b55d8b70b5, type: 2}
-  - {fileID: 11400000, guid: b28c543ada899ba4588cc6b55d8b70b5, type: 2}
+  - {fileID: 11400000, guid: a88528097dcd42f44b76ace7e94543b7, type: 2}
+  - {fileID: 11400000, guid: a88528097dcd42f44b76ace7e94543b7, type: 2}
+  - {fileID: 11400000, guid: a88528097dcd42f44b76ace7e94543b7, type: 2}
+  - {fileID: 11400000, guid: a88528097dcd42f44b76ace7e94543b7, type: 2}
+  - {fileID: 11400000, guid: a88528097dcd42f44b76ace7e94543b7, type: 2}
+  - {fileID: 11400000, guid: a88528097dcd42f44b76ace7e94543b7, type: 2}

@@ -34,7 +34,6 @@ public class ParalaxCardController : MonoBehaviour
     private Vector3 initialMousePosition;
     private Vector3 currentRotation;
 
-    private bool isDragging = false;
     private Coroutine resetRotationCoroutine;
 
     public void SetupCard(CardSO _cd)
@@ -98,8 +97,6 @@ public class ParalaxCardController : MonoBehaviour
     {
         initialMousePosition = Input.mousePosition;
         currentRotation = transform.localEulerAngles;
-
-        isDragging = true;
     }
 
     void OnMouseDrag()
@@ -114,8 +111,6 @@ public class ParalaxCardController : MonoBehaviour
 
     void OnMouseUp()
     {
-        isDragging = false;
-
         transform.DOLocalRotate(Vector3.zero, 0.5f).SetEase(Ease.OutQuad);
     }
 }

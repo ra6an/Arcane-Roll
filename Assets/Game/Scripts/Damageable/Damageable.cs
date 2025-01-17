@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -5,8 +6,10 @@ using UnityEngine;
 
 public class Damageable : MonoBehaviour, IDamageable
 {
+    private List<EffectBase> effects = new();
     private BattleSettings _battleSettings;
     private CombatAnimatorController _combatAnimator;
+    private Effectable _effectable;
     [VInspector.ReadOnly]
     [SerializeField]
     private int maxHealth;
@@ -20,6 +23,7 @@ public class Damageable : MonoBehaviour, IDamageable
     private void Start()
     {
         _combatAnimator = GetComponent<CombatAnimatorController>();
+        _effectable = GetComponent<Effectable>();
         _battleSettings = GameManager.Instance.BattleSettings;
     }
 
@@ -52,7 +56,9 @@ public class Damageable : MonoBehaviour, IDamageable
 
     public void TakeDamage(AbilityExecutionContext aec)
     {
-        int amount = aec.amount;
+        int amount = _effectable.ModifyReceiveDamage(aec.amount);
+
+        Debug.Log($"Damage to take: {amount} --OLD ({aec.amount})--.");
         
         if (aec.lethal)
         {
@@ -60,19 +66,12 @@ public class Damageable : MonoBehaviour, IDamageable
 
             amount = isInLethalRange ? amount * 2 : amount;
         }
-
         
         int damageAfterShield = aec.piercing ? amount : TakeShieldDamage(amount);
 
         if (currentHealth - damageAfterShield <= 0)
         {
-            currentHealth = 0;
-            Die();
-            if(transform.gameObject.layer == LayerMask.NameToLayer("Ally"))
-            {
-                AllyCrystalController acc = transform.GetComponent<AllyCrystalController>();
-                acc.Dissolve();
-            }
+            HandleDie();
         }
         else
         {
@@ -165,5 +164,44 @@ public class Damageable : MonoBehaviour, IDamageable
         if (currentHealth <= amount) isLethal = true;
 
         return isLethal;
+    }
+
+    public void AddEffect(EffectBase _effToAdd, int _duration)
+    {
+        if (_effToAdd == null || _duration <= 0) return;
+
+        _effectable.AddNewEffect(_effToAdd, _duration);
+    }
+
+    public int ModifyAttack(int value)
+    {
+        return _effectable.ModifyAttackValue(value);
+    }
+
+    internal void ApplyStatus(int statusDmg)
+    {
+        if (currentHealth - statusDmg <= 0)
+        {
+            HandleDie();
+        }
+        else
+        {
+            currentHealth -= statusDmg;
+            if (_combatAnimator != null)
+            {
+                _combatAnimator.TakeDamageAnimation();
+            }
+        }
+    }
+
+    private void HandleDie()
+    {
+        currentHealth = 0;
+        Die();
+        if (transform.gameObject.layer == LayerMask.NameToLayer("Ally"))
+        {
+            AllyCrystalController acc = transform.GetComponent<AllyCrystalController>();
+            acc.Dissolve();
+        }
     }
 }

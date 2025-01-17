@@ -29,7 +29,8 @@ public enum AbilityType
     CrowdControl = 1 << 2,
     Buff = 1 << 3,
     Debuff = 1 << 4,
-    Heal = 1 << 5,
+    Status = 1 << 5,
+    Heal = 1 << 6,
 }
 
 public enum NumOfTargets
@@ -49,24 +50,35 @@ public enum CC
     Confuse,
 }
 
+[Flags]
 public enum Buff
 {
-    None,
-    Strength,
-    Vitality,
-    Immortal,
-    Unstoppable,
-    Piercing,
-    Divinity,
+    None = 0,
+    Strength = 1 << 0,
+    Vitality = 1 << 1,
+    Immortal = 1 << 2,
+    Unstoppable = 1 << 3,
+    Piercing = 1 << 4,
+    Divinity = 1 << 5,
 }
 
+[Flags]
 public enum Debuff
 {
-    None,
-    Vulnerable,
-    Weak,
-    Shatter,
-    Depressed,
+    None = 0,
+    Vulnerable = 1 << 0,
+    Weak = 1 << 1,
+    Shatter = 1 << 2,
+    Depressed = 1 << 3,
+}
+
+[Flags]
+public enum Status
+{
+    None = 0,
+    Burn = 1 << 0,
+    Poison = 1 << 1,
+    Chill = 1 << 2,
 }
 
 [CreateAssetMenu(menuName = "Data/Ability")]
@@ -85,6 +97,7 @@ public class AbilitySO : ScriptableObject, IAbility
     public bool execute = false;
     public bool piercing = false;
     public bool attackRandom = false;
+    public bool applyEffectToTarget = false;
     [Header("Defense")]
     public int defense;
     public NumOfTargets numOfTargetsToDefense;
@@ -100,11 +113,18 @@ public class AbilitySO : ScriptableObject, IAbility
     public NumOfTargets numOfTargetsToBuff;
     public int buffDuration = 1;
     public bool buffRandom = false;
+    public bool applyDebuffOnSameTarget = false;
     [Header("Debuff")]
     public Debuff debuff;
     public NumOfTargets numOfTargetsToDebuff;
     public int debuffDuration = 1;
     public bool debuffRandom = false;
+    [Header("Status")]
+    public Status status;
+    public NumOfTargets numOfTargetsToStatus;
+    public float chanceToApplyStatus = 1f;
+    public int statusDuration = 1;
+    public bool statusRandom = false;
     [Header("Heal")]
     public int heal;
     public NumOfTargets numOfTargetsToHeal;
@@ -120,7 +140,7 @@ public class AbilitySO : ScriptableObject, IAbility
             List<Damageable> selectedEnemyTargets = attackRandom ? PickTargets(enemyTargets) : enemyTargets;
             if (selectedEnemyTargets.Count == 0) return;
             // Logika za napad
-            ExecuteAttack(selectedEnemyTargets);
+            ExecuteAttack(caster, selectedEnemyTargets);
             if(lifesteal)
             {
                 caster.GetComponent<Damageable>().Lifesteal(attack);
@@ -134,9 +154,14 @@ public class AbilitySO : ScriptableObject, IAbility
             {
                 ExecuteCc(selectedEnemyTargets);
             }
+
+            if (type.HasFlag(AbilityType.Status) && applyEffectToTarget)
+            {
+                ExecuteStatus(selectedEnemyTargets);
+            }
         }
         // Aktivacija Debuffa
-        if(type.HasFlag(AbilityType.Debuff) && !type.HasFlag(AbilityType.Attack))
+        if(type.HasFlag(AbilityType.Debuff) && !type.HasFlag(AbilityType.Attack) && !applyDebuffOnSameTarget)
         {
             List<Damageable> selectedEnemyTargets = debuffRandom ? PickTargets(enemyTargets) : enemyTargets;
             if (selectedEnemyTargets.Count == 0) return;
@@ -149,7 +174,7 @@ public class AbilitySO : ScriptableObject, IAbility
             List<Damageable> selectedEnemyTargets = ccRandom ? PickTargets(enemyTargets) : enemyTargets;
             if (selectedEnemyTargets.Count == 0) return;
 
-            ExecuteDebuff(selectedEnemyTargets);
+            ExecuteCc(selectedEnemyTargets);
         }
         // Aktivacija Defense-a
         if (type.HasFlag(AbilityType.Defense))
@@ -176,21 +201,40 @@ public class AbilitySO : ScriptableObject, IAbility
             }
         }
         // Aktivacija Buff-a
-        if(type.HasFlag(AbilityType.Buff) && !(type.HasFlag(AbilityType.Defense) || type.HasFlag(AbilityType.Heal)))
+        if(type.HasFlag(AbilityType.Buff) && !(type.HasFlag(AbilityType.Defense) || type.HasFlag(AbilityType.Heal) || type.HasFlag(AbilityType.Attack)))
         {
             List<Damageable> selectedAllyTargets = buffRandom ? PickTargets(allyTargets) : allyTargets;
             if (selectedAllyTargets.Count == 0) return;
             ExecuteBuff(selectedAllyTargets);
+
+            if(type.HasFlag(AbilityType.Debuff) && applyDebuffOnSameTarget)
+            {
+                ExecuteDebuff(selectedAllyTargets);
+            }
+        }
+        // Aktivacija Status Effect-a
+        if(type.HasFlag(AbilityType.Status) && !(type.HasFlag(AbilityType.Attack)))
+        {
+            List<Damageable> selectedEnemyTargets = statusRandom ? PickTargets(enemyTargets) : enemyTargets;
+            if (selectedEnemyTargets.Count == 0) return;
+            ExecuteStatus(selectedEnemyTargets);
         }
     }
 
-    private void ExecuteAttack(List<Damageable> targets)
+    private void ExecuteAttack(GameObject _caster, List<Damageable> targets)
     {
-        foreach(Damageable target in targets)
+        Damageable dmg = _caster.GetComponent<Damageable>();
+
+        if (dmg == null) return;
+
+        int modifiedAttackValue = dmg.ModifyAttack(attack);
+        Debug.Log($"Casters modified attack: {modifiedAttackValue}.");
+
+        foreach (Damageable target in targets)
         {
             AbilityExecutionContext aec = new()
             {
-                amount = attack,
+                amount = modifiedAttackValue,
                 lethal = execute,
                 piercing = piercing
             };
@@ -218,6 +262,21 @@ public class AbilitySO : ScriptableObject, IAbility
         foreach (Damageable target in targets)
         {
             Debug.Log($"{target.name} is buffed with {buff}.");
+            EffectBase _buff = null;
+
+            if(buff == Buff.Strength)
+            {
+                _buff = new Strength();
+            }
+            if(buff == Buff.Vitality)
+            {
+                _buff = new Vitality();
+            }
+
+            if(_buff != null)
+            {
+                target.AddEffect(_buff, buffDuration);
+            }
         }
     }
 
@@ -226,6 +285,22 @@ public class AbilitySO : ScriptableObject, IAbility
         foreach (Damageable target in targets)
         {
             Debug.Log($"{target.name} is debuffed with {debuff}.");
+            EffectBase _debuff = null;
+            int _duration = debuffDuration;
+
+            if(debuff == Debuff.Vulnerable)
+            {
+                _debuff = new Vulnerable();
+            }
+            if(debuff == Debuff.Weak)
+            {
+                _debuff = new Weak();
+            }
+
+            if(_debuff != null)
+            {
+                target.AddEffect(_debuff, _duration);
+            }
         }
     }
 
@@ -234,6 +309,40 @@ public class AbilitySO : ScriptableObject, IAbility
         foreach (Damageable target in targets)
         {
             Debug.Log($"{target.name} is cc-ed with {crowdControlType}.");
+        }
+    }
+
+    private void ExecuteStatus(List<Damageable> targets)
+    {
+        EffectBase _status = null;
+        int _duration = statusDuration;
+
+        // Postavljamo Status Effekat
+        if (status.HasFlag(Status.Burn))
+        { 
+            _status = new Burn();
+        }
+        if(status.HasFlag(Status.Poison))
+        {
+            _status = new Poison();
+        }
+        if(status.HasFlag(Status.Chill))
+        {
+            _status = new Chill();
+        }
+
+        if (_status == null) return;
+
+        foreach (Damageable target in targets)
+        {
+            Debug.Log($"Applying Status: {status} for {statusDuration} turns on -- {target.gameObject.name} --!");
+            System.Random rnd = new();
+            float rndNum = (float)rnd.NextDouble();
+
+            if (rndNum <= chanceToApplyStatus)
+            {
+                target.AddEffect(_status, _duration);
+            }
         }
     }
 
@@ -325,7 +434,7 @@ public class AbilitySO : ScriptableObject, IAbility
 
         if (type.HasFlag(AbilityType.Attack) && !attackRandom) needTargets = ConvertEnumToInt(numOfTargetsToAttack);
         if (type.HasFlag(AbilityType.CrowdControl) && !ccRandom) needTargets = ConvertEnumToInt(numOfTargetsToCC);
-        if (type.HasFlag(AbilityType.Debuff) && !debuffRandom) needTargets = ConvertEnumToInt(numOfTargetsToDebuff);
+        if (type.HasFlag(AbilityType.Debuff) && !debuffRandom && !applyDebuffOnSameTarget) needTargets = ConvertEnumToInt(numOfTargetsToDebuff);
 
         return needTargets;
     }
