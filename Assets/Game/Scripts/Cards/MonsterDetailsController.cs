@@ -16,6 +16,7 @@ public class MonsterDetailsController : MonoBehaviour
     private DiceRollState diceRollState;
     [SerializeField] private GameObject monsterIconGO;
     [SerializeField] private GameObject skillsContainerGO;
+    [SerializeField] private TextMeshProUGUI monsterNameText;
 
     [Header("Health & Shield")]
     [SerializeField] private int currentHealth;
@@ -141,6 +142,7 @@ public class MonsterDetailsController : MonoBehaviour
         id = num;
         cardDetails = cd;
         monsterIconGO.GetComponent<Image>().sprite = cardDetails.art;
+        monsterNameText.text = cd.cardName;
         //currentHealth = cardDetails.health;
 
         SetHealth(currentHealth);
