@@ -19,6 +19,7 @@ public class SkillController : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [SerializeField] private TextMeshProUGUI abilityTitleText;
     [SerializeField] private TextMeshProUGUI abilityDescriptionText;
     [SerializeField] private GameObject abilityFillGO;
+    [SerializeField] private GameObject abilityFillNone;
 
     public AbilitySO Skill => skill;
 
@@ -74,14 +75,21 @@ public class SkillController : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void SetSkillActive()
     {
-        activeShaderGO.SetActive(true);
-        abilityFillGO.SetActive(true);
+        //activeShaderGO.SetActive(true);
+        if(skill != null && !string.IsNullOrEmpty(skill.abilityName))
+        {
+            abilityFillGO.SetActive(true);
+        } else
+        {
+            abilityFillNone.SetActive(true);
+        }
     }
 
     public void SetSkillInactive()
     {
-        activeShaderGO.SetActive(false);
+        //activeShaderGO.SetActive(false);
         abilityFillGO.SetActive(false);
+        abilityFillNone.SetActive(false);
     }
 
     private void GenerateAbilityTypeIcons(AbilityType _a)

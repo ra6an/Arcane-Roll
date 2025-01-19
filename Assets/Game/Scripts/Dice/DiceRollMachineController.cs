@@ -8,11 +8,13 @@ public class DiceRollMachineController : MonoBehaviour
     private CardSO cardData;
     private bool startedRolling = false;
     [SerializeField] private GameObject diceGO;
+    [SerializeField] private GameObject worldViewImageReferenceGO;
 
     public CardSO CardData => cardData;
 
     private void Update()
     {
+        FollowDice();
         if(startedRolling)
         {
             Dice _dice = diceGO.GetComponent<Dice>();
@@ -42,5 +44,10 @@ public class DiceRollMachineController : MonoBehaviour
         if (_c == null) return;
 
         cardData = _c;
+    }
+
+    private void FollowDice()
+    {
+        worldViewImageReferenceGO.transform.localPosition = diceGO.transform.localPosition;
     }
 }

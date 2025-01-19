@@ -198,6 +198,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 569517}
   m_CullTransparentMesh: 1
+--- !u!4 &3054864 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8696229665581631089, guid: 498ddc5b68f3fdd429e7a68136709f23,
+    type: 3}
+  m_PrefabInstance: {fileID: 1721876421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &13006563
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -924,10 +930,10 @@ MonoBehaviour:
   - {fileID: 1721876423}
   - {fileID: 1905299324}
   dicePositions:
-  - {fileID: 1378760505}
-  - {fileID: 248325915}
-  - {fileID: 1721876422}
-  - {fileID: 1784071571}
+  - {fileID: 1730254532}
+  - {fileID: 500910988}
+  - {fileID: 3054864}
+  - {fileID: 1195523403}
 --- !u!114 &164138739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3484,6 +3490,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486316042}
   m_CullTransparentMesh: 1
+--- !u!4 &500910988 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8696229665581631089, guid: 498ddc5b68f3fdd429e7a68136709f23,
+    type: 3}
+  m_PrefabInstance: {fileID: 248325914}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &524949361
 GameObject:
   m_ObjectHideFlags: 0
@@ -7477,6 +7489,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192270593}
   m_CullTransparentMesh: 1
+--- !u!4 &1195523403 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8696229665581631089, guid: 498ddc5b68f3fdd429e7a68136709f23,
+    type: 3}
+  m_PrefabInstance: {fileID: 36902182}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1209842257
 GameObject:
   m_ObjectHideFlags: 0
@@ -8259,6 +8277,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7601200435183040774, guid: 498ddc5b68f3fdd429e7a68136709f23,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7774661224045500841, guid: 498ddc5b68f3fdd429e7a68136709f23,
         type: 3}
@@ -10464,6 +10487,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a924af1df6974104bb01e3153ae5090f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1730254532 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8696229665581631089, guid: 498ddc5b68f3fdd429e7a68136709f23,
+    type: 3}
+  m_PrefabInstance: {fileID: 1378760504}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1751514594
 GameObject:
   m_ObjectHideFlags: 0

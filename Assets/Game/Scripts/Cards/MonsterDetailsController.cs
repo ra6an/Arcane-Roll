@@ -160,7 +160,19 @@ public class MonsterDetailsController : MonoBehaviour
         //diceWorldView.GetComponent<WorldImage>().AddWorldObject(DiceManager.Instance.dicePositions[num]);
         if(_drs != null )
         {
-            diceWorldView.GetComponent<WorldImage>().AddWorldObject(_drs.Dice.transform);
+            Transform diceTransform = null;
+            foreach(Transform dt in _drs.Dice.transform)
+            {
+                if(dt.tag == "Dice")
+                {
+                    diceTransform = dt;
+                }
+            }
+            WorldImage wi = diceWorldView.GetComponent<WorldImage>();
+            wi.AddWorldObject(diceTransform);
+            wi.CameraFollowTransform = true;
+            
+            //diceWorldView.GetComponent<WorldImage>().AddWorldObject(_drs.Dice.transform);
         }
     }
 
@@ -215,17 +227,18 @@ public class MonsterDetailsController : MonoBehaviour
         }
 
         float wiHeight = worldImageContainer.GetComponent<RectTransform>().rect.height;
-        
-        worldImageContainer.transform.DOMoveY(wiHeight - 20, 0.6f);
-        //worldImageContainer.transform.DOMoveY(wiHeight / 2, 0.6f);
+        int pos = 210;
+        //worldImageContainer.transform.DOMoveY(wiHeight - 20, 0.6f);
+        worldImageContainer.transform.DOMoveY(pos, 0.6f);
     }
 
     public void HideDiceWorldImage()
     {
         float wiHeight = worldImageContainer.GetComponent<RectTransform>().rect.height;
 
-        worldImageContainer.transform.DOMoveY(-wiHeight + 20, 0.6f);
-        //worldImageContainer.transform.DOMoveY(-(wiHeight / 2), 0.6f);
+        int pos = 70;
+        worldImageContainer.transform.DOMoveY(pos, 0.6f);
+        //worldImageContainer.transform.DOMoveY(-wiHeight + 20, 0.6f);
     }
 
     private void CheckForRolledNumbersAndSetIt()
@@ -261,7 +274,7 @@ public class MonsterDetailsController : MonoBehaviour
         if(value > 0 && value < 7)
         {
             rolledDiceSprite.sprite = diceFaces[value - 1];
-            rolledDiceGO.SetActive(true);
+            //rolledDiceGO.SetActive(true);
             _currRolledNum = value;
         }
     }
