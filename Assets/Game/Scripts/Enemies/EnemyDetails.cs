@@ -114,7 +114,7 @@ public class EnemyDetails : MonoBehaviour
         }
 
         currentHealth = targetHealth;
-        Debug.Log(currentHealth);
+        //Debug.Log(currentHealth);
         currentHealthSliderGO.GetComponent<Image>().fillAmount = currentHealth / (float)maxHealth;
         healthText.text = $"{targetHealth} / {maxHealth}";
     }

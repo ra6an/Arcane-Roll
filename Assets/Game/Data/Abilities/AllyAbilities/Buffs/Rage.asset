@@ -24,6 +24,7 @@ MonoBehaviour:
   execute: 0
   piercing: 0
   attackRandom: 0
+  applyEffectToTarget: 0
   defense: 0
   numOfTargetsToDefense: 0
   lethalDefenseBoost: 0
@@ -34,7 +35,7 @@ MonoBehaviour:
   ccRandom: 0
   buff: 1
   numOfTargetsToBuff: 1
-  buffDuration: 2
+  buffDuration: 1
   buffRandom: 0
   applyDebuffOnSameTarget: 1
   debuff: 2
@@ -43,6 +44,7 @@ MonoBehaviour:
   debuffRandom: 0
   status: 0
   numOfTargetsToStatus: 0
+  chanceToApplyStatus: 1
   statusDuration: 1
   statusRandom: 0
   heal: 0

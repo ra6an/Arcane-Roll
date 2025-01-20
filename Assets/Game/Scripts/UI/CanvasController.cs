@@ -50,6 +50,27 @@ public class CanvasController : MonoBehaviour
     //[SerializeField] public GameObject infoMessagePanel;
     //[SerializeField] public RectTransform infoMessageRect;
 
+    [Foldout("Effect Icons")]
+    [SerializeField] private Sprite strength;
+    [SerializeField] private Sprite weak;
+    [SerializeField] private Sprite vitality;
+    [SerializeField] private Sprite vulnerable;
+    [SerializeField] private Sprite resilient;
+    [SerializeField] private Sprite brittle;
+    [SerializeField] private Sprite burn;
+    [SerializeField] private Sprite poison;
+    [SerializeField] private Sprite chill;
+
+    public Sprite Strength => strength;
+    public Sprite Weak => weak;
+    public Sprite Vitality => vitality;
+    public Sprite Vulnerable => vulnerable;
+    public Sprite Brittle => brittle;
+    public Sprite Resilient => resilient;
+    public Sprite Burn => burn;
+    public Sprite Poison => poison;
+    public Sprite Chill => chill;
+
     public void CloseAllPanels()
     {
         starterSetPanel.SetActive(false);

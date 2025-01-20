@@ -15,4 +15,4 @@ MonoBehaviour:
   id: 3
   starterSetName: Test Set
   deck: {fileID: 11400000, guid: 09c50b4b876510d409a41dc2899ed411, type: 2}
-  relic: {fileID: 11400000, guid: dc751a366db081944b91fb52360cbe14, type: 2}
+  relic: {fileID: 11400000, guid: 5e3c9e73322954646ab256cf7dc87c66, type: 2}

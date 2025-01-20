@@ -58,7 +58,7 @@ public class Damageable : MonoBehaviour, IDamageable
     {
         int amount = _effectable.ModifyReceiveDamage(aec.amount);
 
-        Debug.Log($"Damage to take: {amount} --OLD ({aec.amount})--.");
+        //Debug.Log($"Damage to take: {amount} --OLD ({aec.amount})--.");
         
         if (aec.lethal)
         {
@@ -192,6 +192,11 @@ public class Damageable : MonoBehaviour, IDamageable
                 _combatAnimator.TakeDamageAnimation();
             }
         }
+    }
+
+    public void HandleEndTurnEffects()
+    {
+        _effectable.HandleEndTurnEffects();
     }
 
     private void HandleDie()

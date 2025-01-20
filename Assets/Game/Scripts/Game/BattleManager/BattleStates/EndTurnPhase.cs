@@ -41,6 +41,15 @@ public class EndTurnPhase : IBattleState
             HandleEnemyTeamBuffsDebuffsAndShields();
             _battleStateMachine.ChangeState<EnemyPlanningPhase>();
             stateChanged = true;
+
+            foreach(Damageable enemy in enemyTeam)
+            {
+                enemy.HandleEndTurnEffects();
+            }
+            foreach(Damageable ally in allyTeam)
+            {
+                ally.HandleEndTurnEffects();
+            }
         }
     }
 

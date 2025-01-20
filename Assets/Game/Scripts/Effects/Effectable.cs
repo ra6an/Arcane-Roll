@@ -8,23 +8,36 @@ public class Effectable : MonoBehaviour
 {
     private List<EffectBase> effects = new();
 
+    public List<EffectBase> Effects => effects;
+
     public void AddNewEffect(EffectBase _effToAdd, int _duration)
     {
         if (_effToAdd == null || _duration <= 0) return;
-        Debug.Log($"Prije dodavanja: {effects.Count} -- EFEKAT: {_effToAdd.Name} ({_effToAdd.Duration}) --");
         EffectBase _eff = effects.Find(x => x.Name == _effToAdd.Name);
 
         if(_eff != null)
         {
             _eff.Add(_duration);
-            Debug.Log($"Poslije dodavanja: {effects.Count} -- EFEKAT: {_eff.Name} ({_eff.Duration}) --");
             return;
         }
 
         _effToAdd.Add(_duration);
         effects.Add(_effToAdd);
+    }
 
-        Debug.Log($"Poslije dodavanja: {effects.Count} -- EFEKAT: {_effToAdd.Name} ({_effToAdd.Duration}) --");
+    internal void HandleEndTurnEffects()
+    {
+        foreach (EffectBase _eff in effects)
+        {
+            if(_eff.Type == EffectType.Status && _eff is IStatusEffect _statusEff)
+            {
+                _statusEff.ApplyStatus(transform.GetComponent<Damageable>());
+            }
+            
+            _eff.Tick();
+        }
+
+        effects.RemoveAll(_eff => _eff.Duration == 0);
     }
 
     internal int ModifyAttackValue(int value)
@@ -49,17 +62,35 @@ public class Effectable : MonoBehaviour
         if(amount <= 0) return 0;
 
         int modifiedAmount = amount;
-        Debug.Log(effects.Count);
+        //Debug.Log(effects.Count);
         foreach (var effect in effects)
         {
             if(effect is IBuffDebuffEffect buffDebuff && effect.Modify == ModifyStat.ReceiveDamage)
             {
-                Debug.Log($"EFEKAT: {effect.Name}, MODIFIKUJE: {effect.Modify}");
-                Debug.Log("Modifikuje amount!!!");
+                //Debug.Log($"EFEKAT: {effect.Name}, MODIFIKUJE: {effect.Modify}");
+                //Debug.Log("Modifikuje amount!!!");
                 modifiedAmount += buffDebuff.Apply(amount);
             }
         }
 
         return modifiedAmount;
+    }
+
+    public bool EffectExistInList(string effName)
+    {
+        bool exist = false;
+
+        EffectBase eb = effects.Find(x => x.Name == effName);
+        if (eb != null)
+        {
+            exist = true;
+        }
+
+        if(eb == null)
+        {
+            Debug.Log(effName);
+        }
+
+        return exist;
     }
 }

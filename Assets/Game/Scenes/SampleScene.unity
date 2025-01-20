@@ -8884,7 +8884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bcb812c2f6a578469fa634e12689762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDistance: 250
+  moveDistance: 275
   animationSpeed: 0.5
 --- !u!114 &1507831074
 MonoBehaviour:
@@ -11748,6 +11748,15 @@ MonoBehaviour:
   endBattleRect: {fileID: 381937441}
   stateChangePanel: {fileID: 1981022740}
   stateChangeMsgRect: {fileID: 1981022741}
+  strength: {fileID: 21300000, guid: 985abd629a68f2a4f87880ab2d896b83, type: 3}
+  weak: {fileID: 21300000, guid: 16acc6758511502448d4e0a4faea4ef5, type: 3}
+  vitality: {fileID: 21300000, guid: f686d58e25eb10a42a8f30966b94a84f, type: 3}
+  vulnerable: {fileID: 21300000, guid: 192a0ce60a728e34ebe37c22895fecb4, type: 3}
+  resilient: {fileID: 21300000, guid: f40561aa32b6da147a2efa8abde3d643, type: 3}
+  brittle: {fileID: 21300000, guid: 578a7fcae4f379a4d8f6129effb3a7b4, type: 3}
+  burn: {fileID: 21300000, guid: 41c3dc50118f2bd4780219ac91b0730a, type: 3}
+  poison: {fileID: 21300000, guid: 13bf01b335dfc7b419aff23d430cddd3, type: 3}
+  chill: {fileID: 21300000, guid: 681ce6d4595bd8141ad69321eb49b68c, type: 3}
 --- !u!1 &2054584676 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4214292448292008581, guid: 9ee29ece6cae92547a95b7df5ae5d360,

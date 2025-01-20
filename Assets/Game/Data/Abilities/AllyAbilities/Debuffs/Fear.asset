@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 0
   abilityName: Fear
   icon: {fileID: 21300000, guid: f655ab5e3b23f6d41a6eee6c65a663de, type: 3}
-  description: Apply 4 Weak to two enemy targets.
+  description: Apply 4 Vulnerable to two enemy targets.
   type: 16
   attack: 0
   numOfTargetsToAttack: 0

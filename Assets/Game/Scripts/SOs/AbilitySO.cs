@@ -228,7 +228,7 @@ public class AbilitySO : ScriptableObject, IAbility
         if (dmg == null) return;
 
         int modifiedAttackValue = dmg.ModifyAttack(attack);
-        Debug.Log($"Casters modified attack: {modifiedAttackValue}.");
+        //Debug.Log($"Casters modified attack: {modifiedAttackValue}.");
 
         foreach (Damageable target in targets)
         {
@@ -261,7 +261,7 @@ public class AbilitySO : ScriptableObject, IAbility
     {
         foreach (Damageable target in targets)
         {
-            Debug.Log($"{target.name} is buffed with {buff}.");
+            //Debug.Log($"{target.name} is buffed with {buff}.");
             EffectBase _buff = null;
 
             if(buff == Buff.Strength)
@@ -284,7 +284,7 @@ public class AbilitySO : ScriptableObject, IAbility
     {
         foreach (Damageable target in targets)
         {
-            Debug.Log($"{target.name} is debuffed with {debuff}.");
+            //Debug.Log($"{target.name} is debuffed with {debuff}.");
             EffectBase _debuff = null;
             int _duration = debuffDuration;
 
@@ -308,7 +308,7 @@ public class AbilitySO : ScriptableObject, IAbility
     {
         foreach (Damageable target in targets)
         {
-            Debug.Log($"{target.name} is cc-ed with {crowdControlType}.");
+            //Debug.Log($"{target.name} is cc-ed with {crowdControlType}.");
         }
     }
 
@@ -335,7 +335,7 @@ public class AbilitySO : ScriptableObject, IAbility
 
         foreach (Damageable target in targets)
         {
-            Debug.Log($"Applying Status: {status} for {statusDuration} turns on -- {target.gameObject.name} --!");
+            //Debug.Log($"Applying Status: {status} for {statusDuration} turns on -- {target.gameObject.name} --!");
             System.Random rnd = new();
             float rndNum = (float)rnd.NextDouble();
 

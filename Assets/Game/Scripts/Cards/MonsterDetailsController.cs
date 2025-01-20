@@ -40,12 +40,19 @@ public class MonsterDetailsController : MonoBehaviour
     [SerializeField] private Image rolledDiceSprite;
     [SerializeField] private List<Sprite> diceFaces = new List<Sprite>(6);
 
+    private int moveUp = 230;
+    private int moveDown = 90;
+
     [Header("Combat Buttons")]
     [SerializeField] private GameObject combatBtnsGO;
     [SerializeField] private GameObject activateSpellBtnGO;
     [SerializeField] private Image abilitySprite;
     [SerializeField] private GameObject selectCheckBox;
     [SerializeField] private Image selectedIcon;
+
+    [Header("Effects")]
+    [SerializeField] private GameObject effectsContainerGO;
+    [SerializeField] private GameObject singleEffectPrefab;
 
     private int _currRolledNum = 0;
 
@@ -73,6 +80,7 @@ public class MonsterDetailsController : MonoBehaviour
         CheckIfDiceNumberIsLocked();
         ActivateAbilityWhenItIsReady();
         HandleShowCheckBox();
+        UpdateEffects();
 
         UpdateHealth();
         UpdateShield();
@@ -219,7 +227,7 @@ public class MonsterDetailsController : MonoBehaviour
         }
 
         currentHealth = targetHealth;
-        Debug.Log(currentHealth);
+        //Debug.Log(currentHealth);
         currentHealthSliderGO.GetComponent<Image>().fillAmount = currentHealth / (float)maxHealth;
         healthText.text = $"{targetHealth} / {maxHealth}";
     }
@@ -256,7 +264,7 @@ public class MonsterDetailsController : MonoBehaviour
         }
 
         float wiHeight = worldImageContainer.GetComponent<RectTransform>().rect.height;
-        int pos = 210;
+        int pos = moveUp;
         //worldImageContainer.transform.DOMoveY(wiHeight - 20, 0.6f);
         worldImageContainer.transform.DOMoveY(pos, 0.6f);
     }
@@ -265,7 +273,7 @@ public class MonsterDetailsController : MonoBehaviour
     {
         float wiHeight = worldImageContainer.GetComponent<RectTransform>().rect.height;
 
-        int pos = 70;
+        int pos = moveDown;
         worldImageContainer.transform.DOMoveY(pos, 0.6f);
         //worldImageContainer.transform.DOMoveY(-wiHeight + 20, 0.6f);
     }
@@ -561,6 +569,76 @@ public class MonsterDetailsController : MonoBehaviour
         } else
         {
             currentShieldGO.SetActive(true);
+        }
+    }
+
+    private void UpdateEffects()
+    {
+        Effectable _ef = diceRollState.Crystal.GetComponent<Effectable>();
+        List<EffectBase> _effects = _ef.Effects;
+
+        if (_effects.Count == 0 && effectsContainerGO.transform.childCount == 0) return;
+
+        Effectable _target = diceRollState.Crystal.GetComponent<Effectable>();
+        RemoveExpiredEffects(_target);
+
+        //ClearEffectsContainer();
+        foreach (EffectBase effectBase in _effects)
+        {
+            if (effectBase == null) continue;
+
+            if(!CheckIfExistEffect(effectBase))
+            {
+                GameObject go = Instantiate(singleEffectPrefab, effectsContainerGO.transform);
+                EffectController ec = go.GetComponent<EffectController>();
+                ec.SetEffect(effectBase);
+            }
+        }
+    }
+
+    private bool CheckIfExistEffect(EffectBase _ef)
+    {
+        Transform exist = null;
+
+        if (effectsContainerGO.transform.childCount == 0) return false;
+
+        foreach (Transform child in effectsContainerGO.transform)
+        {
+            EffectController _ec = child.GetComponent<EffectController>();
+
+            // AKO POSTOJI EFEKAT UPDATEATI DURATION
+            if (_ec.Effect.Name == _ef.Name)
+            {
+                exist = child;
+                _ec.SetDuration(_ef);
+                if(_ef.Duration == 0) Destroy(child.gameObject);
+                break;
+            }
+        }
+
+        return exist != null;
+    }
+
+    private void RemoveExpiredEffects(Effectable target)
+    {
+        foreach(Transform child in effectsContainerGO.transform)
+        {
+            EffectController _ec = child.GetComponent<EffectController>();
+
+            if (!target.EffectExistInList(_ec.Effect.Name))
+            {
+                Debug.Log($"Ne postoji {_ec.Effect.Name} Effekat u listi!!!");
+                Destroy(child.gameObject);
+                break;
+            }
+        }
+    }
+
+    private void ClearEffectsContainer()
+    {
+        foreach(Transform child in effectsContainerGO.transform)
+        {
+            Destroy(child.gameObject);
         }
     }
 }

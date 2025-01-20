@@ -24,7 +24,9 @@ public abstract class EffectBase : IEffect
     {
         if(Duration > 0)
         {
+            Debug.Log("Removamo jedan duration");
             Duration--;
+            //Debug.Log(Duration);
         }
     }
 }
