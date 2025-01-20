@@ -33,6 +33,9 @@ public class EnemyDetails : MonoBehaviour
 
     [Header("Health")]
     [SerializeField] private GameObject currentHealthSliderGO;
+    [SerializeField] private TextMeshProUGUI healthText;
+    private float fillAmount;
+    private Coroutine healthCoroutine;
 
     public int SpawnId => spawnId;
     public EnemySO EnemyData => enemyData;
@@ -67,13 +70,53 @@ public class EnemyDetails : MonoBehaviour
 
             if (newHealth > maxHealth) newHealth = maxHealth;
 
-            //healthText.text = $"{newHealth} / {maxHealth}";
+            healthText.text = $"{newHealth} / {maxHealth}";
             currentHealth = newHealth;
 
-            //Postaviti health bar
+            if (healthCoroutine != null)
+            {
+                StopCoroutine(healthCoroutine);
+            }
 
-            currentHealthSliderGO.GetComponent<Image>().fillAmount = newHealth / (float)maxHealth;
+            healthCoroutine = StartCoroutine(UpdateHealthBar(fillAmount, newHealth, maxHealth));
+            //int newHealth = _newHealth;
+            //EnemiesController ec = GameManager.Instance.GetComponent<EnemiesController>();
+            //Damageable eDmg = ec.GetEnemyDamageableBySpawnId(spawnId);
+            //int maxHealth = eDmg.MaxHealth;
+
+            //if (newHealth > maxHealth) newHealth = maxHealth;
+
+            ////healthText.text = $"{newHealth} / {maxHealth}";
+            //currentHealth = newHealth;
+
+            ////Postaviti health bar
+
+            //currentHealthSliderGO.GetComponent<Image>().fillAmount = newHealth / (float)maxHealth;
         }
+    }
+
+    private IEnumerator UpdateHealthBar(float startHealth, int targetHealth, int maxHealth)
+    {
+        float duration = 1.0f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            fillAmount = Mathf.Lerp(startHealth, targetHealth, elapsedTime / duration);
+
+            currentHealthSliderGO.GetComponent<Image>().fillAmount = fillAmount / maxHealth;
+
+            healthText.text = $"{Mathf.RoundToInt(fillAmount)} / {maxHealth}";
+
+            yield return null;
+        }
+
+        currentHealth = targetHealth;
+        Debug.Log(currentHealth);
+        currentHealthSliderGO.GetComponent<Image>().fillAmount = currentHealth / (float)maxHealth;
+        healthText.text = $"{targetHealth} / {maxHealth}";
     }
 
     private void UpdateHealth()
@@ -98,7 +141,8 @@ public class EnemyDetails : MonoBehaviour
 
         spawnId = _spawnId;
         enemyData = _data;
-        currentHealth = _data.health;
+        SetHealth(_data.health);
+        //currentHealth = _data.health;
 
         if(!string.IsNullOrEmpty(_data.enemyName))
         {

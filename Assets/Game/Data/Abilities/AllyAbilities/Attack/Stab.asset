@@ -15,16 +15,17 @@ MonoBehaviour:
   id: 5
   abilityName: Stab
   icon: {fileID: 21300000, guid: 9b44ff2786cd9b940b7dee7f1afecc20, type: 3}
-  description: Deal 4 damage to enemy monster, if it's under 40% health deal double
+  description: Deal 6 damage to enemy monster, if it's under 40% health deal double
     damage.
   type: 33
-  attack: 8
+  attack: 6
   numOfTargetsToAttack: 1
   numOfAttacks: 0
   lifesteal: 1
   execute: 0
   piercing: 0
   attackRandom: 0
+  applyEffectToTarget: 0
   defense: 0
   numOfTargetsToDefense: 0
   lethalDefenseBoost: 0
@@ -37,10 +38,16 @@ MonoBehaviour:
   numOfTargetsToBuff: 0
   buffDuration: 1
   buffRandom: 0
+  applyDebuffOnSameTarget: 0
   debuff: 0
   numOfTargetsToDebuff: 0
   debuffDuration: 1
   debuffRandom: 0
+  status: 0
+  numOfTargetsToStatus: 0
+  chanceToApplyStatus: 1
+  statusDuration: 1
+  statusRandom: 0
   heal: 0
   numOfTargetsToHeal: 0
   lethalHealBoost: 0

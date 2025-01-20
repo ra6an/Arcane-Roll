@@ -16,7 +16,7 @@ MonoBehaviour:
   abilityName: Phoenix Soul
   icon: {fileID: 21300000, guid: 32dfdc8a9ddd9aa4eb24c12dea823183, type: 3}
   description: Heal all ally monsters for 4 health.
-  type: 32
+  type: 64
   attack: 0
   numOfTargetsToAttack: 0
   numOfAttacks: 0
@@ -24,6 +24,7 @@ MonoBehaviour:
   execute: 0
   piercing: 0
   attackRandom: 0
+  applyEffectToTarget: 0
   defense: 0
   numOfTargetsToDefense: 0
   lethalDefenseBoost: 0
@@ -36,10 +37,16 @@ MonoBehaviour:
   numOfTargetsToBuff: 0
   buffDuration: 1
   buffRandom: 0
+  applyDebuffOnSameTarget: 0
   debuff: 0
   numOfTargetsToDebuff: 0
   debuffDuration: 1
   debuffRandom: 0
+  status: 0
+  numOfTargetsToStatus: 0
+  chanceToApplyStatus: 1
+  statusDuration: 1
+  statusRandom: 0
   heal: 4
   numOfTargetsToHeal: 4
   lethalHealBoost: 1

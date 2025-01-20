@@ -25,6 +25,8 @@ public class MonsterDetailsController : MonoBehaviour
     [SerializeField] private int currentShield;
     [SerializeField] private GameObject currentShieldGO;
     [SerializeField] private TextMeshProUGUI shieldText;
+    private float fillAmount;
+    private Coroutine healthCoroutine;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject skillPrefab;
@@ -189,10 +191,37 @@ public class MonsterDetailsController : MonoBehaviour
             healthText.text = $"{newHealth} / {maxHealth}";
             currentHealth = newHealth;
 
-            //Postaviti health bar
-
-            currentHealthSliderGO.GetComponent<Image>().fillAmount = newHealth / (float)maxHealth;
+            if(healthCoroutine != null)
+            {
+                StopCoroutine(healthCoroutine);
+            }
+            
+            healthCoroutine = StartCoroutine(UpdateHealthBar(fillAmount, newHealth, maxHealth));
         }
+    }
+
+    private IEnumerator UpdateHealthBar(float startHealth, int targetHealth, int maxHealth)
+    {
+        float duration = 1.0f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            fillAmount = Mathf.Lerp(startHealth, targetHealth, elapsedTime / duration);
+
+            currentHealthSliderGO.GetComponent<Image>().fillAmount = fillAmount / maxHealth;
+
+            healthText.text = $"{Mathf.RoundToInt(fillAmount)} / {maxHealth}";
+
+            yield return null;
+        }
+
+        currentHealth = targetHealth;
+        Debug.Log(currentHealth);
+        currentHealthSliderGO.GetComponent<Image>().fillAmount = currentHealth / (float)maxHealth;
+        healthText.text = $"{targetHealth} / {maxHealth}";
     }
 
     public void SetShield(int _newShield)

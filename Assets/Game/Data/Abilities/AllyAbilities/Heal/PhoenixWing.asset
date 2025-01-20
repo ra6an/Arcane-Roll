@@ -16,7 +16,7 @@ MonoBehaviour:
   abilityName: Phoenix Wing
   icon: {fileID: 21300000, guid: a5969f52ad074d149ac10204dfb74f2f, type: 3}
   description: Heal ally monster with 5 health.
-  type: 32
+  type: 64
   attack: 0
   numOfTargetsToAttack: 0
   numOfAttacks: 0
@@ -24,6 +24,7 @@ MonoBehaviour:
   execute: 0
   piercing: 0
   attackRandom: 0
+  applyEffectToTarget: 0
   defense: 0
   numOfTargetsToDefense: 0
   lethalDefenseBoost: 0
@@ -36,10 +37,16 @@ MonoBehaviour:
   numOfTargetsToBuff: 0
   buffDuration: 1
   buffRandom: 0
+  applyDebuffOnSameTarget: 0
   debuff: 0
   numOfTargetsToDebuff: 0
   debuffDuration: 1
   debuffRandom: 0
+  status: 0
+  numOfTargetsToStatus: 0
+  chanceToApplyStatus: 1
+  statusDuration: 1
+  statusRandom: 0
   heal: 5
   numOfTargetsToHeal: 1
   lethalHealBoost: 0
