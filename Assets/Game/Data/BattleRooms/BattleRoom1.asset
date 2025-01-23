@@ -16,6 +16,6 @@ MonoBehaviour:
   playerPositionFrom: {x: 8, y: 7, z: -20}
   playerPositionTo: {x: 0, y: 1, z: 0}
   playerRotationFrom: {x: -0.11829691, y: 0.41900277, z: -0.055162765, w: -0.8985542}
-  playerRotationTo: {x: 0, y: 0, z: 0, w: 0}
-  enemyPositions: {x: -929.01, y: -573.97, z: -2148.27}
-  enemyRotation: {x: 0, y: 0.9961947, z: 0, w: -0.08715577}
+  playerRotationTo: {x: 0.06975647, y: 0, z: 0, w: 0.9975641}
+  enemyPositions: {x: -929.01, y: -573.97, z: -2152}
+  enemyRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}

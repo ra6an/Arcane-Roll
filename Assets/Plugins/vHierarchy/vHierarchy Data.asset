@@ -35,6 +35,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-2049402664-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-421103631-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1129633570-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1383443262-0
         values:
         - colorIndex: 1
           iconNameOrGuid: Folder Icon
@@ -53,7 +54,7 @@ MonoBehaviour:
         - colorIndex: 0
           iconNameOrGuid: Settings Icon
         - colorIndex: 0
-          iconNameOrGuid: DirectionalLight Icon
+          iconNameOrGuid: Light Icon
         - colorIndex: 0
           iconNameOrGuid: Settings Icon
         - colorIndex: 0
@@ -70,3 +71,5 @@ MonoBehaviour:
           iconNameOrGuid: 
         - colorIndex: 0
           iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 0
+          iconNameOrGuid: LightProbes Icon

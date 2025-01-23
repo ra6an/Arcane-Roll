@@ -10,6 +10,9 @@ public class AllyCrystalController : MonoBehaviour
     private int position;
     private int rolledDice;
 
+    private bool haveShield = false;
+    [SerializeField] private GameObject shield;
+
     public CardSO CardData => cardData;
     public int Position => position;
     public int RolledDice => rolledDice;
@@ -17,13 +20,17 @@ public class AllyCrystalController : MonoBehaviour
     private void Awake()
     {
         this.GetComponent<Dissolver>().currentState = Dissolver.DissolveState.Dissolved;
-        
     }
 
     private void Start()
     {
         StartCoroutine(StartRotation());
         StartCoroutine(StartLevitation());
+    }
+
+    private void Update()
+    {
+        CheckIfHaveShield();
     }
 
     public void SetMonster(CardSO _card, int _position)
@@ -70,5 +77,26 @@ public class AllyCrystalController : MonoBehaviour
     public void SetRolledDice(int _rolledDice)
     {
         rolledDice = _rolledDice;
+    }
+
+    private void CheckIfHaveShield()
+    {
+        Damageable dmg = GetComponent<Damageable>();
+
+        if (dmg == null) return;
+
+        if(dmg.CurrentShield > 0 && !haveShield)
+        {
+            haveShield = true;
+            FadeInShield fs = shield.GetComponent<FadeInShield>();
+            fs.ShowShield();
+        }
+
+        if(dmg.CurrentShield <= 0 && haveShield)
+        {
+            haveShield = false;
+            FadeInShield fs = shield.GetComponent<FadeInShield>();
+            fs.HideShield();
+        }
     }
 }
