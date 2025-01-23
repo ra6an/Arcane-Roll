@@ -123,6 +123,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4538888602982433619}
+  - component: {fileID: 2075472097567867381}
   m_Layer: 23
   m_Name: R Toe0
   m_TagString: Untagged
@@ -145,6 +146,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3593353841308647895}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2075472097567867381
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148386191578881185}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.01, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &201440060093187877
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,6 +242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4732493417158697061}
+  - component: {fileID: 4336463933700982971}
   m_Layer: 23
   m_Name: L Toe0
   m_TagString: Untagged
@@ -242,6 +265,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3294278019496029356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4336463933700982971
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548269133792876398}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.01, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &660507909811047990
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,8 +718,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5141121463296011898}
   - {fileID: 6552833905322488495}
@@ -2314,6 +2358,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5456808113763254195}
+  - component: {fileID: 4136367776319226724}
   m_Layer: 23
   m_Name: R Finger0
   m_TagString: Untagged
@@ -2336,6 +2381,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3595688148259764887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4136367776319226724
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8487094818265429123}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.01, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8568508378312311334
 GameObject:
   m_ObjectHideFlags: 0
@@ -2377,6 +2443,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3791189298142235954}
+  - component: {fileID: 1567192339132173145}
   m_Layer: 23
   m_Name: L Finger0
   m_TagString: Untagged
@@ -2399,6 +2466,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7582363325922830146}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1567192339132173145
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8657876963437337689}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.01, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8685055255284219079
 GameObject:
   m_ObjectHideFlags: 0

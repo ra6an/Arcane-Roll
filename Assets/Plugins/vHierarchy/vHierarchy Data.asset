@@ -36,6 +36,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-421103631-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1129633570-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1383443262-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-155929258-0
         values:
         - colorIndex: 1
           iconNameOrGuid: Folder Icon
@@ -73,3 +74,5 @@ MonoBehaviour:
           iconNameOrGuid: AvatarMask On Icon
         - colorIndex: 0
           iconNameOrGuid: LightProbes Icon
+        - colorIndex: 9
+          iconNameOrGuid: Favorite

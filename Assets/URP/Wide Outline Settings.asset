@@ -16,7 +16,7 @@ MonoBehaviour:
   materialInstanced: {fileID: 0}
   isActive: 1
   customDepthEnabled: 0
-  RenderingLayer: 256
+  RenderingLayer: 4294967295
   occlusion: 0
   cullingMode: 0
   closedLoop: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   - {fileID: -6917194617552077577}
   materialType: 0
   customMaterial: {fileID: 0}
-  width: 37.2
+  width: 23.1
   blendMode: 0
   customDepthBuffer: 0
   occludedColor: {r: 1, g: 0, b: 0, a: 1}

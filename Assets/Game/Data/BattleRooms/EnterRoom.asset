@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c602496e87dc8c4fb95b2be6914d720, type: 3}
+  m_Name: EnterRoom
+  m_EditorClassIdentifier: 
+  id: 0
+  playerPositionFrom: {x: -3, y: 4, z: 14}
+  playerPositionTo: {x: -1, y: 4.6, z: -15}
+  playerRotationFrom: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  playerRotationTo: {x: -0.0056657298, y: 0.97596145, z: -0.025556456, w: -0.21636546}
+  enemyPositions: {x: -936.09, y: -571.13, z: -2190.96}
+  enemyRotation: {x: 0, y: 0.15643448, z: 0, w: 0.98768836}

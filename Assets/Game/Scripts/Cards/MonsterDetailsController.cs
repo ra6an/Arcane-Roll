@@ -263,6 +263,7 @@ public class MonsterDetailsController : MonoBehaviour
             return;
         }
 
+        diceWorldView.SetActive(true);
         float wiHeight = worldImageContainer.GetComponent<RectTransform>().rect.height;
         int pos = moveUp;
         //worldImageContainer.transform.DOMoveY(wiHeight - 20, 0.6f);
@@ -274,7 +275,10 @@ public class MonsterDetailsController : MonoBehaviour
         float wiHeight = worldImageContainer.GetComponent<RectTransform>().rect.height;
 
         int pos = moveDown;
-        worldImageContainer.transform.DOMoveY(pos, 0.6f);
+        worldImageContainer.transform.DOMoveY(pos, 0.6f).OnComplete(() =>
+        {
+            diceWorldView.SetActive(false);
+        });
         //worldImageContainer.transform.DOMoveY(-wiHeight + 20, 0.6f);
     }
 

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BattleRoomsDB
   m_EditorClassIdentifier: 
   battleRooms:
-  - {fileID: 11400000, guid: 3b46f2c4cf88eb2468601b3212299fce, type: 2}
+  - {fileID: 11400000, guid: daba82036c43b3e48b51ee35771a6dc4, type: 2}

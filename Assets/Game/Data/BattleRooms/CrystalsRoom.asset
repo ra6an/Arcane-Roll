@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c602496e87dc8c4fb95b2be6914d720, type: 3}
+  m_Name: CrystalsRoom
+  m_EditorClassIdentifier: 
+  id: 0
+  playerPositionFrom: {x: 49, y: 8.5, z: -20}
+  playerPositionTo: {x: 76, y: 4, z: -26}
+  playerRotationFrom: {x: 0.07767978, y: 0.66546506, z: -0.0699432, w: 0.7390738}
+  playerRotationTo: {x: 0, y: 0.89493436, z: 0, w: 0.44619778}
+  enemyPositions: {x: -849.002, y: -572.33, z: -2199.892}
+  enemyRotation: {x: 0, y: 0.9396926, z: 0, w: 0.34202015}
